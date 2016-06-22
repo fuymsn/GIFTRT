@@ -6,14 +6,15 @@ var webpack = require('webpack');
 var path = require('path');
 
 //自动打开浏览器插件
-var OpenBrowserPlugin = require('open-browser-webpack-plugin');
+//var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
+    watch: true,
     entry: [
         //自动刷新网页配置
-        "webpack-dev-server/client?http://0.0.0.0:3000",
-        "webpack/hot/only-dev-server",
-        path.resolve(__dirname, './src/app.js')
+        //"webpack-dev-server/client?http://0.0.0.0:3000",
+        //"webpack/hot/only-dev-server",
+        path.resolve(__dirname, './src/app.es6')
     ],
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -23,10 +24,13 @@ module.exports = {
     module: {
         loaders:[
             {
-                test: /\.js[x]?$/,
+                test: /\.es6?$/,
                 exclude: /node_modules/,
                 //loader 加入热替换
-                loaders: ['react-hot', 'babel?presets[]=react']
+                loader: 'babel',
+                query: {
+                    presets: ['react', 'es2015']
+                }
             }, {
                 test: /\.less$/,
                 loader: 'style!css!autoprefixer!less'
@@ -41,7 +45,6 @@ module.exports = {
     },
     plugins: [
         //热替换代码，但不能自动刷新网页
-        new webpack.HotModuleReplacementPlugin(),
         // new webpack.optimize.UglifyJsPlugin({
         //     sourceMap: false,
         //     mangle: false
@@ -52,8 +55,6 @@ module.exports = {
             name: "common",
             filename: "common.js",
             minChunks: Infinity
-        }),
-        //打开浏览器
-        new OpenBrowserPlugin({ url: 'http://localhost:3000' })
+        })
     ]
 };

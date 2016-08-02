@@ -1,7 +1,3 @@
-/**
- * In this file, we create a React component
- * which incorporates components provided by Material-UI.
- */
 import React, {Component} from 'react';
 
 import { RaisedButton } from 'material-ui';
@@ -14,6 +10,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ChatAppBar from './AppBar.js';
 //聊天输入
 import ChatToolBar from './ToolBar.js';
+//聊天内容列表
+import ChatList from './ChatList.js';
 
 //样式
 const styles = {
@@ -29,7 +27,6 @@ const muiTheme = getMuiTheme({
     accent1Color: deepOrange500,
   },
 });
-
 
 class Main extends Component {
   constructor(props, context) {
@@ -53,7 +50,7 @@ class Main extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div style={styles.container}>
           <ChatAppBar />
-          <h1>Chat Panel</h1>
+          <ChatList />
           <ChatToolBar />
         </div>
       </MuiThemeProvider>

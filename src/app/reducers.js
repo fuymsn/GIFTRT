@@ -7,7 +7,8 @@ const chatLists = (state = [], action) => {
             return [
                 ...state,
                 {
-                    text: action.text
+                    text: action.text,
+                    id: action.id
                 }
             ]
         case UPDATE_CHAT_ITEM_LEFT:

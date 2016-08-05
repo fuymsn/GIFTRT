@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Avatar from 'material-ui/Avatar';
 import FileFolder from 'material-ui/svg-icons/file/folder';
 import FontIcon from 'material-ui/FontIcon';
@@ -23,39 +23,51 @@ const style = {
         // paddingBottom: '10px',
         paddingLeft: '66px'
     },
-
-    secondaryText:{
+    secondaryTextLeft:{
         overflow: 'initial',
         textOverflow: 'initial',
         whiteSpace: 'normal',
         height: 'auto',
         marginTop: '0px',
     },
+    secondaryTextRight: {
+        overflow: 'initial',
+        textOverflow: 'initial',
+        whiteSpace: 'normal',
+        height: 'auto',
+        marginTop: '0px',
+        textAlign: "right"
+    }
 };
 
 /**
  * Examples of `Avatar` using an image, [Font Icon](/#/components/font-icon), [SVG Icon](/#/components/svg-icon)
  * and "Letter" (string), with and without custom colors at the default size (`40dp`) and an alternate size (`30dp`).
  */
-const ChatListItemLeft = () => (
+const ChatListItem = ({ text, id }) => (
     <ListItem
-      disabled={true}
-      style={ style.listItem }
-      leftAvatar={
+        disabled={true}
+        style={ style.listItem }
+        rightAvatar={
         <Avatar
-          color={deepOrange300}
-          backgroundColor={purple500}
-          size={30}
-          style={style.avatar}
+            color={deepOrange300}
+            backgroundColor={purple500}
+            size={30}
+            style={style.avatar}
         >
-          L
+            Y
         </Avatar>
-      }
-      secondaryText={
-          <p style={style.secondaryText}>I'll be in your neighborhood doing errands this weekend. Do you want, I'll be in your neighborhood doing errands this weekend. Do you want </p>
-      }
+        }
+        secondaryText={
+            <p style={style.secondaryTextRight}>{text}</p>
+        }
+        data-chatid={id}
     >
     </ListItem>
 );
 
-export default ChatListItemLeft;
+ChatListItem.propTypes = {
+    text: PropTypes.string.isRequired
+}
+
+export default ChatListItem;

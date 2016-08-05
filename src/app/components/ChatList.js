@@ -7,9 +7,8 @@ import ListItem from 'material-ui/List/ListItem';
 import Divider from 'material-ui/Divider';
 
 import { connect } from 'react-redux';
-
-import ChatListItemLeft from './ChatListItemLeft';
-import ChatListItemRight from './ChatListItemRight';
+// chat item
+import ChatListItem from './ChatListItem';
 
 const style = {
     divider:{
@@ -32,13 +31,13 @@ const mapStateToProps = (state) => {
 
 let ChatList = ({ chatLists }) => (
   <List>
-    <ChatListItemLeft />
-    <Divider inset={true} style={style.divider}/>
     {chatLists.map((item, index) =>
-      <ChatListItemRight 
-        {...item}
-        key={index}
-      />
+      <div key={index}>
+        <ChatListItem 
+          {...item}
+        />
+        <Divider inset={true} style={style.divider}/>
+      </div>
     )}
   </List>
 )

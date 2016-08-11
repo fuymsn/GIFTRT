@@ -1,21 +1,26 @@
 import { combineReducers } from 'redux';
-import { ADD_CHAT_ITEM_RIGHT, UPDATE_CHAT_ITEM_LEFT } from './actions';
+import { POST_MESSAGE, RECEIVE_MESSAGE, CONNECT, DISCONNECT } from './actions';
+
+import Message from './utils/Message';
 
 const chatLists = (state = [], action) => {
     switch (action.type) {
-        case ADD_CHAT_ITEM_RIGHT:
+        case POST_MESSAGE:
             return [
                 ...state,
                 {
                     text: action.text,
-                    id: action.id
+                    id: action.id,
+                    type: 0 //自己
                 }
             ]
-        case UPDATE_CHAT_ITEM_LEFT:
+        case RECEIVE_MESSAGE:
             return [
                 ...state,
                 {
-                    text: action.text
+                    text: action.text,
+                    id: action.id,
+                    type: 1 //别人
                 }
             ]
         default:

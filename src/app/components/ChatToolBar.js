@@ -8,7 +8,7 @@ import {Toolbar, ToolbarSeparator, ToolbarGroup} from 'material-ui/Toolbar';
 
 //redux
 import { connect } from 'react-redux';
-import { addChatItemRight } from '../actions';
+import { postMessage, receiveMessage } from '../actions';
 
 const style = {
     toolBar: {
@@ -42,7 +42,7 @@ let ChatToolBar = ({ dispatch }) => {
             return;
           }
 
-          dispatch(addChatItemRight(input.value));
+          dispatch(postMessage(input.value));
           input.value = '';
         }}/>
       </ToolbarGroup>

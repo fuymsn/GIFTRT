@@ -16,6 +16,7 @@ const style = {
     }
 }
 
+//chatLists 数据，filter 状态
 const getChats = (chatLists, filter) => {
   switch(filter) {
     case 'SHOW_ALL':

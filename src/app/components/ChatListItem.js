@@ -44,27 +44,39 @@ const style = {
  * Examples of `Avatar` using an image, [Font Icon](/#/components/font-icon), [SVG Icon](/#/components/svg-icon)
  * and "Letter" (string), with and without custom colors at the default size (`40dp`) and an alternate size (`30dp`).
  */
-const ChatListItem = ({ text, id }) => (
-    <ListItem
-        disabled={true}
-        style={ style.listItem }
-        rightAvatar={
+const ChatListItem = ({ text, id, type }) => {
+
+    let avatar = (
         <Avatar
             color={deepOrange300}
             backgroundColor={purple500}
             size={30}
             style={style.avatar}
         >
-            Y
+        Y
         </Avatar>
-        }
-        secondaryText={
-            <p style={style.secondaryTextRight}>{text}</p>
-        }
-        data-chatid={id}
-    >
-    </ListItem>
-);
+    );
+
+    let attrs;
+    //0 自己
+    if(type){
+        attrs = { leftAvatar: avatar }
+    }else{
+        attrs = { rightAvatar: avatar }
+    }
+
+    return (
+        <ListItem
+            disabled={true}
+            style={ style.listItem }
+            { ...attrs }
+            secondaryText={
+                <p style={type ? style.secondaryTextLeft: style.secondaryTextRight}>{text}</p>
+            }
+            data-chatid={id}
+        >
+        </ListItem>
+)};
 
 ChatListItem.propTypes = {
     text: PropTypes.string.isRequired

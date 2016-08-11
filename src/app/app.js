@@ -13,7 +13,9 @@ import chatApp from './reducers';
 injectTapEventPlugin();
 
 // redux
-let store = createStore(chatApp);
+//let store = createStore(chatApp);
+// 调试模式
+let store = createStore(chatApp, window.devToolsExtension && window.devToolsExtension());
 // root element
 let rootElement = document.getElementById('app');
 

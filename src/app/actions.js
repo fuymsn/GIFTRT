@@ -1,26 +1,43 @@
 /**
  * ACTION 类型
  */
-export const ADD_CHAT_ITEM_RIGHT = 'ADD_CHAT_ITEM_RIGHT';
-export const UPDATE_CHAT_ITEM_LEFT = 'UPDATE_CHAT_ITEM_LEFT';
 
 //chat item 随机id
 let nextChatId = 0;
 
-/**
- * action 创建函数
- */
-export const addChatItemRight = (text) => {
-    return { 
-        type: ADD_CHAT_ITEM_RIGHT,
+//websocket 消息收发
+export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
+export const POST_MESSAGE = 'POST_MESSAGE';
+export const CONNECT = 'CONNECT';
+export const DISCONNECT = 'DISCONNECT';
+
+//连接
+export const connect = () => {
+    return {
+        type: CONNECT
+    }
+}
+//断开连接
+export const disconnect = () => {
+    return {
+        type: DISCONNECT
+    }
+}
+//收
+export const receiveMessage = (message) => {
+    return {
+        type: RECEIVE_MESSAGE,
         id: nextChatId++,
-        text 
+        message
     }
 }
 
-export const updateChatItemLeft = (text) => {
+//发
+export const postMessage = (text) => {
     return {
-        type: UPDATE_CHAT_ITEM_LEFT,
+        type: POST_MESSAGE,
+        id: nextChatId++,
         text
     }
 }
+

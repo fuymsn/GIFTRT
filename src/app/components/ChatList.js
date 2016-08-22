@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Avatar from 'material-ui/Avatar';
 import FileFolder from 'material-ui/svg-icons/file/folder';
 import FontIcon from 'material-ui/FontIcon';
@@ -6,7 +6,10 @@ import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import Divider from 'material-ui/Divider';
 
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
+import * as ChatActions from '../actions';
 // chat item
 import ChatListItem from './ChatListItem';
 
@@ -17,38 +20,41 @@ const style = {
 }
 
 //chatLists 数据，filter 状态
-const getChats = (chatLists, filter) => {
-  switch(filter) {
-    case 'SHOW_ALL':
-      return chatLists;
-  }
-}
-
 const mapStateToProps = (state) => {
   return {
-    chatLists: getChats(state.chatLists, state.visibilityFilter)
+    messages: state.messages,
+    isConnect: state.messages.status
   }
 }
 
-let ChatList = ({ chatLists }) => (
-  <List>
-    {chatLists.map((item, index) =>
-      <div key={index}>
-        <ChatListItem 
-          {...item}
-        />
-        <Divider inset={true} style={style.divider}/>
-      </div>
-    )}
-  </List>
-)
-
-ChatList.propTypes = {
-  chatLists: PropTypes.arrayOf(PropTypes.shape({
-    text: PropTypes.string.isRequired
-  }).isRequired).isRequired
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(ChatActions, dispatch)
+  }
 }
 
-ChatList = connect(mapStateToProps)(ChatList);
+class ChatList extends Component {
 
-export default ChatList;
+  render() {
+
+    const { messages } = this.props;
+
+    return (
+      <List>
+      {
+        messages.conversation.map((item, index) =>
+          <div key={index}>
+            <ChatListItem 
+              {...item}
+            />
+            <Divider inset={true} style={style.divider}/>
+          </div>
+        )
+      }
+      </List>
+    )
+  }
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

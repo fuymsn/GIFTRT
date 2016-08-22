@@ -71,15 +71,16 @@ const ChatListItem = ({ text, id, type }) => {
             style={ style.listItem }
             { ...attrs }
             secondaryText={
-                <p style={type ? style.secondaryTextLeft: style.secondaryTextRight}>{text}</p>
+                <p style={type ? style.secondaryTextLeft: style.secondaryTextRight}>{text.message}</p>
             }
             data-chatid={id}
         >
         </ListItem>
-)};
+    )
+};
 
-ChatListItem.propTypes = {
-    text: PropTypes.string.isRequired
-}
+// ChatListItem.propTypes = {
+//     text: PropTypes.string.isRequired
+// }
 
 export default ChatListItem;

@@ -5,6 +5,14 @@ export default class WS {
         this.websocket.onmessage = function(event) {
             dispatcher(event.msg);
         }
+
+        this.websocket.onopen = function(event) {
+            console.log("WebSocket is OPEN");
+        }
+
+        this.websocket.onerror = function(error) {
+            console.log("WebSocket ERROR: " + error);
+        }
     }
 
     postMessage(text) {

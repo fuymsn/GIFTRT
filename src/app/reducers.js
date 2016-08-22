@@ -3,42 +3,88 @@ import { POST_MESSAGE, RECEIVE_MESSAGE, CONNECT, DISCONNECT } from './actions';
 
 import Message from './utils/Message';
 
-const chatLists = (state = [], action) => {
+const initialState = {
+    conversation: [],
+    status: false
+}
+
+//消息列表
+const messages = (state = initialState, action) => {
     switch (action.type) {
         case POST_MESSAGE:
-            return [
-                ...state,
-                {
-                    text: action.text,
-                    id: action.id,
-                    type: 0 //自己
-                }
-            ]
+            return {
+                conversation: [
+                    ...state,
+                    {
+                        text: new Message(action.text),
+                        id: action.id,
+                        type: 0 //自己
+                    }
+                ]
+            }
         case RECEIVE_MESSAGE:
-            return [
-                ...state,
-                {
-                    text: action.text,
-                    id: action.id,
-                    type: 1 //别人
-                }
-            ]
+            return {
+                conversation: [
+                    ...state,
+                    {
+                        text: new Message(action.text),
+                        id: action.id,
+                        type: 1 //别人
+                    }
+                ]
+            }
+                // {
+                //     text: action.text,
+                //     id: action.id,
+                //     type: 1 //别人
+                // }
+        
+        case CONNECT:
+            return {
+                conversation: [],
+                status: true
+            }
+        
+        case DISCONNECT:
+            return {
+                conversation: [],
+                status: false
+            }
+
         default:
             return state;
     }
 }
 
-const visibilityFilter = (state = 'SHOW_ALL', action) => {
-    switch (action.type) {
-        default:
-            return state;
-    }
+//最后一条消息
+const lastAction = (state = null, action) => {
+    return action;
 }
 
-const chatApp = combineReducers({
-    chatLists,
-    visibilityFilter
+//appbar 侧边栏
+const drawerState = (state = null, action) => {
+    return action;
+}
+
+//home页面 slide index
+const homeSlideIndex = (state = { slideIndex: 0 }, action) => {
+    return action;
+}
+
+//home页面 slide index
+const rankSlideIndex = (state = { slideIndex: 0 }, action) => {
+    return action;
+}
+
+const reducers = combineReducers({
+    messages,
+    lastAction,
+    drawerState,
+    homeSlideIndex,
+    rankSlideIndex
 });
 
-export default chatApp;
-
+/**
+ * reducer组件
+ **/
+export default reducers;

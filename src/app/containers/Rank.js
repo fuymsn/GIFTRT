@@ -37,7 +37,7 @@ function mapDispatchToProps(dispatch) {
 class Rank extends Component {
 
   handleChange(value) {
-      this.props.actions.rankSwitchTabIndex(value);
+      this.props.actions.setRankTabIndex(value);
   };
 
   render() {

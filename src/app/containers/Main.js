@@ -38,7 +38,9 @@ class Main extends Component {
         </div>
       </MuiThemeProvider>
     )
+
   }
+  
 };
 
 Main.propTypes = {

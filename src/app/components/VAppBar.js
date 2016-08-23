@@ -11,7 +11,7 @@ import ActionSearch from 'material-ui/svg-icons/action/search';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as ChatActions from '../actions';
+import * as actions from '../actions';
 
 const style = {
     avatar: {
@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators(ChatActions, dispatch)
+        actions: bindActionCreators(actions, dispatch)
     }
 }
 

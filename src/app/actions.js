@@ -1,5 +1,5 @@
 /**
- * ACTION 类型
+ * ACTION 描述数据改变（描述了有事件发生）
  */
 
 //chat item 随机id
@@ -52,7 +52,7 @@ export const drawerToggle = (isOpen) => {
     return {
         type: DRAWER_TOGGLE,
         //反转
-        open: !isOpen
+        open: isOpen
     }
 }
 
@@ -65,7 +65,7 @@ export const drawerClose = () => {
 }
 
 //home tabs index
-export const homeSwitchTabIndex = (index) => {
+export const setHomeTabIndex = (index) => {
     return {
         type: HOME_TAB_INDEX,
         slideIndex: index
@@ -73,7 +73,7 @@ export const homeSwitchTabIndex = (index) => {
 }
 
 //rank tabs index
-export const rankSwitchTabIndex = (index) => {
+export const setRankTabIndex = (index) => {
     return {
         type: RANK_TAB_INDEX,
         slideIndex: index

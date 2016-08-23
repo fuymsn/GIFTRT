@@ -28,14 +28,14 @@ const style = {
     }
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     messages: state.messages,
-//     isConnect: state.messages.status
-//   }
-// }
+const mapStateToProps = (state) => {
+  return {
+    messages: state.messages,
+    isConnect: state.messages.status
+  }
+}
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     //注入dispatch 方法
     //dispatch,
@@ -76,4 +76,4 @@ class ChatToolBar extends React.Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(ChatToolBar);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatToolBar);

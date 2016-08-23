@@ -3,15 +3,22 @@ export default class WS {
         this.websocket = new WebSocket(url);
         this.dispatcher = dispatcher;
         this.websocket.onmessage = function(event) {
-            dispatcher(event.msg);
+            dispatcher(event.data);
         }
 
         this.websocket.onopen = function(event) {
-            console.log("WebSocket is OPEN");
+            console.log("WS is OPEN");
         }
 
         this.websocket.onerror = function(error) {
-            console.log("WebSocket ERROR: " + error);
+            console.log("WS ERROR: " + error);
+        }
+    }
+
+    onOpenState(func) {
+        this.websocket.onopen = function() {
+            console.log("WS is OPEN");
+            func();
         }
     }
 
@@ -19,7 +26,7 @@ export default class WS {
         this.websocket.send(text);
     }
 
-    close(){
+    close() {
         this.websocket.close();
     }
 }

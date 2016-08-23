@@ -32,20 +32,20 @@ render(
     rootElement
 );
 
-const VURL = 'ws://10.1.100.190:9876/ws';
+const VURL = 'ws://10.1.100.190:9877/ws';
 
 const sock = {
     ws: null,
     URL: VURL,
     wsDispatcher: (msg) => {
-        return store.dispatch(actions.receiveMessage(msg));
+        return store.dispatch(actions.receiveMessage( JSON.parse(msg).info ));
     },
     wsListener: () => {
         const { lastAction } = store.getState();
 
         switch (lastAction.type) {
             case actions.POST_MESSAGE:
-                return sock.ws.postMessage(lastAction.text);
+                return sock.sendWS({"cmd": 30001, "info": lastAction.text});
             case actions.CONNECT:
                 return sock.startWS();
             case actions.DISCONNECT:
@@ -60,11 +60,22 @@ const sock = {
         if(!!sock.ws) sock.ws.close();
 
         sock.ws = new WS(sock.URL, sock.wsDispatcher);
+        //登录
+        sock.ws.onOpenState(function(){
+            sock.sendWS({"cmd":10001,"info":"login"});
+        });
+
+        
     },
 
+    //关闭
     stopWS: () => {
         sock.ws.close();
         sock.ws = null;
+    },
+
+    sendWS: (json) => {
+        sock.ws.postMessage(JSON.stringify({"cmd": json.cmd, "info": json.info}));
     }
 
 }

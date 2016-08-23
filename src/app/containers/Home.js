@@ -37,7 +37,7 @@ function mapDispatchToProps(dispatch) {
 class Home extends Component {
 
   handleChange(value) {
-      this.props.actions.switchTabIndex(value);
+      this.props.actions.setHomeTabIndex(value);
   };
 
   render() {

@@ -4,7 +4,6 @@ import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import Avatar from 'material-ui/Avatar';
 import Drawer from 'material-ui/Drawer';
-import FontIcon from 'material-ui/FontIcon';
 
 import ActionSearch from 'material-ui/svg-icons/action/search';
 

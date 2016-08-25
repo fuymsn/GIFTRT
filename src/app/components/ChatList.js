@@ -13,7 +13,12 @@ import * as ChatActions from '../actions';
 // chat item
 import ChatListItem from './ChatListItem';
 
-const style = {
+const styles = {
+
+    chatList: {
+      flex: 1
+    },
+
     divider:{
         marginLeft: '66px'
     }
@@ -40,14 +45,16 @@ class ChatList extends Component {
     const { messages } = this.props;
 
     return (
-      <List>
+      <List 
+        style={ styles.chatList }
+        >
       {
         messages.conversation.map((item, index) =>
           <div key={index}>
             <ChatListItem 
               {...item}
             />
-            <Divider inset={true} style={style.divider}/>
+            <Divider inset={true} style={styles.divider}/>
           </div>
         )
       }

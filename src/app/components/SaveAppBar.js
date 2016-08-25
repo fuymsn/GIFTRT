@@ -28,6 +28,12 @@ const BackAppBar = () => (
             <NavigationClose />
         </IconButton>
     }
+    iconElementRight={
+        <FlatButton 
+            label="Save" 
+            onTouchTap={ handleRightBtn }
+            /> 
+        }
   />
 );
 

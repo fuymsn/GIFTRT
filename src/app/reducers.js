@@ -14,6 +14,8 @@ import {
     DISCONNECT,
     DRAWER_TOGGLE,
     DRAWER_CLOSE,
+    GIFT_DIALOG_OPEN,
+    GIFT_DIALOG_CLOSE,
     HOME_TAB_INDEX,
     RANK_TAB_INDEX
 } from './actions';
@@ -97,6 +99,18 @@ const drawerState = (state = { open: false }, action) => {
     }
 }
 
+const giftDialogState = (state = { open: false }, action) => {
+    switch (action.type){
+        case GIFT_DIALOG_OPEN:
+        case GIFT_DIALOG_CLOSE:
+            return {
+                open: action.open
+            }
+        default:
+            return state;
+    }
+}
+
 
 //slide index 初始化
 const initialSlideIndex = {
@@ -130,6 +144,7 @@ const reducers = combineReducers({
     messages,
     lastAction,
     drawerState,
+    giftDialogState,
     homeSlideIndex,
     rankSlideIndex
 });

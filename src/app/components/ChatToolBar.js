@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import FontIcon from 'material-ui/FontIcon';
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+
 //tool bar
 import {Toolbar, ToolbarSeparator, ToolbarGroup} from 'material-ui/Toolbar';
 
@@ -31,7 +34,8 @@ const style = {
 const mapStateToProps = (state) => {
   return {
     messages: state.messages,
-    isConnect: state.messages.status
+    isConnect: state.messages.status,
+    dialogState: state.giftDialogState.open
   }
 }
 
@@ -43,7 +47,16 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-class ChatToolBar extends React.Component {
+class ChatToolBar extends Component {
+
+  handleDialogOpen() {
+    this.props.actions.openGiftDialog();
+  }
+
+  handleDialogClose() {
+    this.props.actions.closeGiftDialog();
+  }
+
   handlePost(e) {
 
     //let dispatch = this.props.dispatch;
@@ -64,14 +77,39 @@ class ChatToolBar extends React.Component {
   }
 
   render() {
+
+    const { dialogState } = this.props;
+
+    const actions = [
+      <FlatButton
+        label="取消"
+        primary={true}
+        onTouchTap={ (e) => { this.handleDialogClose(e) } }
+      />
+    ];
+
     return (
-      <Toolbar style={style.toolBar}>
-        <ToolbarGroup style={style.toolBarGroup}>
-          <TextField hintText="输入消息" fullWidth={true} ref="chatInput"/>
-          <ToolbarSeparator />
-          <RaisedButton label="发送" primary={true} style={style.sendBotton} onClick={(e)=> this.handlePost(e)}/>
-        </ToolbarGroup>
-      </Toolbar>
+      <div style={style.toolBar}>
+        <Toolbar>
+          <ToolbarGroup>
+            <TextField hintText="输入消息" ref="chatInput" fullWidth={true}/>
+          </ToolbarGroup>
+          <ToolbarGroup>
+            <FontIcon className="material-icons" onTouchTap={ (e) => { this.handleDialogOpen(e) } }>redeem</FontIcon>
+            <ToolbarSeparator />
+            <RaisedButton label="发送" primary={true} style={style.sendBotton} onClick={(e)=> this.handlePost(e)}/>
+          </ToolbarGroup>
+        </Toolbar>
+        <Dialog
+          title="礼物"
+          actions={actions}
+          modal={false}
+          open={dialogState}
+          onRequestClose={ (e) => { this.handleDialogClose(e); } }
+          autoScrollBodyContent={true}
+        >
+        </Dialog>
+      </div>
     );
   }
 }

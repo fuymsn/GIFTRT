@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import Main from './containers/Main';
-import Chat from './containers/Chat';
+import Video from './containers/Video';
 import Login from './containers/Login';
 import Search from './containers/Search';
 import Home from './containers/Home';
@@ -12,7 +12,7 @@ import UserInfoEdit from './containers/UserInfoEdit';
 
 export default (
     <Route path="/" component={ Main }>
-        <IndexRoute component={ Chat } />
+        <IndexRoute component={ Video } />
         <Route path="/home" component={ Home } />
         <Route path="/login" component={ Login } />
         <Route path="/search" component={ Search } />

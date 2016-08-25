@@ -45,7 +45,7 @@ class Login extends Component {
   handleLogin(e){
     
     this.props.isConnected ? this.props.actions.disconnect() : this.props.actions.connect();
-    location.href = "#/";
+    location.href = "#/home";
 
   }
 

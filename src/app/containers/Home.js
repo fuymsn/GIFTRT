@@ -6,9 +6,10 @@ import { connect } from 'react-redux';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 
-
 //聊天窗口头部
 import VAppBar from '../components/VAppBar';
+import VideoList from '../components/VideoList';
+
 //actions
 import * as actions from '../actions';
 //样式
@@ -63,8 +64,7 @@ class Home extends Component {
           onChangeIndex={ (slideIndex) =>{ this.handleChange(slideIndex) } }
         >
           <div>
-            <h2 style={styles.headline}>Tabs with slide effect</h2>
-            Swipe to see the next slide.<br />
+            <VideoList />
           </div>
           <div style={styles.slide}>
             slide n°2

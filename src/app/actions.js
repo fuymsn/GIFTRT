@@ -13,6 +13,8 @@ export const DISCONNECT = 'DISCONNECT';
 
 export const DRAWER_TOGGLE = 'DRAWER_TOGGLE';
 export const DRAWER_CLOSE = 'DRAWER_CLOSE';
+export const GIFT_DIALOG_OPEN = 'GIFT_DIALOG_OPEN';
+export const GIFT_DIALOG_CLOSE = 'GIFT_DIALOG_CLOSE';
 
 export const HOME_TAB_INDEX = 'HOME_TAB_INDEX';
 export const RANK_TAB_INDEX = 'RANK_TAB_INDEX';
@@ -60,6 +62,21 @@ export const drawerToggle = (isOpen) => {
 export const drawerClose = () => {
     return {
         type: DRAWER_CLOSE,
+        open: false
+    }
+}
+
+//gift dialog open
+export const openGiftDialog = () => {
+    return {
+        type: GIFT_DIALOG_OPEN,
+        open: true
+    }
+}
+//gift dialog close
+export const closeGiftDialog = () => {
+    return {
+        type: GIFT_DIALOG_CLOSE,
         open: false
     }
 }

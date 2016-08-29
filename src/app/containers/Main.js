@@ -13,6 +13,7 @@ const styles = {
   container: {
     //textAlign: 'center',
     //paddingTop: 200,
+    height: "100%"
   },
 };
 

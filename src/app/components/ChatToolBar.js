@@ -16,9 +16,9 @@ import * as ChatActions from '../actions';
 
 const style = {
     toolBar: {
-        position: "fixed",
-        bottom: "0px",
-        width: "100%"
+        // position: "fixed",
+        // bottom: "0px",
+        // width: "100%"
     },
 
     toolBarGroup: {

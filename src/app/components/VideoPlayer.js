@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 
 const styles = {
     videoPlayer: {
-        flex: 1,
         height: "240px",
         overflow: "hidden",
         position: "relative"
     },
     
     videoImage: {
-        flex: 1,
         height: "auto",
         width: "100%",
         position: "relative",

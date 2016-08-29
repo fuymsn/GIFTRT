@@ -1,9 +1,15 @@
 html {
   font-family: 'Roboto', '', sans-serif;
+  height: 100%;
 }
 
 body {
   font-size: 13px;
   line-height: 20px;
   margin: 0px;
+  height: 100%;
+}
+
+#app{
+  height: 100%;
 }

@@ -16,7 +16,8 @@ import ChatListItem from './ChatListItem';
 const styles = {
 
     chatList: {
-      flex: 1
+        overflowY: 'scroll',
+        flex: 1
     },
 
     divider:{
@@ -45,20 +46,18 @@ class ChatList extends Component {
     const { messages } = this.props;
 
     return (
-      <List 
-        style={ styles.chatList }
-        >
-      {
-        messages.conversation.map((item, index) =>
-          <div key={index}>
-            <ChatListItem 
-              {...item}
-            />
-            <Divider inset={true} style={styles.divider}/>
-          </div>
-        )
-      }
-      </List>
+        <List style={ styles.chatList }>
+        {
+          messages.conversation.map((item, index) =>
+            <div key={index}>
+              <ChatListItem 
+                {...item}
+              />
+              <Divider inset={true} style={styles.divider}/>
+            </div>
+          )
+        }
+        </List>
     )
   }
 

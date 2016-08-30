@@ -19,11 +19,15 @@ const style = {
     display: 'flex',
     flexDirection: 'column'
   },
+  
   slide: {
     overflowX: 'hidden'
   },
+
   videoList: {
-    flex: 1
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
   }
 };
 

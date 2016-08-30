@@ -19,7 +19,9 @@ const style = {
       height: '100%'
     },
     rankList: {
-      flex: 1
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
     }
 };
 

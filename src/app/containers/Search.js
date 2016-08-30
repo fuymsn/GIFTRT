@@ -49,7 +49,7 @@ class Search extends Component {
   render() {
     return (
     <div>
-      <VAppBar />
+      <VAppBar title="搜索" />
       <Toolbar style={styles.toolBar}>
         <ToolbarGroup style={styles.toolBarGroup}>
           <TextField hintText="主播名或主播ID" fullWidth={true} ref="chatInput"/>

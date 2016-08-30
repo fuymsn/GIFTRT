@@ -1,5 +1,5 @@
 html {
-  font-family: 'Roboto', '', sans-serif;
+  font-family: 'Roboto', 'YouYuan', 'microsoft yahei', sans-serif;
   height: 100%;
 }
 
@@ -12,4 +12,13 @@ body {
 
 #app{
   height: 100%;
+}
+
+.appBar{
+  background-image: url(images/header.png);
+  background-size: cover;
+}
+
+.padding0{
+  padding: 0px !important;
 }

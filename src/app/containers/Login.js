@@ -52,7 +52,7 @@ class Login extends Component {
   render() {
     return (
     <div>
-      <VAppBar />
+      <VAppBar title="登录" />
       <div style={ styles.container}>
         <TextField
             //hintText="Hint Text"

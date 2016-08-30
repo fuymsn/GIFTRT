@@ -15,8 +15,12 @@ const styles = {
     width: 480,
     //height: 500,
     overflowY: 'auto',
-    marginBottom: 24,
+    marginBottom: 5,
   },
+
+  videoItem: {
+    //overflow: 'hidden'
+  }
 };
 
 const tilesData = [
@@ -102,6 +106,7 @@ class VideoList extends Component {
                         subtitle={<span>by <b>{tile.author}</b></span>}
                         onTouchTap={ (e) => { this.handleVideoTap(e) }}
                         actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+                        style={ styles.videoItem }
                         >
                         <img src={tile.img} />
                     </GridTile>

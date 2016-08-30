@@ -49,7 +49,7 @@ class UserInfoEdit extends Component {
   render() {
     return (
     <div>
-      <SaveAppBar />
+      <SaveAppBar title="编辑个人信息" />
       <div style={ styles.container}>
         <TextField
             //hintText="Hint Text"

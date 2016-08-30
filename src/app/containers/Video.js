@@ -21,7 +21,7 @@ const styles = {
 
 const Video = () => (
     <div style={styles.container}>
-      <BackAppBar />
+      <BackAppBar title="你心中的迷妹" />
       <VideoPlayer />
       <Chat />
     </div>

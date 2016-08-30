@@ -11,8 +11,6 @@ import routes from '../routes';
 //样式
 const styles = {
   container: {
-    //textAlign: 'center',
-    //paddingTop: 200,
     height: "100%"
   },
 };
@@ -20,8 +18,10 @@ const styles = {
 //主题
 const muiTheme = getMuiTheme({
   palette: {
+    primary1Color: '#0fa3ce',
     accent1Color: deepOrange500,
   },
+  fontFamily: 'Roboto, YouYuan, helvetica neue, hiragino sans gb, stheiti, microsoft yahei'
 });
 
 class Main extends Component {

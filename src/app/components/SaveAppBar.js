@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
@@ -12,29 +12,29 @@ function handleRightBtn() {
     window.history.back();
 }
 
-const styles = {
-  title: {
-    cursor: 'pointer',
-  },
-};
+class BackAppBar extends Component{
+    render() {
+        return (
+            <AppBar
+                title={ this.props.title }
+                iconElementLeft={ 
+                    <IconButton
+                        onTouchTap={ handleLeftBtn }
+                        >
+                        <NavigationClose />
+                    </IconButton>
+                }
+                iconElementRight={
+                    <FlatButton 
+                        label="保存" 
+                        onTouchTap={ handleRightBtn }
+                        /> 
+                    }
+                className='appBar'
+            />
+            );
 
-const BackAppBar = () => (
-  <AppBar
-    title={<span style={styles.title}>Title</span>}
-    iconElementLeft={ 
-        <IconButton
-            onTouchTap={ handleLeftBtn }
-            >
-            <NavigationClose />
-        </IconButton>
     }
-    iconElementRight={
-        <FlatButton 
-            label="Save" 
-            onTouchTap={ handleRightBtn }
-            /> 
-        }
-  />
-);
+}
 
 export default BackAppBar;

@@ -13,13 +13,18 @@ import VideoList from '../components/VideoList';
 //actions
 import * as actions from '../actions';
 //样式
-const styles = {
-    container: {
-        //textAlign: 'center',
-        //paddingTop: 200,
-        paddingLeft: "20px",
-        paddingRight: "20px"
-    }
+const style = {
+  container: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  slide: {
+    overflowX: 'hidden'
+  },
+  videoList: {
+    flex: 1
+  }
 };
 
 function mapStateToProps(state) {
@@ -46,9 +51,8 @@ class Home extends Component {
     let { slideIndex } = this.props;
     
     return (
-    <div>
-      <VAppBar />
-      <div>
+      <div style={ style.container }>
+        <VAppBar title='大厅' />
         <Tabs
             onChange = { (slideIndex) =>{ this.handleChange(slideIndex) } }
             value = { slideIndex }
@@ -62,29 +66,25 @@ class Home extends Component {
         <SwipeableViews
           index={ slideIndex }
           onChangeIndex={ (slideIndex) =>{ this.handleChange(slideIndex) } }
+          style={ style.videoList }
         >
-          <div>
+          <div style={style.slide}>
             <VideoList />
           </div>
-          <div style={styles.slide}>
+          <div style={style.slide}>
             slide n°2
           </div>
-          <div style={styles.slide}>
+          <div style={style.slide}>
             slide n°3
           </div>
-          <div style={styles.slide}>
+          <div style={style.slide}>
             一对一
           </div>
-          <div style={styles.slide}>
+          <div style={style.slide}>
             我的关注
           </div>
         </SwipeableViews>
-
       </div>
-      <div style={ styles.container}>
-
-      </div>
-    </div>
     );
   }
 

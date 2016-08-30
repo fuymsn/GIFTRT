@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { RaisedButton, Checkbox, TextField } from 'material-ui';
+import {List, ListItem} from 'material-ui/List';
 
 //聊天窗口头部
 import VAppBar from '../components/VAppBar';
@@ -14,12 +15,8 @@ const styles = {
   container: {
     //textAlign: 'center',
     //paddingTop: 200,
-    paddingLeft: "20px",
-    paddingRight: "20px"
-  },
-
-  userText: {
-      fontSize: "16px"
+    paddingLeft: "18px",
+    paddingRight: "18px"
   },
 
   checkbox: {
@@ -49,15 +46,30 @@ class User extends Component {
   render() {
     return (
     <div>
-      <VAppBar />
+      <VAppBar title="个人中心" />
+      <List>
+        <ListItem
+          primaryText='昵称：太阳神'
+          disabled={ true }
+        />
+        <ListItem
+          primaryText='签名：这是签名，太阳神Gage。这是签名，太阳神Gage。这是签名，太阳神Gage。这是签名，太阳神Gage这是签名，太阳神Gage'
+          disabled={ true }
+        />
+        <ListItem
+          primaryText='性别：男'
+          disabled={ true }
+        />
+        <ListItem
+          primaryText='生日：1995年4月1日'
+          disabled={ true }
+        />
+        <ListItem
+          primaryText='位置：北京'
+          disabled={ true }
+        />
+      </List>
       <div style={ styles.container}>
-        <div style={ styles.userText }>
-            <p>昵称：太阳神</p>
-            <p>签名：这是签名，太阳神Gage。这是签名，太阳神Gage。这是签名，太阳神Gage。这是签名，太阳神Gage这是签名，太阳神Gage</p>
-            <p>性别：男</p>
-            <p>位置：北京</p>
-            <p>生日：1995年4月1日</p>
-        </div>
         <RaisedButton label="编 辑" primary={true} fullWidth={true} onClick={ (e) => {this.handleEdit(e)} } />
       </div>
     </div>

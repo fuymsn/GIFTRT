@@ -70,7 +70,8 @@ class VAppBar extends Component {
 
         return(
             <AppBar
-                title="Title"
+                //只有创建class类VAppBar才可以传递参数，普通方法不可传递
+                title={ this.props.title ? this.props.title : "标题" }
 
                 iconElementLeft={
 
@@ -94,6 +95,8 @@ class VAppBar extends Component {
                         <ActionSearch />
                     </IconButton>
                 }
+
+                className='appBar'
 
             >
                 <Drawer

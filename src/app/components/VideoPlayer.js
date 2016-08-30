@@ -8,8 +8,9 @@ const styles = {
     },
 
     videoPlayerInner: {
-        height: '240px',
-        zIndex:0,
+        //height: '240px',
+        width: '100%',
+        zIndex: 10,
         position: 'absolute',
         top: '0px',
         left: '0px'
@@ -22,7 +23,7 @@ const styles = {
         transform: "translateY(-50%)",
         top: "50%",
         left: "0px",
-        zIndex: 10
+        zIndex: 0
     }
 }
 
@@ -32,10 +33,10 @@ class VideoPlayer extends Component{
         return (
             
             <div style={ styles.videoPlayer }>
-                <video id="live" controls style={ styles.videoPlayerInner }>
-                    <source src="http://103.12.152.102/v44184064-49756942__18185_hls/playlist.m3u8" type="video/mp4" />
+                <video id="live" autoplay controls style={ styles.videoPlayerInner }>
+                    <source src="http://hls.wspull.bn.netease.com/pushstation/54053324/playlist.m3u8" type="video/mp4" />
                 </video>
-                <img style={ styles.videoImage } src="http://bobo-public.nosdn.127.net/anchor_1472109586899_58602517.jpg" />
+                <img style={ styles.videoImage } src="http://imgsize.ph.126.net/?imgurl=http://bobo-public.nosdn.127.net/anchor_1472525211871_49136488.jpg_300x191x1x85.jpg" />
             </div>
         )
     }

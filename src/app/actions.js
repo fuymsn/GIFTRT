@@ -16,8 +16,13 @@ export const DRAWER_CLOSE = 'DRAWER_CLOSE';
 export const GIFT_DIALOG_OPEN = 'GIFT_DIALOG_OPEN';
 export const GIFT_DIALOG_CLOSE = 'GIFT_DIALOG_CLOSE';
 
-export const HOME_TAB_INDEX = 'HOME_TAB_INDEX';
-export const RANK_TAB_INDEX = 'RANK_TAB_INDEX';
+export const SWITCH_HOME_TAB_INDEX = 'SWITCH_HOME_TAB_INDEX';
+export const UPDATE_HOME_VIDEO_LISTS = 'UPDATE_HOME_VIDEO_LISTS';
+
+export const SWITCH_RANK_TAB_INDEX = 'SWITCH_RANK_TAB_INDEX';
+export const UPDATE_RANK_ANCHOR_LISTS = 'UPDATE_RANK_ANCHOR_LISTS';
+
+export const SEARCH_VIDEO = 'SEARCH_VIDEO';
 
 //连接
 export const connect = () => {
@@ -82,17 +87,40 @@ export const closeGiftDialog = () => {
 }
 
 //home tabs index
-export const setHomeTabIndex = (index) => {
+export const setHomeTabIndex = (slideIndex) => {
     return {
-        type: HOME_TAB_INDEX,
-        slideIndex: index
+        type: SWITCH_HOME_TAB_INDEX,
+        slideIndex
+    }
+}
+
+//home video lists
+export const updateHomeVideoLists = (slideIndex) => {
+    return {
+        type: UPDATE_HOME_VIDEO_LISTS,
+        slideIndex
     }
 }
 
 //rank tabs index
-export const setRankTabIndex = (index) => {
+export const setRankTabIndex = (slideIndex) => {
     return {
-        type: RANK_TAB_INDEX,
-        slideIndex: index
+        type: SWITCH_RANK_TAB_INDEX,
+        slideIndex
+    }
+}
+
+export const updateRankAnchorLists = (anchorLists) => {
+    return {
+        type: UPDATE_RANK_ANCHOR_LISTS,
+        anchorLists
+    }
+}
+
+//search
+export const searchVideos = (videos) => {
+    return {
+        type: SEARCH_VIDEO,
+        videos
     }
 }

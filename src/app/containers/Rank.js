@@ -9,6 +9,8 @@ import SwipeableViews from 'react-swipeable-views';
 import VAppBar from '../components/VAppBar';
 import RankList from '../components/RankList';
 
+import rankAnchorList from '../data/rankAnchorList';
+
 //actions
 import * as actions from '../actions';
 //样式
@@ -25,13 +27,14 @@ const style = {
     }
 };
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
-        slideIndex: state.rankSlideIndex.slideIndex
+        slideIndex: state.rank.slideIndex,
+        anchorLists: state.rank.anchorLists
     }
 }
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
     return {
         actions: bindActionCreators(actions, dispatch)
     }
@@ -44,9 +47,17 @@ class Rank extends Component {
       this.props.actions.setRankTabIndex(value);
   };
 
+  loadAnchorRankFromServer() {
+    this.props.actions.updateRankAnchorLists(rankAnchorList);
+  };
+
+  componentDidMount() {
+    this.loadAnchorRankFromServer();
+  };
+
   render() {
 
-    let { slideIndex } = this.props;
+    let { slideIndex, anchorLists } = this.props;
     
     return (
     <div style={ style.container }>
@@ -65,19 +76,11 @@ class Rank extends Component {
         onChangeIndex={ (slideIndex) =>{ this.handleChange(slideIndex) } }
         style={ style.rankList }
       >
-        <RankList />
+        <RankList anchorLists={ anchorLists.day }/>
+        <RankList anchorLists={ anchorLists.week }/>
+        <RankList anchorLists={ anchorLists.month }/>
+        <RankList anchorLists={ anchorLists.total }/>
 
-        <div style={style.slide}>
-          <h2 style={style.headline}>Tabs with slide effect</h2>
-          Swipe to see the next slide.<br />
-          排行榜2
-        </div>
-        <div style={style.slide}>
-          slide n°3
-        </div>
-        <div style={style.slide}>
-          排行榜4
-        </div>
       </SwipeableViews>
     </div>
     );

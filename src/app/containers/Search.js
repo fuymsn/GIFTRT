@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Router, Route, Link, hashHistory } from 'react-router';
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -8,16 +9,22 @@ import {Toolbar, ToolbarSeparator, ToolbarGroup} from 'material-ui/Toolbar';
 
 //聊天窗口头部
 import VAppBar from '../components/VAppBar';
+import VideoList from '../components/VideoList';
+
+//data
+import tilesData from '../data/searchVideoList';
+
 //actions
-import * as ChatActions from '../actions';
+import * as actions from '../actions';
+
 //样式
 const styles = {
-  container: {
-    //textAlign: 'center',
-    //paddingTop: 200,
-    paddingLeft: "20px",
-    paddingRight: "20px"
-  },
+    container: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%'
+    },
+
     toolBarGroup: {
         width: "100%"
     },
@@ -31,24 +38,31 @@ const styles = {
     }
 };
 
-// function mapStateToProps(state) {
+const mapStateToProps = (state) => {
+  return {
+    lists: state.searchVideos.videos
+  }
+}
 
-// }
-
-// function mapDispatchToProps(dispatch) {
-
-// }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  }
+}
 
 //主题
 class Search extends Component {
   
   handleSearch(e){
-    
+    this.props.actions.searchVideos(tilesData);
   }
 
   render() {
+
+    let { lists } = this.props;
+
     return (
-    <div>
+    <div style={ styles.container } >
       <VAppBar title="搜索" />
       <Toolbar style={styles.toolBar}>
         <ToolbarGroup style={styles.toolBarGroup}>
@@ -58,13 +72,12 @@ class Search extends Component {
         </ToolbarGroup>
       </Toolbar>
 
-      <div style={ styles.container}>
+      <VideoList videoLists={ lists } />
 
-      </div>
     </div>
     );
   }
 
 }
 
-export default Search;
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

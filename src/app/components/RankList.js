@@ -9,78 +9,49 @@ import {yellow500, grey300, brown300, transparent} from 'material-ui/styles/colo
 
 class RankList extends Component {
 
+    /**
+     * 设置排行榜图标
+     */
+    setAnchorRankIcon(index) {
+        switch(index) {
+            case 0:
+                return <ActionGrade color={ yellow500 } />;
+            case 1:
+                return <ActionGrade color={ grey300 } />;
+            case 2:
+                return <ActionGrade color={ brown300 } />;
+            default:
+                return;
+        }
+    }
+
+    /**
+     * 设置排行榜布局
+     */
+    setAnchorRankLayout(index) {
+        return index > 2 ? true : false;
+    }
+
     render() {
+
+        let { anchorLists } = this.props;
+
         return (
             <List className='padding0'>
-                <ListItem
-                    primaryText="水水惹人爱"
-                    secondaryText="粉丝：1243214"
-                    leftIcon={<ActionGrade color={yellow500} />}
-                    rightAvatar={<Avatar src="images/z1.jpg" />}
-                />
-                <Divider />
-                <ListItem
-                    primaryText="带刺的玫瑰"
-                    secondaryText="粉丝：343214"
-                    leftIcon={<ActionGrade color={grey300} />}
-                    rightAvatar={<Avatar src="images/z2.jpg" />}
-                />
-                <Divider />
-                <ListItem
-                    primaryText="郁金香"
-                    secondaryText="粉丝：78324"
-                    leftIcon={<ActionGrade color={brown300} />}
-                    rightAvatar={<Avatar src="images/z3.jpg" />}
-                />
-                <Divider />
-                <ListItem
-                    primaryText="天下第一美人"
-                    secondaryText="粉丝：78324"
-                    insetChildren={true}
-                    rightAvatar={<Avatar src="images/z4.jpg" />}
-                />
-                <Divider />
-                <ListItem
-                    primaryText="天下第一美人"
-                    secondaryText="粉丝：78324"
-                    insetChildren={true}
-                    rightAvatar={<Avatar src="images/z5.jpg" />}
-                />
-                <Divider />
-                <ListItem
-                    primaryText="天下第一美人"
-                    secondaryText="粉丝：78324"
-                    insetChildren={true}
-                    rightAvatar={<Avatar src="images/z6.jpg" />}
-                />
-                <Divider />
-                <ListItem
-                    primaryText="天下第一美人"
-                    secondaryText="粉丝：78324"
-                    insetChildren={true}
-                    rightAvatar={<Avatar src="images/z7.jpg" />}
-                />
-                <Divider />
-                <ListItem
-                    primaryText="天下第一美人"
-                    secondaryText="粉丝：78324"
-                    insetChildren={true}
-                    rightAvatar={<Avatar src="images/z8.jpg" />}
-                />
-                <Divider />
-                <ListItem
-                    primaryText="天下第一美人"
-                    secondaryText="粉丝：78324"
-                    insetChildren={true}
-                    rightAvatar={<Avatar src="images/z9.jpg" />}
-                />
-                <Divider />
-                <ListItem
-                    primaryText="天下第一美人"
-                    secondaryText="粉丝：78324"
-                    insetChildren={true}
-                    rightAvatar={<Avatar src="images/z10.jpg" />}
-                />
+
+                {anchorLists.map(( anchor, index ) => (
+                    <div key={index} >
+                        <ListItem
+                            primaryText={ anchor.name }
+                            secondaryText={ anchor.info }
+                            leftIcon={ this.setAnchorRankIcon(index) }
+                            rightAvatar={<Avatar src={ anchor.avatar } />}
+                            insetChildren={ this.setAnchorRankLayout(index) }
+                        />
+                        <Divider />
+                    </div>
+                ))}
+
             </List>
         );
     }

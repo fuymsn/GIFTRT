@@ -10,6 +10,9 @@ import SwipeableViews from 'react-swipeable-views';
 import VAppBar from '../components/VAppBar';
 import VideoList from '../components/VideoList';
 
+//data
+import tilesData from '../data/homeVideoList';
+
 //actions
 import * as actions from '../actions';
 //样式
@@ -19,11 +22,10 @@ const style = {
     display: 'flex',
     flexDirection: 'column'
   },
-  
   slide: {
     overflowX: 'hidden'
   },
-
+  
   videoList: {
     flex: 1,
     display: 'flex',
@@ -31,13 +33,14 @@ const style = {
   }
 };
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
-        slideIndex: state.homeSlideIndex.slideIndex
+        slideIndex: state.home.slideIndex,
+        videoLists: state.home.videoLists
     }
 }
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
     return {
         actions: bindActionCreators(actions, dispatch)
     }
@@ -47,8 +50,16 @@ function mapDispatchToProps(dispatch) {
 class Home extends Component {
 
   handleChange(value) {
-      this.props.actions.setHomeTabIndex(value);
+    this.props.actions.setHomeTabIndex(value);
   };
+
+  loadVideoListFromServer() {
+    this.props.actions.updateHomeVideoLists(tilesData);
+  }
+
+  componentDidMount(){
+    this.loadVideoListFromServer();
+  }
 
   render() {
 
@@ -73,19 +84,21 @@ class Home extends Component {
           style={ style.videoList }
         >
           <div style={style.slide}>
-            <VideoList />
+            <VideoList videoLists={ tilesData.all }/>
           </div>
           <div style={style.slide}>
-            slide n°2
+            <h2>小编暂时还没有推荐哟！</h2>
+            <p>观看其它主播吧。</p>
           </div>
           <div style={style.slide}>
-            slide n°3
+            <VideoList videoLists={ tilesData.vip }/>
           </div>
           <div style={style.slide}>
-            一对一
+            <h2>按时还没有一对一房间哟！</h2>
+            <p>观看其它主播吧。</p>
           </div>
           <div style={style.slide}>
-            我的关注
+            <VideoList videoLists={ tilesData.fav }/>
           </div>
         </SwipeableViews>
       </div>

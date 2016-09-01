@@ -16,8 +16,18 @@ import {
     DRAWER_CLOSE,
     GIFT_DIALOG_OPEN,
     GIFT_DIALOG_CLOSE,
-    HOME_TAB_INDEX,
-    RANK_TAB_INDEX
+
+    //home
+    SWITCH_HOME_TAB_INDEX,
+    UPDATE_HOME_VIDEO_LISTS,
+
+    //rank
+    SWITCH_RANK_TAB_INDEX,
+    UPDATE_RANK_ANCHOR_LISTS,
+
+    //search
+    SEARCH_VIDEO
+
 } from './actions';
 
 import Message from './utils/Message';
@@ -112,29 +122,66 @@ const giftDialogState = (state = { open: false }, action) => {
 }
 
 
-//slide index 初始化
-const initialSlideIndex = {
-    slideIndex: 0
-}
-
 /**
  * home页面 slide index
  * state: 默认数据
  * action: 当前传入动作的action数据
  **/
-const homeSlideIndex = (state = initialSlideIndex, action) => {
+const initialHome = {
+    slideIndex: 0,
+    videoLists: {}
+}
+
+const home = (state = initialHome, action) => {
     switch (action.type) {
-        case HOME_TAB_INDEX:
-            return action;
+        case SWITCH_HOME_TAB_INDEX:
+            return Object.assign({}, state, {
+                slideIndex: action.slideIndex
+            });
+        
+        case UPDATE_HOME_VIDEO_LISTS:
+            return Object.assign({}, state, {
+                videoLists: action.videoLists
+            });
+
         default: 
             return state;
     }
 }
-//rank页面 slide index
-const rankSlideIndex = (state = initialSlideIndex, action) => {
+
+/**
+ * rank页面 slide index
+ **/
+const initialRank = {
+    slideIndex: 0,
+    anchorLists: {
+        day: [],
+        week: [],
+        month: [],
+        total: []
+    }
+}
+
+const rank = (state = initialRank, action) => {
     switch (action.type) {
-        case RANK_TAB_INDEX:
-            return action
+        case SWITCH_RANK_TAB_INDEX:
+            return Object.assign({}, state, {
+                slideIndex: action.slideIndex
+            });
+
+        case UPDATE_RANK_ANCHOR_LISTS:
+            return Object.assign({}, state, {
+                anchorLists: action.anchorLists
+            });
+        default:
+            return state;
+    }
+}
+
+const searchVideos = (state={ videos: [] }, action) => {
+    switch (action.type) {
+        case SEARCH_VIDEO:
+            return action;
         default:
             return state;
     }
@@ -145,8 +192,9 @@ const reducers = combineReducers({
     lastAction,
     drawerState,
     giftDialogState,
-    homeSlideIndex,
-    rankSlideIndex
+    home,
+    rank,
+    searchVideos
 });
 
 /**

@@ -22,8 +22,8 @@ const styles = {
 
 class VideoList extends Component {
 
-    handleVideoTap() {
-        location.href = '#/';
+    handleVideoTap(id) {
+        location.href = '#/video/' + id;
     }
 
     loadVideoListFromServer() {
@@ -51,7 +51,7 @@ class VideoList extends Component {
                             key={tile.img}
                             title={tile.title}
                             subtitle={<span>by <b>{tile.author}</b></span>}
-                            onTouchTap={ (e) => { this.handleVideoTap(e) }}
+                            onTouchTap={ () => { this.handleVideoTap(tile.id) }}
                             actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
                             >
                             <img src={tile.img} />

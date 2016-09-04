@@ -36,7 +36,7 @@ class VideoPlayer extends Component{
                 <video id="live" controls style={ styles.videoPlayerInner }>
                     <source src="http://hls.wspull.bn.netease.com/pushstation/54053324/playlist.m3u8" type="video/mp4" />
                 </video>
-                <img style={ styles.videoImage } src="http://imgsize.ph.126.net/?imgurl=http://bobo-public.nosdn.127.net/anchor_1472525211871_49136488.jpg_300x191x1x85.jpg" />
+                <img style={ styles.videoImage } src="images/z1.jpg" />
             </div>
         )
     }

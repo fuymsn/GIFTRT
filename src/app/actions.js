@@ -24,6 +24,8 @@ export const UPDATE_RANK_ANCHOR_LISTS = 'UPDATE_RANK_ANCHOR_LISTS';
 
 export const SEARCH_VIDEO = 'SEARCH_VIDEO';
 
+export const UPDATE_ACTIVITY_LISTS = 'UPDATE_ACTIVITY_LISTS';
+
 //连接
 export const connect = () => {
     return {
@@ -122,5 +124,12 @@ export const searchVideos = (videos) => {
     return {
         type: SEARCH_VIDEO,
         videos
+    }
+}
+
+export const updateActivityLists = (activityList) => {
+    return {
+        type: UPDATE_ACTIVITY_LISTS,
+        activityList
     }
 }

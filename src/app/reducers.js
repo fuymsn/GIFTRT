@@ -26,7 +26,10 @@ import {
     UPDATE_RANK_ANCHOR_LISTS,
 
     //search
-    SEARCH_VIDEO
+    SEARCH_VIDEO,
+
+    //activity
+    UPDATE_ACTIVITY_LISTS
 
 } from './actions';
 
@@ -178,11 +181,21 @@ const rank = (state = initialRank, action) => {
     }
 }
 
-const searchVideos = (state={ videos: [] }, action) => {
+const searchVideos = (state = { videos: [] }, action) => {
     switch (action.type) {
         case SEARCH_VIDEO:
             return action;
         default:
+            return state;
+    }
+}
+
+//activity
+const activity = (state = { activityList: [] }, action) => {
+    switch (action.type){
+        case UPDATE_ACTIVITY_LISTS:
+            return action;
+        default: 
             return state;
     }
 }
@@ -194,6 +207,7 @@ const reducers = combineReducers({
     giftDialogState,
     home,
     rank,
+    activity,
     searchVideos
 });
 

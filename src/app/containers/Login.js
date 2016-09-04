@@ -50,30 +50,34 @@ class Login extends Component {
   }
 
   render() {
+
     return (
-    <div>
-      <VAppBar title="登录" />
-      <div style={ styles.container}>
-        <TextField
-            //hintText="Hint Text"
-            floatingLabelText="登录邮箱"
-            fullWidth={true}
-            inputStyle={ styles.input }
-        /><br />
-        <TextField
-            //hintText="Hint Text"
-            floatingLabelText="登录密码"
-            fullWidth={true}
-            inputStyle={ styles.input }
-        /><br />
-        <Checkbox
-            label="记住密码"
-            style={styles.checkbox}
-        /><br/>
-        <RaisedButton label="登 录" primary={true} fullWidth={true} onClick={ (e) => {this.handleLogin(e)} } />
+
+      <div>
+        <VAppBar title="登录" />
+        <div style={ styles.container}>
+          <TextField
+              //hintText="Hint Text"
+              floatingLabelText="登录邮箱"
+              fullWidth={true}
+              inputStyle={ styles.input }
+          /><br />
+          <TextField
+              //hintText="Hint Text"
+              floatingLabelText="登录密码"
+              fullWidth={true}
+              inputStyle={ styles.input }
+          /><br />
+          <Checkbox
+              label="记住密码"
+              style={styles.checkbox}
+          /><br/>
+          <RaisedButton label="登 录" primary={true} fullWidth={true} onClick={ (e) => {this.handleLogin(e)} } />
+        </div>
       </div>
-    </div>
+
     );
+    
   }
 
 }

@@ -56,6 +56,11 @@ class VAppBar extends Component {
         location.href = "#/login";
     }
 
+    handleActivity(e) {
+        this.handleClose(e);
+        location.href = "#/activity";
+    }
+
     handleToggle(e) {
         this.props.actions.drawerToggle();
     }
@@ -107,6 +112,7 @@ class VAppBar extends Component {
                     >
                     <MenuItem onTouchTap={ (e) => this.handleHome(e) }>大厅</MenuItem>
                     <MenuItem onTouchTap={ (e) => this.handleRank(e) }>排行榜</MenuItem>
+                    <MenuItem onTouchTap={ (e) => this.handleActivity(e) }>活动</MenuItem>
                     <MenuItem onTouchTap={ (e) => this.handleUser(e) }>个人中心</MenuItem>
                     <MenuItem onTouchTap={ (e) => this.handleLogout(e) }>退出登录</MenuItem>
                 </Drawer>

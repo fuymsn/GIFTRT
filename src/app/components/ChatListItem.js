@@ -6,12 +6,12 @@ import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 
 import {
-blue300,
-indigo900,
-orange200,
-deepOrange300,
-pink400,
-purple500,
+    blue300,
+    indigo900,
+    orange200,
+    deepOrange300,
+    pink400,
+    purple500,
 } from 'material-ui/styles/colors';
 
 const style = {
@@ -44,7 +44,7 @@ const style = {
  * Examples of `Avatar` using an image, [Font Icon](/#/components/font-icon), [SVG Icon](/#/components/svg-icon)
  * and "Letter" (string), with and without custom colors at the default size (`40dp`) and an alternate size (`30dp`).
  */
-const ChatListItem = ({ text, id, type }) => {
+const ChatListItem = ({ text, id, isSelf, type }) => {
 
     let avatar = (
         <Avatar
@@ -57,12 +57,25 @@ const ChatListItem = ({ text, id, type }) => {
         </Avatar>
     );
 
+    let message;
     let attrs;
+
+    if(type == 0){
+        message = (
+            <p style={isSelf ? style.secondaryTextRight : style.secondaryTextLeft}>{text.message}</p>
+        )
+    }else {
+        message = (
+            <p style={isSelf ? style.secondaryTextRight : style.secondaryTextLeft}>礼物：{text.giftId}</p>
+        )
+    }
+
+    
     //0 自己
-    if(type){
-        attrs = { leftAvatar: avatar }
-    }else{
+    if(isSelf){
         attrs = { rightAvatar: avatar }
+    }else {
+        attrs = { leftAvatar: avatar }
     }
 
     return (
@@ -70,9 +83,7 @@ const ChatListItem = ({ text, id, type }) => {
             disabled={true}
             style={ style.listItem }
             { ...attrs }
-            secondaryText={
-                <p style={type ? style.secondaryTextLeft: style.secondaryTextRight}>{text.message}</p>
-            }
+            secondaryText={ message }
             data-chatid={id}
         >
         </ListItem>

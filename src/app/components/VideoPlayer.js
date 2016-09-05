@@ -31,7 +31,6 @@ class VideoPlayer extends Component{
     
     render() {
         return (
-            
             <div style={ styles.videoPlayer }>
                 <video id="live" controls style={ styles.videoPlayerInner }>
                     <source src="http://hls.wspull.bn.netease.com/pushstation/54053324/playlist.m3u8" type="video/mp4" />

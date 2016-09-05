@@ -14,6 +14,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import GiftList from './GiftList';
+import GiftLists from '../data/giftList';
 
 import * as ChatActions from '../actions';
 
@@ -31,6 +32,14 @@ const style = {
     sendBotton: {
       marginRight: "0px",
       //float: "right"
+    },
+
+    dialogTitleStyle: {
+      padding: 15
+    },
+
+    dialogBodyStyle: {
+      padding: '0 15px'
     }
 }
 
@@ -38,7 +47,7 @@ const mapStateToProps = (state) => {
   return {
     messages: state.messages,
     isConnect: state.messages.status,
-    giftDialogState: state.gift.dialogState,
+    giftDialogState: state.gift.dialogIsOpen,
     giftList: state.gift.giftList
   }
 }
@@ -59,6 +68,14 @@ class ChatToolBar extends Component {
 
   handleDialogClose() {
     this.props.actions.closeGiftDialog();
+  }
+
+  loadGiftListFromServer() {
+    this.props.actions.updateGiftList(GiftLists);
+  }
+
+  componentDidMount() {
+    this.loadGiftListFromServer();
   }
 
   handlePost(e) {
@@ -86,7 +103,7 @@ class ChatToolBar extends Component {
 
     const actions = [
       <FlatButton
-        label="取消"
+        label="关闭礼物盒子"
         primary={true}
         onTouchTap={ (e) => { this.handleDialogClose(e) } }
       />
@@ -106,8 +123,10 @@ class ChatToolBar extends Component {
         </Toolbar>
         <Dialog
           title="礼物"
+          titleStyle={ style.dialogTitleStyle }
+          bodyStyle={ style.dialogBodyStyle }
           actions={actions}
-          modal={false}
+          modal={ false }
           open={ giftDialogState }
           onRequestClose={ (e) => { this.handleDialogClose(e); } }
           autoScrollBodyContent={true}

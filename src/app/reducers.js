@@ -10,6 +10,7 @@ import { combineReducers } from 'redux';
 import {
     RECEIVE_MESSAGE,
     POST_MESSAGE,
+    SEND_GIFT,
     CONNECT,
     DISCONNECT,
     DRAWER_TOGGLE,
@@ -37,6 +38,7 @@ import {
 } from './actions';
 
 import Message from './utils/Message';
+import Gift from './utils/Gift';
 
 const initialMessage = {
     conversation: [],
@@ -44,6 +46,7 @@ const initialMessage = {
 }
 
 //消息列表
+//type: 0 文字信息，1 礼物
 const messages = (state = initialMessage, action) => {
     switch (action.type) {
         case POST_MESSAGE:
@@ -53,7 +56,8 @@ const messages = (state = initialMessage, action) => {
                     {
                         text: new Message(action.text),
                         id: action.id,
-                        type: 0 //别人
+                        isSelf: 1, //自己
+                        type: 0
                     }
                 ]
             });
@@ -65,7 +69,8 @@ const messages = (state = initialMessage, action) => {
                     {
                         text: new Message(action.message),
                         id: action.id,
-                        type: 1 //别人
+                        isSelf: 0, //别人
+                        type: 0
                     }
                 ]
             });
@@ -75,6 +80,19 @@ const messages = (state = initialMessage, action) => {
                 //     type: 1 //别人
                 // }
         
+        case SEND_GIFT:
+            return Object.assign({}, state, {
+                conversation: [
+                    ...state.conversation,
+                    {
+                        text: new Gift(action.giftId),
+                        id: action.id,
+                        isSelf: 1,
+                        type: 1
+                    }
+                ]
+            });
+
         case CONNECT:
             return {
                 conversation: [],
@@ -116,7 +134,7 @@ const drawerState = (state = { open: false }, action) => {
 }
 
 const initialGift = {
-    dialogState: false,
+    dialogIsOpen: false,
     giftList: []
 }
 
@@ -125,7 +143,7 @@ const gift = (state = initialGift, action) => {
         case GIFT_DIALOG_OPEN:
         case GIFT_DIALOG_CLOSE:
             return Object.assign({}, state, {
-                dialogState: action.dialogState
+                dialogIsOpen: action.dialogIsOpen
             });
         
         case UPDATE_GIFT_LIST:

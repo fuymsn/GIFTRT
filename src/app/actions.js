@@ -8,6 +8,7 @@ let nextChatId = 0;
 //websocket 消息收发
 export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
 export const POST_MESSAGE = 'POST_MESSAGE';
+export const SEND_GIFT = 'SEND_GIFT';
 export const CONNECT = 'CONNECT';
 export const DISCONNECT = 'DISCONNECT';
 
@@ -58,6 +59,15 @@ export const postMessage = (text) => {
     }
 }
 
+//送礼 id为礼物id
+export const sendGift = (giftId) => {
+    return {
+        type: SEND_GIFT,
+        id: nextChatId++,
+        giftId
+    }
+}
+
 //drawer toggle
 export const drawerToggle = (isOpen) => {
     return {
@@ -79,14 +89,14 @@ export const drawerClose = () => {
 export const openGiftDialog = () => {
     return {
         type: GIFT_DIALOG_OPEN,
-        open: true
+        dialogIsOpen: true
     }
 }
 //gift dialog close
 export const closeGiftDialog = () => {
     return {
         type: GIFT_DIALOG_CLOSE,
-        open: false
+        dialogIsOpen: false
     }
 }
 //gift update list

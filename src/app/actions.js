@@ -13,8 +13,10 @@ export const DISCONNECT = 'DISCONNECT';
 
 export const DRAWER_TOGGLE = 'DRAWER_TOGGLE';
 export const DRAWER_CLOSE = 'DRAWER_CLOSE';
+
 export const GIFT_DIALOG_OPEN = 'GIFT_DIALOG_OPEN';
 export const GIFT_DIALOG_CLOSE = 'GIFT_DIALOG_CLOSE';
+export const UPDATE_GIFT_LIST = 'UPDATE_GIFT_LIST';
 
 export const SWITCH_HOME_TAB_INDEX = 'SWITCH_HOME_TAB_INDEX';
 export const UPDATE_HOME_VIDEO_LISTS = 'UPDATE_HOME_VIDEO_LISTS';
@@ -87,6 +89,14 @@ export const closeGiftDialog = () => {
         open: false
     }
 }
+//gift update list
+export const updateGiftList = (giftList) => {
+    return {
+        type: UPDATE_GIFT_LIST,
+        giftList
+    }
+}
+
 
 //home tabs index
 export const setHomeTabIndex = (slideIndex) => {

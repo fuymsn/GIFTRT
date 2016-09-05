@@ -14,9 +14,12 @@ import {
     DISCONNECT,
     DRAWER_TOGGLE,
     DRAWER_CLOSE,
+
+    //gift
     GIFT_DIALOG_OPEN,
     GIFT_DIALOG_CLOSE,
-
+    UPDATE_GIFT_LIST,
+    
     //home
     SWITCH_HOME_TAB_INDEX,
     UPDATE_HOME_VIDEO_LISTS,
@@ -112,13 +115,23 @@ const drawerState = (state = { open: false }, action) => {
     }
 }
 
-const giftDialogState = (state = { open: false }, action) => {
+const initialGift = {
+    dialogState: false,
+    giftList: []
+}
+
+const gift = (state = initialGift, action) => {
     switch (action.type){
         case GIFT_DIALOG_OPEN:
         case GIFT_DIALOG_CLOSE:
-            return {
-                open: action.open
-            }
+            return Object.assign({}, state, {
+                dialogState: action.dialogState
+            });
+        
+        case UPDATE_GIFT_LIST:
+            return Object.assign({}, state, {
+                giftList: action.giftList
+            });
         default:
             return state;
     }
@@ -146,7 +159,7 @@ const home = (state = initialHome, action) => {
             return Object.assign({}, state, {
                 videoLists: action.videoLists
             });
-
+        
         default: 
             return state;
     }
@@ -204,7 +217,7 @@ const reducers = combineReducers({
     messages,
     lastAction,
     drawerState,
-    giftDialogState,
+    gift,
     home,
     rank,
     activity,

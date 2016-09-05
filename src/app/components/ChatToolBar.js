@@ -12,6 +12,9 @@ import {Toolbar, ToolbarSeparator, ToolbarGroup} from 'material-ui/Toolbar';
 //redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
+import GiftList from './GiftList';
+
 import * as ChatActions from '../actions';
 
 const style = {
@@ -35,7 +38,8 @@ const mapStateToProps = (state) => {
   return {
     messages: state.messages,
     isConnect: state.messages.status,
-    dialogState: state.giftDialogState.open
+    giftDialogState: state.gift.dialogState,
+    giftList: state.gift.giftList
   }
 }
 
@@ -78,7 +82,7 @@ class ChatToolBar extends Component {
 
   render() {
 
-    const { dialogState } = this.props;
+    const { giftDialogState, giftList } = this.props;
 
     const actions = [
       <FlatButton
@@ -104,10 +108,11 @@ class ChatToolBar extends Component {
           title="礼物"
           actions={actions}
           modal={false}
-          open={dialogState}
+          open={ giftDialogState }
           onRequestClose={ (e) => { this.handleDialogClose(e); } }
           autoScrollBodyContent={true}
         >
+          <GiftList giftList={ giftList }/>
         </Dialog>
       </div>
     );

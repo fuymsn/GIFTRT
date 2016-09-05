@@ -86,7 +86,15 @@ class Activity extends Component{
 						    >
 						      <img src={ item.image} />
 						    </CardMedia>
-						    <CardTitle title={ item.title } subtitle={ item.subtitle } style={ style.cardTitleContainer } titleStyle={ style.cardTitle }/>
+						    <CardTitle 
+
+								title={ item.title } 
+								titleStyle={ style.cardTitle }
+
+								subtitle={ item.subtitle }
+								style={ style.cardTitleContainer }
+								
+							/>
 						</Card>
 					))}
 

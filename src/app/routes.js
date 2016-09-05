@@ -9,6 +9,7 @@ import Home from './containers/Home';
 import Rank from './containers/Rank';
 import User from './containers/User';
 import Activity from './containers/Activity';
+import ActivityDetail from './containers/ActivityDetail';
 import UserInfoEdit from './containers/UserInfoEdit';
 
 export default (
@@ -20,6 +21,7 @@ export default (
         <Route path="/search" component={ Search } />
         <Route path="/rank" component={ Rank } />
         <Route path="/activity" component={ Activity } />
+        <Route path="/activity/:id" component={ ActivityDetail } />
         <Route path="/user" component={ User }>
             <Route path="edit" component={ UserInfoEdit } />
         </Route>

@@ -22,6 +22,7 @@ const style = {
     display: 'flex',
     flexDirection: 'column'
   },
+
   slide: {
     overflowX: 'hidden'
   },
@@ -94,7 +95,7 @@ class Home extends Component {
             <VideoList videoLists={ tilesData.vip }/>
           </div>
           <div style={style.slide}>
-            <h2>按时还没有一对一房间哟！</h2>
+            <h2>一对一房间暂时还没有开放哟！</h2>
             <p>观看其它主播吧。</p>
           </div>
           <div style={style.slide}>

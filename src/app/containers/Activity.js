@@ -33,6 +33,9 @@ const style = {
 		fontSize: '20px'
 	},
 
+	cardMedia: {
+		overflow: 'hidden',
+	},
 	cardTitleContainer: {
 		padding: '5px 15px'
 	}
@@ -60,6 +63,10 @@ class Activity extends Component{
 		this.loadActivityListFromServer();
 	}
 
+	handleToDetail(id) {
+		location.href = '#/activity/' + id
+	}
+
 	render(){
 
 		let { activityList } = this.props;
@@ -69,8 +76,13 @@ class Activity extends Component{
 				<VAppBar title='活动' />
 				<div style={ style.activityLists }>
 					{activityList.map((item, index) => (
-						<Card style={ style.cardItem } key={ item.image } >
+						<Card 
+							style={ style.cardItem }
+							key={ item.image }
+							onTouchTap={ () => this.handleToDetail(item.id) }
+						>
 						    <CardMedia
+								style={ style.cardMedia }
 						    >
 						      <img src={ item.image} />
 						    </CardMedia>

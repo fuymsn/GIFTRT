@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import VAppBar from '../components/VAppBar';
+import BackAppBar from '../components/BackAppBar';
 
 import activityList from '../data/activityList';
 
@@ -47,7 +47,7 @@ class ActivityDetail extends Component{
 
 		return (
 			<div style={ style.container }>
-				<VAppBar title='女神降临' />
+				<BackAppBar title='女神降临' />
 				<div>
 				    <img src='../images/activity/a2.png' style={ style.ActivityDetail }/>
 				</div>

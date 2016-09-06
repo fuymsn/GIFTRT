@@ -16,17 +16,14 @@ export default (
     <Route path="/" component={ Main }>
         <IndexRoute component={ Login } />
         <Redirect from="/" to="/login" />
-        <Route path="/home" component={ Home } />
-        <Route path="/login" component={ Login } />
-        <Route path="/search" component={ Search } />
-        <Route path="/rank" component={ Rank } />
-        <Route path="/activity" component={ Activity } />
-        <Route path="/activity/:id" component={ ActivityDetail } />
-        <Route path="/user" component={ User }>
-            <Route path="edit" component={ UserInfoEdit } />
-        </Route>
-
-        <Route path="/video/:id" component={ Video } />
-        
+        <Route path="home" component={ Home } />
+        <Route path="login" component={ Login } />
+        <Route path="search" component={ Search } />
+        <Route path="rank" component={ Rank } />
+        <Route path="activity" component={ Activity } />
+        <Route path="activity/:id" component={ ActivityDetail } />
+        <Route path="user" component={ User }></Route>
+        <Route path="user/edit" component={ UserInfoEdit } />
+        <Route path="video/:id" component={ Video } />
     </Route>
 )

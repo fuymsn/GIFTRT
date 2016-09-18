@@ -117,10 +117,10 @@ export const setHomeTabIndex = (slideIndex) => {
 }
 
 //home video lists
-export const updateHomeVideoLists = (slideIndex) => {
+export const updateHomeVideoLists = (videoLists) => {
     return {
         type: UPDATE_HOME_VIDEO_LISTS,
-        slideIndex
+        videoLists
     }
 }
 

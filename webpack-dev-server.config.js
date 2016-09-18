@@ -47,5 +47,5 @@ const config = {
   },
 };
 
-console.log(buildPath);
+console.log('buildPath:' + buildPath);
 module.exports = config;

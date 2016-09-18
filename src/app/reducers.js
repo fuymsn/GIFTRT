@@ -163,7 +163,9 @@ const gift = (state = initialGift, action) => {
  **/
 const initialHome = {
     slideIndex: 0,
-    videoLists: {}
+    videoLists: {
+        rec: []
+    }
 }
 
 const home = (state = initialHome, action) => {
@@ -231,7 +233,16 @@ const activity = (state = { activityList: [] }, action) => {
     }
 }
 
+const initInstances = {
+    PIC_PATH: 'http://p1.1room1.co/public'
+}
+
+const instances = (state = initInstances, action) => {
+    return state;
+}
+
 const reducers = combineReducers({
+    instances, //常量
     messages,
     lastAction,
     drawerState,

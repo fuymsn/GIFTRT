@@ -12,9 +12,6 @@ import $ from 'jquery';
 import VAppBar from '../components/VAppBar';
 import VideoList from '../components/VideoList';
 
-//data
-import tilesData from '../data/homeVideoList';
-
 //actions
 import * as actions from '../actions';
 //样式
@@ -57,16 +54,26 @@ class Home extends Component {
   };
 
   loadVideoListFromServer() {
-    $.ajax({
-      url: 'http://www.vf.com/videolist.json',
-      dataType: 'jsonp',
-      jsonp: 'callback',
-      jsonpCallback: 'cb',
-      succuss: function(data){
 
+    var that = this;
+
+    $.ajax({
+      url: '/videolist.json',
+      dataType: 'json',
+      type: 'GET',
+      data: {
+        '_': (new Date()).getTime()
+      },
+      success: function(data){
+        var indexData = {};
+        indexData.rec = data.rec;
+        that.props.actions.updateHomeVideoLists(indexData);
+      },
+      error: function(ret){
+        console.log(ret.responseText);
       }
     });
-    this.props.actions.updateHomeVideoLists(tilesData);
+    
   }
 
   componentDidMount(){
@@ -75,7 +82,7 @@ class Home extends Component {
 
   render() {
 
-    let { slideIndex } = this.props;
+    let { slideIndex, videoLists } = this.props;
     
     return (
       <div style={ style.container }>
@@ -84,10 +91,10 @@ class Home extends Component {
             onChange = { (slideIndex) =>{ this.handleChange(slideIndex) } }
             value = { slideIndex }
         >
-            <Tab label="大厅" value={0} />
-            <Tab label="小编推荐" value={1} />
-            <Tab label="才艺主播" value={2} />
-            <Tab label="关注" value={3} />
+            <Tab label="直播大厅" value={0} />
+            <Tab label="美女主播" value={1} />
+            <Tab label="全部主播" value={2} />
+            <Tab label="我的关注" value={3} />
         </Tabs>
         <SwipeableViews
           index={ slideIndex }
@@ -95,17 +102,17 @@ class Home extends Component {
           style={ style.videoList }
         >
           <div style={style.slide}>
-            <VideoList videoLists={ tilesData.all }/>
+            <VideoList videoLists={ videoLists.rec }/>
           </div>
           <div style={style.slide}>
             <h2>小编暂时还没有推荐哟！</h2>
             <p>观看其它主播吧。</p>
           </div>
           <div style={style.slide}>
-            <VideoList videoLists={ tilesData.vip }/>
+            <VideoList videoLists={ videoLists.rec }/>
           </div>
           <div style={style.slide}>
-            <VideoList videoLists={ tilesData.fav }/>
+            <VideoList videoLists={ videoLists.rec }/>
           </div>
         </SwipeableViews>
       </div>

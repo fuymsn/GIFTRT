@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
@@ -13,27 +15,29 @@ const styles = {
     justifyContent: 'space-around',
   },
   gridList: {
-    width: 480,
+    width: 500,
     //height: 500,
     overflowY: 'auto',
     marginBottom: 5,
   }
 };
 
+const mapStateToProps = (state) => {
+    return {
+        instances: state.instances
+    }
+}
+
 class VideoList extends Component {
 
     handleVideoTap(id) {
-        location.href = '#/video/' + id;
+        //location.href = '#/video/' + id;
     }
 
-    loadVideoListFromServer() {
-        // $.get("", function(){
-
-        // });
-    }
-
-    componentDidMount() {
-        this.loadVideoListFromServer();
+    //设置视频背景图片
+    getVideoImageUrl(userID, imageID) {
+        let { instances } = this.props;
+        return /\d{13}/.test(imageID) ? (instances.PIC_PATH + "/images/anchorimg/" + userID + "_" + imageID.match(/\d{13}/)[0] + ".jpg") : instances.PIC_PATH + '/images/vzhubo.jpg'
     }
 
     render() {
@@ -48,13 +52,13 @@ class VideoList extends Component {
                     >
                     {videoLists.map((tile) => (
                         <GridTile
-                            key={tile.img}
-                            title={tile.title}
-                            subtitle={<span>by <b>{tile.author}</b></span>}
+                            key={tile.uid}
+                            title={tile.username}
+                            subtitle={<span><b>{tile.live_time}</b></span>}
                             onTouchTap={ () => { this.handleVideoTap(tile.id) }}
                             actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
                             >
-                            <img src={tile.img} />
+                            <img src={ this.getVideoImageUrl(tile.uid, tile.headimg)} />
                         </GridTile>
                     ))}
                 </GridList>
@@ -64,4 +68,4 @@ class VideoList extends Component {
 
 }
 
-export default VideoList;
+export default connect(mapStateToProps, null)(VideoList);

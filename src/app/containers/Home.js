@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 
+import $ from 'jquery';
+
 //聊天窗口头部
 import VAppBar from '../components/VAppBar';
 import VideoList from '../components/VideoList';
@@ -55,6 +57,15 @@ class Home extends Component {
   };
 
   loadVideoListFromServer() {
+    $.ajax({
+      url: 'http://www.vf.com/videolist.json',
+      dataType: 'jsonp',
+      jsonp: 'callback',
+      jsonpCallback: 'cb',
+      succuss: function(data){
+
+      }
+    });
     this.props.actions.updateHomeVideoLists(tilesData);
   }
 
@@ -68,7 +79,7 @@ class Home extends Component {
     
     return (
       <div style={ style.container }>
-        <VAppBar title='大厅' />
+
         <Tabs
             onChange = { (slideIndex) =>{ this.handleChange(slideIndex) } }
             value = { slideIndex }
@@ -76,8 +87,7 @@ class Home extends Component {
             <Tab label="大厅" value={0} />
             <Tab label="小编推荐" value={1} />
             <Tab label="才艺主播" value={2} />
-            <Tab label="一对一" value={3} />
-            <Tab label="关注" value={4} />
+            <Tab label="关注" value={3} />
         </Tabs>
         <SwipeableViews
           index={ slideIndex }
@@ -93,10 +103,6 @@ class Home extends Component {
           </div>
           <div style={style.slide}>
             <VideoList videoLists={ tilesData.vip }/>
-          </div>
-          <div style={style.slide}>
-            <h2>一对一房间暂时还没有开放哟！</h2>
-            <p>观看其它主播吧。</p>
           </div>
           <div style={style.slide}>
             <VideoList videoLists={ tilesData.fav }/>

@@ -18,7 +18,7 @@ const styles = {
 //主题
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: '#0fa3ce',
+    primary1Color: '#FA0A82',
     accent1Color: deepOrange500,
   },
   fontFamily: 'Roboto, YouYuan, helvetica neue, hiragino sans gb, stheiti, microsoft yahei'

@@ -14,10 +14,10 @@ body {
   height: 100%;
 }
 
-.appBar{
+/*.appBar{
   background-image: url(images/header.jpg);
   background-size: cover;
-}
+}*/
 
 .padding0{
   padding: 0px !important;

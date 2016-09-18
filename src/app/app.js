@@ -28,7 +28,7 @@ let rootElement = document.getElementById('app');
 // Render the main app react component into the app div.
 // For more details see: https://facebook.github.io/react/docs/top-level-api.html#react.render
 render(
-    <Main store = {store} history={ hashHistory }/>,
+    <Main store={ store } history={ hashHistory }/>,
     rootElement
 );
 

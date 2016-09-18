@@ -28,7 +28,7 @@ export const UPDATE_RANK_ANCHOR_LISTS = 'UPDATE_RANK_ANCHOR_LISTS';
 export const SEARCH_VIDEO = 'SEARCH_VIDEO';
 
 export const UPDATE_ACTIVITY_LISTS = 'UPDATE_ACTIVITY_LISTS';
-
+export const UPDATE_ACTIVITY_DETAILS = 'UPDATE_ACTIVITY_DETAILS';
 //连接
 export const connect = () => {
     return {
@@ -147,9 +147,17 @@ export const searchVideos = (videos) => {
     }
 }
 
-export const updateActivityLists = (activityList) => {
+//activity
+export const updateActivityLists = (lists) => {
     return {
         type: UPDATE_ACTIVITY_LISTS,
-        activityList
+        lists
+    }
+}
+
+export const updateActivityDetails = (detailLists) => {
+    return {
+        type: UPDATE_ACTIVITY_DETAILS,
+        detailLists
     }
 }

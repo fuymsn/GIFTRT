@@ -6,8 +6,10 @@ import { connect } from 'react-redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 import VAppBar from '../components/VAppBar';
+import Common from '../utils/Common';
 
-import activityList from '../data/activityList';
+import $ from 'jquery';
+//import activityList from '../data/activityList';
 
 import * as actions from '../actions';
 
@@ -43,7 +45,7 @@ const style = {
 
 const mapStateToProps = (state) => {
 	return {
-		activityList: state.activity.activityList
+		activityList: state.activity.lists
 	}
 }
 
@@ -56,9 +58,24 @@ const mapDispatchToProps = (dispatch) => {
 class Activity extends Component{
 	
 	loadActivityListFromServer() {
-		this.props.actions.updateActivityLists(activityList);
-	}
 
+		let that = this;
+
+		$.ajax({
+			url: '/m/activitylist',
+			dataType: 'json',
+			type: 'GET',
+			success: function(ret){
+				that.props.actions.updateActivityLists(ret.data);
+			},
+			error: function(ret){
+				console.log(ret.responseText);
+			}
+		});
+
+		
+	}
+	
 	componentDidMount() {
 		this.loadActivityListFromServer();
 	}
@@ -70,28 +87,29 @@ class Activity extends Component{
 	render(){
 
 		let { activityList } = this.props;
+		let common = new Common();
 
 		return (
 			<div style={ style.container }>
-				<VAppBar title='活动' />
+				{/*<VAppBar title='活动' />*/}
 				<div style={ style.activityLists }>
 					{activityList.map((item, index) => (
 						<Card 
 							style={ style.cardItem }
-							key={ item.image }
+							key={ item.id }
 							onTouchTap={ () => this.handleToDetail(item.id) }
 						>
 						    <CardMedia
 								style={ style.cardMedia }
 						    >
-						      <img src={ item.image} />
+						      <img src={ common.getActivityBannerImageUrl(item.url) } />
 						    </CardMedia>
 						    <CardTitle 
 
 								title={ item.title } 
 								titleStyle={ style.cardTitle }
 
-								subtitle={ item.subtitle }
+								subtitle={ item.init_time }
 								style={ style.cardTitleContainer }
 								
 							/>

@@ -3,9 +3,12 @@ import React, { Component } from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import BackAppBar from '../components/BackAppBar';
+import $ from 'jquery';
 
-import activityList from '../data/activityList';
+import BackAppBar from '../components/BackAppBar';
+import Common from '../utils/Common';
+
+//import activityList from '../data/activityList';
 
 import * as actions from '../actions';
 
@@ -17,13 +20,14 @@ const style = {
 	},
 
     ActivityDetail: {
-        width: '100%'
+        width: '100%',
+		display: 'block'
     }
 }
 
 const mapStateToProps = (state) => {
 	return {
-		activityList: state.activity.activityList
+		detailLists: state.activity.detailLists
 	}
 }
 
@@ -36,7 +40,25 @@ const mapDispatchToProps = (dispatch) => {
 class ActivityDetail extends Component{
 	
 	loadActivityListFromServer() {
-		this.props.actions.updateActivityLists(activityList);
+
+		let activityId = this.props.params.id;
+		let that = this;
+
+		$.ajax({
+			url: '/m/activitydetail/' + activityId,
+			dataType: 'json',
+			data: 'get',
+			success: function(ret){
+				console.log(ret);
+				that.props.actions.updateActivityDetails(ret);
+			},
+
+			error: function(ret){
+				console.log(ret.responseText);
+			}
+		});
+
+		
 	}
 
 	componentDidMount() {
@@ -45,14 +67,27 @@ class ActivityDetail extends Component{
 
 	render(){
 
+		let { detailLists } = this.props;
+		let common = new Common();
+		let detail = [];
+
+		if(!detailLists || !detailLists.url ){ return null; }
+
+		for (var i = 0; i < detailLists.url.length; i++) {
+			if(i == 0) { continue; }
+			detail.push(<img key={i} src={common.getActivityBannerImageUrl(detailLists.url[i])} style={ style.ActivityDetail }/>);	
+		}
+
 		return (
 			<div style={ style.container }>
-				<BackAppBar title='女神降临' />
+				{/*<BackAppBar title='女神降临' />*/}
 				<div>
-				    <img src='../images/activity/a2.png' style={ style.ActivityDetail }/>
+					{ detail }
 				</div>
 			</div>
 		);
+		
+
 	}
 }
 

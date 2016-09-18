@@ -33,7 +33,8 @@ import {
     SEARCH_VIDEO,
 
     //activity
-    UPDATE_ACTIVITY_LISTS
+    UPDATE_ACTIVITY_LISTS,
+    UPDATE_ACTIVITY_DETAILS
 
 } from './actions';
 
@@ -224,11 +225,22 @@ const searchVideos = (state = { videos: [] }, action) => {
 }
 
 //activity
-const activity = (state = { activityList: [] }, action) => {
+const initActivity = {
+    lists: [],
+    detailLists: []
+}
+
+const activity = (state = initActivity, action) => {
     switch (action.type){
         case UPDATE_ACTIVITY_LISTS:
-            return action;
-        default: 
+            return {
+                lists: action.lists    
+            }
+        case UPDATE_ACTIVITY_DETAILS:
+            return Object.assign({}, state, {
+                detailLists: action.detailLists
+            });
+        default:
             return state;
     }
 }

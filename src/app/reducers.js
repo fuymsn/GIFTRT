@@ -6,7 +6,7 @@
  * 3. 调用非纯函数，入Date.now()
  */
 
-import { combineReducers } from 'redux';
+import {combineReducers} from "redux";
 import {
     RECEIVE_MESSAGE,
     POST_MESSAGE,
@@ -20,12 +20,12 @@ import {
     GIFT_DIALOG_OPEN,
     GIFT_DIALOG_CLOSE,
     UPDATE_GIFT_LIST,
-    
+
     //home
     SWITCH_HOME_TAB_INDEX,
-    UPDATE_HOME_VIDEO_LISTS,
 
     //rank
+    CHANGE_RANK_DROPDOWN_VALUE,
     SWITCH_RANK_TAB_INDEX,
     UPDATE_RANK_ANCHOR_LISTS,
 
@@ -34,12 +34,19 @@ import {
 
     //activity
     UPDATE_ACTIVITY_LISTS,
-    UPDATE_ACTIVITY_DETAILS
+    UPDATE_ACTIVITY_DETAILS,
+    //user
+    UPDATE_USER_INFO,
 
-} from './actions';
+    //videolist
+    UPDATE_VIDEO_LISTS,
+    UPDATE_VIDEOS,
 
-import Message from './utils/Message';
-import Gift from './utils/Gift';
+    //Snackbar
+    UPDATE_SNACKBAR
+} from "./actions";
+import Message from "./utils/Message";
+import Gift from "./utils/Gift";
 
 const initialMessage = {
     conversation: [],
@@ -75,12 +82,12 @@ const messages = (state = initialMessage, action) => {
                     }
                 ]
             });
-                // {
-                //     text: action.text,
-                //     id: action.id,
-                //     type: 1 //别人
-                // }
-        
+        // {
+        //     text: action.text,
+        //     id: action.id,
+        //     type: 1 //别人
+        // }
+
         case SEND_GIFT:
             return Object.assign({}, state, {
                 conversation: [
@@ -99,7 +106,7 @@ const messages = (state = initialMessage, action) => {
                 conversation: [],
                 status: true
             }
-        
+
         case DISCONNECT:
             return {
                 conversation: [],
@@ -112,15 +119,15 @@ const messages = (state = initialMessage, action) => {
 }
 
 //最后一条消息
-const lastAction = ( state = null, action ) => {
+const lastAction = (state = null, action) => {
     return action;
 }
 
 /**
  * appbar 侧边栏
  **/
-const drawerState = (state = { open: false }, action) => {
-    switch (action.type){
+const drawerState = (state = {open: false}, action) => {
+    switch (action.type) {
         case DRAWER_TOGGLE:
             return {
                 open: !action.open
@@ -140,13 +147,13 @@ const initialGift = {
 }
 
 const gift = (state = initialGift, action) => {
-    switch (action.type){
+    switch (action.type) {
         case GIFT_DIALOG_OPEN:
         case GIFT_DIALOG_CLOSE:
             return Object.assign({}, state, {
                 dialogIsOpen: action.dialogIsOpen
             });
-        
+
         case UPDATE_GIFT_LIST:
             return Object.assign({}, state, {
                 giftList: action.giftList
@@ -164,9 +171,6 @@ const gift = (state = initialGift, action) => {
  **/
 const initialHome = {
     slideIndex: 0,
-    videoLists: {
-        rec: []
-    }
 }
 
 const home = (state = initialHome, action) => {
@@ -175,47 +179,89 @@ const home = (state = initialHome, action) => {
             return Object.assign({}, state, {
                 slideIndex: action.slideIndex
             });
-        
-        case UPDATE_HOME_VIDEO_LISTS:
-            return Object.assign({}, state, {
-                videoLists: action.videoLists
-            });
-        
-        default: 
+
+        default:
+            return state;
+    }
+};
+const initVideoLists = {
+    // lobby_rec: {},
+    // lobby_all: {},
+    // all: {},
+    // ord: {},
+    // rec: {},
+    // following: {},
+    lobby_rec: [],
+    lobby_all: [],
+    all: [],
+    ord: [],
+    rec: [],
+    following: [],
+}
+const videoLists = (state = initVideoLists, action)=> {
+    switch (action.type) {
+        case UPDATE_VIDEO_LISTS:
+            return Object.assign({}, state, action.videoLists);
+        default:
             return state;
     }
 }
 
+const initUser = {
+    userInfo: {},
+};
+const user = (state = initUser, action)=> {
+    switch (action.type) {
+        case UPDATE_USER_INFO:
+            return Object.assign({}, state.userInfo, action.userInfo);
+        default:
+            return state;
+    }
+};
+
 /**
  * rank页面 slide index
+ * params: dropDownValue: 下拉菜单值 0主播，1用户
  **/
 const initialRank = {
+    dropDownValue: 0,
     slideIndex: 0,
     anchorLists: {
-        day: [],
-        week: [],
-        month: [],
-        total: []
+        rank_rich_day: [],
+        rank_rich_week: [],
+        rank_rich_month: [],
+        rank_rich_his: [],
+        rank_exp_day: [],
+        rank_exp_week: [],
+        rank_exp_month: [],
+        rank_exp_his: [],
     }
 }
 
 const rank = (state = initialRank, action) => {
     switch (action.type) {
+
         case SWITCH_RANK_TAB_INDEX:
             return Object.assign({}, state, {
                 slideIndex: action.slideIndex
+            });
+
+        case CHANGE_RANK_DROPDOWN_VALUE:
+            return Object.assign({}, state, {
+                dropDownValue: action.dropDownValue
             });
 
         case UPDATE_RANK_ANCHOR_LISTS:
             return Object.assign({}, state, {
                 anchorLists: action.anchorLists
             });
+
         default:
             return state;
     }
 }
 
-const searchVideos = (state = { videos: [] }, action) => {
+const searchVideos = (state = {videos: []}, action) => {
     switch (action.type) {
         case SEARCH_VIDEO:
             return action;
@@ -231,11 +277,11 @@ const initActivity = {
 }
 
 const activity = (state = initActivity, action) => {
-    switch (action.type){
+    switch (action.type) {
         case UPDATE_ACTIVITY_LISTS:
             return {
-                lists: action.lists    
-            }
+                lists: action.lists
+            };
         case UPDATE_ACTIVITY_DETAILS:
             return Object.assign({}, state, {
                 detailLists: action.detailLists
@@ -246,12 +292,37 @@ const activity = (state = initActivity, action) => {
 }
 
 const initInstances = {
-    PIC_PATH: 'http://p1.1room1.co/public'
+    PIC_PATH: 'http://p1.1room1.co/public',
+    AVATAR_PATH: 'http://10.1.100.194:4869/',
+    RANK_PATH: 'http://10.1.100.102',
 }
 
 const instances = (state = initInstances, action) => {
     return state;
 }
+
+const initSnackbar = {
+    open: false,
+    action: '撤销',
+    message: '',
+    autoHideDuration: 2000,
+};
+const snackbar = (state = initSnackbar, action) => {
+    switch (action.type) {
+        case UPDATE_SNACKBAR:
+            return Object.assign({},state,action.snackbar);
+        default:
+            return state;
+    }
+}
+const videos = (state = {}, action) => {
+    switch (action.type) {
+        case UPDATE_VIDEOS:
+            return Object.assign({},state,action.videos);
+        default:
+            return state;
+    }
+};
 
 const reducers = combineReducers({
     instances, //常量
@@ -260,9 +331,13 @@ const reducers = combineReducers({
     drawerState,
     gift,
     home,
+    videoLists,
+    videos,
+    user,
     rank,
     activity,
-    searchVideos
+    searchVideos,
+    snackbar,
 });
 
 /**

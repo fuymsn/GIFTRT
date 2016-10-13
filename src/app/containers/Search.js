@@ -68,7 +68,7 @@ class Search extends Component {
         <ToolbarGroup style={styles.toolBarGroup}>
           <TextField hintText="主播名或主播ID" fullWidth={true} ref="chatInput"/>
           <ToolbarSeparator />
-          <RaisedButton label="搜索" primary={true} style={styles.sendBotton} onClick={(e)=> this.handleSearch(e)}/>
+          <RaisedButton label="搜索" primary={true} style={styles.sendBotton} onTouchTap={(e)=> this.handleSearch(e)}/>
         </ToolbarGroup>
       </Toolbar>
 

@@ -11,6 +11,7 @@ import User from './containers/User';
 import Activity from './containers/Activity';
 import ActivityDetail from './containers/ActivityDetail';
 import UserInfoEdit from './containers/UserInfoEdit';
+import Setting from './containers/Setting';
 
 export default (
     <Route path="/" component={ Main }>
@@ -25,5 +26,6 @@ export default (
         <Route path="user" component={ User }></Route>
         <Route path="user/edit" component={ UserInfoEdit } />
         <Route path="video/:id" component={ Video } />
+        <Route path="setting" component={ Setting } />
     </Route>
 )

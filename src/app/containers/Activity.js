@@ -3,9 +3,10 @@ import React, { Component } from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-
-import VAppBar from '../components/VAppBar';
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui';
+//import VAppBar from '../components/VAppBar';
+import Icon from '../components/Icon';
+import BasicAppBar from '../components/BasicAppBar';
 import Common from '../utils/Common';
 
 import $ from 'jquery';
@@ -28,7 +29,7 @@ const style = {
 	},
 
 	cardItem: {
-		margin: '15px'
+		margin: '15px 10px'
 	},
 
 	cardTitle:{
@@ -80,8 +81,18 @@ class Activity extends Component{
 		this.loadActivityListFromServer();
 	}
 
-	handleToDetail(id) {
-		location.href = '#/activity/' + id
+	handleToDetail(e, id) {
+		//阻止默认事件
+        e.preventDefault();
+		//数据重组
+        var json = JSON.stringify({
+			dir: 'activity',
+			title: '活动1',
+			url: '#/activity/' + id
+		});
+
+		//执行跳转
+        window.mobileAction.switchPage(json);
 	}
 
 	render(){
@@ -91,13 +102,13 @@ class Activity extends Component{
 
 		return (
 			<div style={ style.container }>
-				{/*<VAppBar title='活动' />*/}
+                <BasicAppBar title="活动" />
 				<div style={ style.activityLists }>
 					{activityList.map((item, index) => (
 						<Card 
 							style={ style.cardItem }
 							key={ item.id }
-							onTouchTap={ () => this.handleToDetail(item.id) }
+							onTouchTap={ (e) => this.handleToDetail(e, item.id) }
 						>
 						    <CardMedia
 								style={ style.cardMedia }

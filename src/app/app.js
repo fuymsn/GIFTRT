@@ -3,8 +3,8 @@ import { render } from 'react-dom';
 
 import { browserHistory, hashHistory } from 'react-router';
 
-import { createStore } from 'redux';
-
+import { createStore,applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Main from './containers/Main';
@@ -13,6 +13,7 @@ import * as actions from './actions';
 
 import WS from './utils/WS.js';
 
+require("../www/style/main.less");
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
@@ -20,7 +21,7 @@ injectTapEventPlugin();
 // redux
 //let store = createStore(chatApp);
 // 调试模式
-let store = createStore(reducers, window.devToolsExtension && window.devToolsExtension());
+let store = createStore(reducers, window.devToolsExtension && window.devToolsExtension(), applyMiddleware(thunkMiddleware));
 
 // root element
 let rootElement = document.getElementById('app');

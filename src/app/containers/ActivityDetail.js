@@ -58,7 +58,6 @@ class ActivityDetail extends Component{
 			}
 		});
 
-		
 	}
 
 	componentDidMount() {

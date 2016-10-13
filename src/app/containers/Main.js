@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { Provider } from 'react-redux';
 import { Router, Route, Link, hashHistory } from 'react-router';
 
-import {deepOrange500} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 //import routes
@@ -19,7 +18,14 @@ const styles = {
 const muiTheme = getMuiTheme({
   palette: {
     primary1Color: '#FA0A82',
-    accent1Color: deepOrange500,
+    primary2Color: '',
+    //primary3Color: '#eee',
+    accent1Color: '#FA0A82',
+    textColor: '#555',
+    white: '#fff'
+  },
+  appBar: {
+    height: 48,
   },
   fontFamily: 'Roboto, YouYuan, helvetica neue, hiragino sans gb, stheiti, microsoft yahei'
 });
@@ -42,6 +48,10 @@ class Main extends Component {
 
   }
   
+};
+
+Main.childContextTypes = {
+  muiTheme: PropTypes.object.isRequired,
 };
 
 Main.propTypes = {

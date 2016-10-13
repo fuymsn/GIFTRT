@@ -72,7 +72,7 @@ class Login extends Component {
               label="记住密码"
               style={styles.checkbox}
           /><br/>
-          <RaisedButton label="登 录" primary={true} fullWidth={true} onClick={ (e) => {this.handleLogin(e)} } />
+          <RaisedButton label="登 录" primary={true} fullWidth={true} onTouchTap={ (e) => {this.handleLogin(e)} } />
         </div>
       </div>
 

@@ -3,6 +3,8 @@ const path = require('path');
 const buildPath = path.resolve(__dirname, 'build');
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
+//extract less
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config = {
   // Entry points to the project
@@ -34,6 +36,8 @@ const config = {
     new TransferWebpackPlugin([
       {from: 'www'},
     ], path.resolve(__dirname, 'src')),
+    // Extract css files
+    new ExtractTextPlugin('main.css')
   ],
   module: {
     loaders: [
@@ -43,6 +47,20 @@ const config = {
         loaders: ['react-hot', 'babel-loader'], // react-hot is like browser sync and babel loads jsx and es6-7
         exclude: [nodeModulesPath],
       },
+
+      // {
+      //   test: /\.less$/,
+      //   loader: ExtractTextPlugin.extract('css!less')
+      // }
+      {
+        test: /\.less$/,
+        loader: "style!css!less"
+      },
+
+      { 
+        test: /\.(jpe?g|png|gif|svg)$/i, 
+        loader: 'url?limit=10000!img?progressive=true' 
+      }
     ],
   },
 };

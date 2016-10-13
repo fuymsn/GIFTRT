@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-
+import {connect} from "react-redux";
 import {List, ListItem} from 'material-ui/List';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
 import Divider from 'material-ui/Divider';
 import Avatar from 'material-ui/Avatar';
 import {yellow500, grey300, brown300, transparent} from 'material-ui/styles/colors';
 
+function mapStateToProps(state){
+    return {
+        avatarPath: state.instances.AVATAR_PATH
+    }
+}
 
 class RankList extends Component {
 
@@ -34,18 +39,17 @@ class RankList extends Component {
 
     render() {
 
-        let { anchorLists } = this.props;
+        let { anchorList, avatarPath } = this.props;
 
         return (
             <List className='padding0'>
-
-                {anchorLists.map(( anchor, index ) => (
+                {anchorList.map(( anchor, index ) => (
                     <div key={index} >
                         <ListItem
-                            primaryText={ anchor.name }
-                            secondaryText={ anchor.info }
+                            primaryText={ anchor.username }
+                            secondaryText={ anchor.description }
                             leftIcon={ this.setAnchorRankIcon(index) }
-                            rightAvatar={<Avatar src={ anchor.avatar } />}
+                            rightAvatar={<Avatar src={ avatarPath + anchor.headimg } />}
                             insetChildren={ this.setAnchorRankLayout(index) }
                         />
                         <Divider />
@@ -58,4 +62,4 @@ class RankList extends Component {
 
 }
 
-export default RankList;
+export default connect(mapStateToProps, null)(RankList);

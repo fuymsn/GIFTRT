@@ -57,25 +57,12 @@ class UserInfoEdit extends Component {
             fullWidth={true}
             inputStyle={ styles.input }
         /><br />
-        <TextField
-            //hintText="签名"
-            floatingLabelText="签名"
-            multiLine={true}
-            fullWidth={true}
-            rows={2}
-        /><br />
         <SelectField value={0} fullWidth={true}>
           <MenuItem value={0} primaryText="男" />
           <MenuItem value={1} primaryText="女" />
           <MenuItem value={2} primaryText="保密" />
         </SelectField>
-        <SelectField value={0} fullWidth={true}>
-          <MenuItem value={0} primaryText="地点" />
-          <MenuItem value={1} primaryText="北京" />
-          <MenuItem value={2} primaryText="上海" />
-          <MenuItem value={3} primaryText="广州" />
-        </SelectField>
-        <DatePicker hintText="生日" fullWidth={true}/>
+        {/* <DatePicker hintText="生日" fullWidth={true}/> */}
       </div>
     </div>
     );

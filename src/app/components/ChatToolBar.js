@@ -118,7 +118,7 @@ class ChatToolBar extends Component {
           <ToolbarGroup>
             <FontIcon className="material-icons" onTouchTap={ (e) => { this.handleDialogOpen(e) } }>redeem</FontIcon>
             <ToolbarSeparator />
-            <RaisedButton label="发送" primary={true} style={style.sendBotton} onClick={(e)=> this.handlePost(e)}/>
+            <RaisedButton label="发送" primary={true} style={style.sendBotton} onTouchTap={(e)=> this.handlePost(e)}/>
           </ToolbarGroup>
         </Toolbar>
         <Dialog

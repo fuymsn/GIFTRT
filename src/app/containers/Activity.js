@@ -8,6 +8,7 @@ import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'm
 import Icon from '../components/Icon';
 import BasicAppBar from '../components/BasicAppBar';
 import Common from '../utils/Common';
+import MobileAction from '../utils/MobileAction';
 
 import $ from 'jquery';
 //import activityList from '../data/activityList';
@@ -92,13 +93,12 @@ class Activity extends Component{
 		});
 
 		//执行跳转
-        window.mobileAction.switchPage(json);
+        MobileAction.switchPage(json);
 	}
 
 	render(){
 
 		let { activityList } = this.props;
-		let common = new Common();
 
 		return (
 			<div style={ style.container }>
@@ -113,7 +113,7 @@ class Activity extends Component{
 						    <CardMedia
 								style={ style.cardMedia }
 						    >
-						      <img src={ common.getActivityBannerImageUrl(item.url) } />
+						      <img src={ Common.getActivityBannerImageUrl(item.url) } />
 						    </CardMedia>
 						    <CardTitle 
 

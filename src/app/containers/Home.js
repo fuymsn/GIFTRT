@@ -22,8 +22,7 @@ const style = {
 
     slide: {
         overflowX: 'hidden',
-        paddingLeft: "10px",
-        paddingRight: "10px",
+        padding: "0px 5px 10px 5px",
     },
 
     videoList: {

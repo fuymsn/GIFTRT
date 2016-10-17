@@ -67,14 +67,13 @@ class ActivityDetail extends Component{
 	render(){
 
 		let { detailLists } = this.props;
-		let common = new Common();
 		let detail = [];
 
 		if(!detailLists || !detailLists.url ){ return null; }
 
 		for (var i = 0; i < detailLists.url.length; i++) {
 			if(i == 0) { continue; }
-			detail.push(<img key={i} src={common.getActivityBannerImageUrl(detailLists.url[i])} style={ style.ActivityDetail }/>);	
+			detail.push(<img key={i} src={Common.getActivityBannerImageUrl(detailLists.url[i])} style={ style.ActivityDetail }/>);	
 		}
 
 		return (

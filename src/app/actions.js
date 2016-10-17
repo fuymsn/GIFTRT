@@ -1,5 +1,7 @@
-import $ from "./getJQuery";
+import $ from "./utils/JQuery";
 import Video from "./utils/Video";
+import Common from "./utils/Common";
+
 /**
  * ACTION 描述数据改变（描述了有事件发生）
  */
@@ -33,6 +35,7 @@ export const UPDATE_ACTIVITY_LISTS = 'UPDATE_ACTIVITY_LISTS';
 export const UPDATE_ACTIVITY_DETAILS = 'UPDATE_ACTIVITY_DETAILS';
 
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
+export const UPDATE_USER_TOKEN = 'UPDATE_USER_TOKEN';
 export const UPDATE_VIDEO_LISTS = 'UPDATE_VIDEO_LISTS';
 export const UPDATE_VIDEOS = 'UPDATE_VIDEOS';
 export const UPDATE_SNACKBAR = 'UPDATE_SNACKBAR';
@@ -174,6 +177,8 @@ export const updateSnackbar = (snackbar) => {
         snackbar
     }
 }
+
+//获取用户信息
 export const fetchUserInfo = ()=> {
     return (dispatch)=> {
         return $.ajax({
@@ -187,21 +192,34 @@ export const fetchUserInfo = ()=> {
                 if (!(data.status == 0)) {
                     dispatch(updateUserInfo({userInfo: data}));
                 } else {
-                    console.log(data);
+                    console.log('没有获取到token, /m/user/info没有获取到数据');
+                    //dispatch(Common.login());
                 }
             },
             error: function (ret) {
+                //获取token
                 console.log(ret.responseText);
             },
         });
     }
 };
+
 export const updateUserInfo = (userInfo)=> {
     return {
         type: UPDATE_USER_INFO,
         userInfo
     }
 }
+
+//更新UserToken
+export const updateUserToken = (token) => {
+    return {
+        type: UPDATE_USER_TOKEN,
+        token
+    }
+}
+
+//获取关注列表信息
 export const fetchUserFollowing = ()=> {
     return (dispatch, getState)=> {
 
@@ -229,7 +247,9 @@ export const fetchUserFollowing = ()=> {
                     // if (_videoLists)
                     //     dispatch(updateVideoLists());
                 } else {
-                    console.log(data);
+                    console.log('没有获取到token，/m/user/following没有获取到数据');
+                    //获取token
+                    //dispatch(Common.login());
                 }
             },
             error: function (ret) {

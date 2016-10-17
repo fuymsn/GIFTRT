@@ -2,15 +2,18 @@ import React, {Component} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {white} from "material-ui/styles/colors";
-import { RaisedButton, IconButton } from "material-ui";
+import { IconButton, Snackbar } from "material-ui";
 
 import LevelRich from "../components/LevelRich";
 import Diamond from "../components/Diamond";
 import Title from "../components/Title";
-import * as ChatActions from "../actions";
 import VideoList from "../components/VideoList";
 import Icon from "../components/Icon";
-import Snackbar from "material-ui/Snackbar";
+
+import * as ChatActions from "../actions";
+import MobileAction from "../utils/MobileAction";
+import Common from "../utils/Common";
+
 //聊天窗口头部
 //actions
 //样式
@@ -24,8 +27,8 @@ const style = {
     followingList: {
         //textAlign: 'center',
         //paddingTop: 200,
-        paddingLeft: "10px",
-        paddingRight: "10px",
+        paddingLeft: "5px",
+        paddingRight: "5px",
         flex: 1,
         display: "flex",
         flexDirection: 'column'
@@ -65,6 +68,10 @@ function mapDispatchToProps(dispatch) {
 class User extends Component {
     componentDidMount() {
 
+        if(!Common.isLogin()){
+            MobileAction.showLoginDialog();
+        }
+
         this.loadUserInfoFromServer();
         if (Object.keys(this.props.following).length==0) {
             this.loadUserFollowingFromServer();
@@ -87,7 +94,7 @@ class User extends Component {
 		});
 
 		//执行跳转
-        window.mobileAction.switchPage(json);
+        MobileAction.switchPage(json);
     }
 
     handleSnackbarRequestClose(){

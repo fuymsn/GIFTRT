@@ -12,6 +12,7 @@ import Activity from './containers/Activity';
 import ActivityDetail from './containers/ActivityDetail';
 import UserInfoEdit from './containers/UserInfoEdit';
 import Setting from './containers/Setting';
+import Info from './containers/Info';
 
 export default (
     <Route path="/" component={ Main }>
@@ -23,9 +24,10 @@ export default (
         <Route path="rank" component={ Rank } />
         <Route path="activity" component={ Activity } />
         <Route path="activity/:id" component={ ActivityDetail } />
-        <Route path="user" component={ User }></Route>
+        <Route path="user" component={ User } />
         <Route path="user/edit" component={ UserInfoEdit } />
         <Route path="video/:id" component={ Video } />
         <Route path="setting" component={ Setting } />
+        <Route path="info/:id" component={ Info } />
     </Route>
 )

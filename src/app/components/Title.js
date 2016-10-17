@@ -10,7 +10,7 @@ const initStyle = {
     borderLeft: '5px solid #FA0A82',
     lineHeight: '14px',
     fontSize: '14px',
-    margin: '10px 0px',
+    margin: '10px 0px 10px 2px',
     paddingLeft: '5px'
 }
 

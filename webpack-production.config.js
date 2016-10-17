@@ -31,10 +31,18 @@ const config = {
   module: {
     loaders: [
       {
+        test: /\.less$/,
+        loader: "style!css!less"
+      },
+      {
         test: /\.js$/, // All .js files
         loaders: ['babel-loader'], // react-hot is like browser sync and babel loads jsx and es6-7
         exclude: [nodeModulesPath],
       },
+      { 
+        test: /\.(jpe?g|png|gif|svg)$/i, 
+        loader: 'url?limit=10000!img?progressive=true' 
+      }
     ],
   },
 };

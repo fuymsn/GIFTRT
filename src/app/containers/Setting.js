@@ -1,14 +1,10 @@
 import React, {Component, PropTypes} from "react";
-import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
 import {List, ListItem} from 'material-ui/List';
-import {AppBar, DropDownMenu, MenuItem, IconButton, FlatButton, Toggle} from "material-ui";
+import { AppBar, DropDownMenu, MenuItem, IconButton, FlatButton, Toggle, RaisedButton } from "material-ui";
 import IconChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import BasicAppBar from "../components/BasicAppBar";
+import MobileAction from "../utils/MobileAction";
 
-import * as actions from "../actions";
-<i class="material-icons">chevron_right</i>
-//actions
 //样式
 const style = {
     container: {
@@ -24,44 +20,42 @@ const style = {
     },
     clearButton: {
         margin: '6px 6px 0px 0px'
+    },
+    buttonBox: {
+        margin: '10px 0',
+        padding: 10
     }
 };
 
-const mapStateToProps = (state) => {
-    return {
-
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        actions: bindActionCreators(actions, dispatch)
-    }
-}
-
 //主题
 class Setting extends Component {
-    constructor() {
-        super();
-        this.RANK_TYPES = {0: 'rank_exp_', 1: 'rank_rich_'};
-        this.RANK_CATS = ['day', 'week', 'month', 'his'];
+
+    //清除缓存
+    handleClearCache() {
+        MobileAction.clearCache();
+    };
+
+    //退出登录
+    handleLogout() {
+        window.localStorage.setItem('token', null);
+        MobileAction.logout();
+    };
+
+    //信息页面
+    handleLinkToInfo(e, info) {
+		//阻止默认事件
+        e.preventDefault();
+
+        //数据重组
+        let json = JSON.stringify({
+            dir: 'activity',
+            title: info.title,
+            url: '#/info/' + info.pageId
+        });
+        
+		//执行跳转
+        MobileAction.switchPage(json);
     }
-
-    handleTabs(value) {
-        this.props.actions.setRankTabIndex(value);
-    };
-
-    handleDropDown(event, index, value) {
-        this.props.actions.changeRankDropDownValue(value);
-    };
-
-    loadAnchorRankFromServer() {
-        this.props.actions.fetchAnchorRank();
-    };
-
-    componentDidMount() {
-        this.loadAnchorRankFromServer();
-    };
 
     render() {
 
@@ -69,30 +63,38 @@ class Setting extends Component {
 
         return (
             <div style={ style.container }>
-                <List style={ style.list }>
+                {/*<List style={ style.list }>
                     <ListItem 
                         primaryText="消息提醒" 
                         rightToggle={<Toggle /> }
                         style={ style.listItem }
                         disabled={true} 
                     />
-                </List>
+                </List>*/}
                 <List style={ style.list }>
                     <ListItem 
                         primaryText="清除缓存" 
-                        rightIconButton={ <FlatButton primary={true} label="立即清除" style={ style.clearButton }/>}  
+                        rightIconButton={ <FlatButton 
+                            primary={true}
+                            label="立即清除"
+                            style={ style.clearButton }
+                            onTouchTap={ (e)=>{ this.handleClearCache(e) } }
+                        />}
                         style={ style.listItem }
                         disabled={true} 
                     />
                 </List>
                 <List style={ style.list }>
-                    <ListItem primaryText="条款" rightIcon={<IconChevronRight />}  style={ style.listItem }/>
-                    <ListItem primaryText="关于" rightIcon={<IconChevronRight />}  style={ style.listItem }/>
+                    <ListItem primaryText="条款" rightIcon={<IconChevronRight />} style={ style.listItem } onTouchTap={ (e)=> this.handleLinkToInfo(e, {pageId: 'terms', title: '条款'}) } />
+                    <ListItem primaryText="关于" rightIcon={<IconChevronRight />} style={ style.listItem } onTouchTap={ (e)=> this.handleLinkToInfo(e, {pageId: 'about', title: '关于'}) }/>
                 </List>
+                <div style={ style.buttonBox }>
+                    <RaisedButton label="退出登录" primary={true} fullWidth={true} onTouchTap={ (e)=>{this.handleLogout(e) } } />
+                </div>
             </div>
         );
     }
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Setting);
+export default Setting;

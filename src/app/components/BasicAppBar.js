@@ -4,7 +4,9 @@ import Icon from './Icon';
 
 const style = {
 	appBarTitle:{
-		textAlign: 'center' 
+		textAlign: 'center',
+        textIndent: '-17px',
+        userSelect: 'none'
 	}
 };
 

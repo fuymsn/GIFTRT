@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {white} from "material-ui/styles/colors";
 import { IconButton, Snackbar } from "material-ui";
 
-import LevelRich from "../components/LevelRich";
+import IconLevel from "../components/IconLevel";
 import Diamond from "../components/Diamond";
 import Title from "../components/Title";
 import VideoList from "../components/VideoList";
@@ -24,14 +24,17 @@ const style = {
         flexDirection: 'column'
     },
 
-    followingList: {
-        //textAlign: 'center',
-        //paddingTop: 200,
+    followingWrapper: {
         paddingLeft: "5px",
         paddingRight: "5px",
         flex: 1,
         display: "flex",
-        flexDirection: 'column'
+        flexDirection: 'column',
+        overflow: 'auto'
+    },
+
+    followingList: {
+        padding: '0px 0px 60px 0px'
     },
 
     checkbox: {
@@ -127,7 +130,8 @@ class User extends Component {
 
                         <div className="user-info_name_wrapper">
                             <div className="user-info_name">{userInfo.nickname}</div>
-                            <LevelRich level={userInfo.lv_rich}/>
+                            <IconLevel level={ userInfo.vip } type='vip'/>
+                            <IconLevel level={userInfo.lv_rich} type='rich'/>
                         </div>
                         <div className="user-info_points">
                             <div className="user-info_points_text">余额</div>
@@ -136,9 +140,11 @@ class User extends Component {
                     </div>
                 </div>
 
-                <div style={ style.followingList }>
+                <div style={ style.followingWrapper }>
                     <Title title="我的关注"/>
-                    <VideoList key={'following'} listType={ 'following' }/>
+                    <div style={ style.followingList }>
+                        <VideoList key={'following'} listType={ 'following' }/>
+                    </div>
                 </div>
                 <Snackbar
                     open={snackbar.open}

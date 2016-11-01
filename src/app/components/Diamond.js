@@ -8,23 +8,22 @@ import React, { Component } from 'react';
 
 const initStyle = {
     diamondWrapper: {
-        display: 'inline-block',
-        verticalAlign: 'middle'
+        // display: 'inline-block',
+        // verticalAlign: 'middle'
+        display: 'flex',
+        alignItems: 'center'
     },
 
     diamondText: {
         fontSize: '13px',
+        lineHeight: '13px',
         color: '#fff',
-        display: 'inline-block',
-        verticalAlign: 'middle'
     },
 
     diamondIcon: {
-        display: 'inline-block',
-        verticalAlign: 'middle',
         backgroundImage: 'url(images/diamond.png)',
         width: '18px',
-        height: '14px',
+        height: '13px',
         backgroundSize: 'cover',
         position: 'relative',
         marginLeft: '3px',

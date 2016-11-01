@@ -305,6 +305,8 @@ export const fetchLobby = ()=> {
         });
     }
 }
+
+//获取主播列表
 export const fetchVideoList = (type)=> {
     return (dispatch)=> {
         return $.ajax({
@@ -333,6 +335,8 @@ export const fetchVideoList = (type)=> {
         });
     }
 }
+
+//关注action
 export const toggleFollow = (uid, ret, tile)=> {
     return (dispatch, getState)=> {
         return $.ajax({
@@ -379,8 +383,10 @@ export const toggleFollow = (uid, ret, tile)=> {
         });
     }
 };
+
+//获取排行榜数据
 export const fetchAnchorRank = ()=> {
-    return (dispatch,getState)=> {
+    return (dispatch, getState)=> {
         const state=getState();
         return $.ajax({
             url: state.instances.RANK_PATH+'/video_gs/rank/data_ajax',

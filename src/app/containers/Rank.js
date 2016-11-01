@@ -24,19 +24,23 @@ const style = {
     dropDownMenu: {
         root: { 
             display: "block", 
-            width: "185px",
             margin: "0px auto",
-            height: 48
+            height: 48,
+            width: '162px'
         },
+
         //dropdown 下划线
         underlineStyle: {
             border: 0
         },
+
         //dropdown 字体颜色
         labelStyle: {
             color: '#fff',
             lineHeight: '48px',
-            fontSize: '24px'
+            fontSize: '24px',
+            padding: 0,
+            userSelect: 'none'
         }
     },
 };
@@ -104,6 +108,7 @@ class Rank extends Component {
                             underlineStyle={ style.dropDownMenu.underlineStyle }
                             labelStyle={ style.dropDownMenu.labelStyle }
                             style={ style.dropDownMenu.root }
+                            autoWidth={ true }
                         >
                             <MenuItem value={0} primaryText="主播排行榜"/>
                             <MenuItem value={1} primaryText="富豪排行榜"/>
@@ -132,10 +137,12 @@ class Rank extends Component {
                     } }
                     style={ style.rankList }
                     disabled={ true }
+                    animateTransitions={false}
                 >
                 { this.RANK_CATS.map((cat)=> {
-                    return <RankList key={this.RANK_TYPES[dropDownValue] + cat}
-                                        anchorList={anchorLists[this.RANK_TYPES[dropDownValue] + cat]}/>
+                    return <RankList 
+                        key={ this.RANK_TYPES[dropDownValue] + cat }
+                        anchorList={ anchorLists[this.RANK_TYPES[dropDownValue] + cat] } />
                 })}
                 </SwipeableViews>
             </div>

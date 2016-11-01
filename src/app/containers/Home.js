@@ -2,10 +2,9 @@ import React, {Component, PropTypes} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {Tabs, Tab} from "material-ui/Tabs";
-import SwipeableViews from "react-swipeable-views";
+
 import VideoList from "../components/VideoList";
 import * as actions from "../actions";
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Title from "../components/Title";
 import Snackbar from "material-ui/Snackbar";
 import BasicAppBar from '../components/BasicAppBar';
@@ -20,15 +19,15 @@ const style = {
         flexDirection: 'column'
     },
 
-    slide: {
-        overflowX: 'hidden',
-        padding: "0px 5px 10px 5px",
-    },
-
-    videoList: {
-        flex: 1,
+    tabs: {
         display: 'flex',
         flexDirection: 'column',
+        flex: 1,
+    },
+
+    tabsContainer: {
+        overflowX: 'hidden',
+        padding: "0px 5px 60px 5px"
     }
 };
 
@@ -83,10 +82,13 @@ class Home extends Component {
     }
 
     componentDidMount() {
+        //加载大厅数据
         this.loadLobbyFromServer();
+        //加载
         this.LIST_TYPES.forEach(function (type) {
             this.loadVideoListFromServer(type)
         }.bind(this));
+        //加载关注
         this.loadFollowingFromServer();
     }
     handleSnackbarRequestClose(){
@@ -110,51 +112,43 @@ class Home extends Component {
                 <BasicAppBar title="大厅" />
                 <Tabs
                     onChange={ (slideIndex) => {
-                        this.handleChange(slideIndex)
+                        this.handleChange(slideIndex);
                     } }
                     value={ slideIndex }
                     tabItemContainerStyle={ tabsStyle }
                     //inkBarStyle={{transition:'none'}}
+                    contentContainerStyle={ style.tabsContainer }
+                    style={ style.tabs }
                 >
-                    <Tab label="直播大厅" value={0} style={ tabStyle }/>
-                    <Tab label="美女主播" value={1} style={ tabStyle }/>
-                    <Tab label="全部主播" value={2} style={ tabStyle }/>
-                    <Tab label="我的关注" value={3} style={ tabStyle }/>
+                    <Tab label="直播大厅" value={0} style={ tabStyle }>
+                        <div>
+                            <Title title='美女主播'/>
+                            <VideoList key={'lobby_rec'} listType={ 'lobby_rec' }/>
+
+                            <Title title='全部主播'/>
+                            <VideoList key={'lobby_all'} listType={ 'lobby_all' }/>
+                        </div>
+                    </Tab>
+                    <Tab label="美女主播" value={1} style={ tabStyle }>
+                        <div>
+                            <Title title='美女主播'/>
+                            <VideoList key={'rec'} listType={ 'rec' }/>
+                        </div>
+                    </Tab>
+                    <Tab label="全部主播" value={2} style={ tabStyle }>
+                        <div>
+                            <Title title='全部主播'/>
+                            <VideoList key={'all'} listType={ 'all' }/>
+                        </div>
+                    </Tab>
+                    <Tab label="我的关注" value={3} style={ tabStyle }>
+                        <div>
+                            <Title title='我的关注'/>
+                            <VideoList key={'following'} listType={ 'following' }/>
+                        </div>
+                    </Tab>
                 </Tabs>
-                <SwipeableViews
-                    index={ slideIndex }
-                    onChangeIndex={ (slideIndex) => {
-                        this.handleChange(slideIndex)
-                    } }
-                    style={ style.videoList }
-                    disabled={ true }
-                    //animateTransitions={false}
-                >
-                    <div style={style.slide}>
 
-                        <Title title='美女主播'/>
-                        <VideoList key={'lobby_rec'} listType={ 'lobby_rec' }/>
-
-                        <Title title='全部主播'/>
-                        <VideoList key={'lobby_all'} listType={ 'lobby_all' }/>
-                    </div>
-                    <div style={style.slide}>
-
-                        <Title title='美女主播'/>
-                        <VideoList key={'rec'} listType={ 'rec' }/>
-
-                    </div>
-                    <div style={style.slide}>
-
-                        <Title title='全部主播'/>
-                        <VideoList key={'all'} listType={ 'all' }/>
-
-                    </div>
-                    <div style={style.slide}>
-                        <Title title='我的关注'/>
-                        <VideoList key={'following'} listType={ 'following' }/>
-                    </div>
-                </SwipeableViews>
                 <Snackbar
                     open={snackbar.open}
                     message={snackbar.message}

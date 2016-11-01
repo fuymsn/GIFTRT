@@ -1,9 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {GridList, GridTile} from "material-ui/GridList";
-import IconButton from "material-ui/IconButton";
-import Star from "material-ui/svg-icons/toggle/star";
-import StarBorder from "material-ui/svg-icons/toggle/star-border";
+
 import * as actions from "../actions";
 import {bindActionCreators} from "redux";
 import Common from "../utils/Common";
@@ -15,8 +12,7 @@ const style = {
     root: {
         display: 'flex',
         flexWrap: 'wrap',
-        flex: 1,
-        justifyContent: 'space-around',
+        flex: 1,        
     },
     gridList: {
         width: 500,
@@ -126,13 +122,17 @@ class VideoList extends Component {
     constructor() {
         super();
         this.touched = false;
+        this.pageNum = 0;
+        this.pageSize = 10;
+        this.tmpVideoList = [];
     }
 
+    //进入直播间
     handleVideoTap(e, data) {
 
         e.preventDefault();
 
-        //location.href = '#/video/' + id;
+        // location.href = '#/video/' + id;
 
         // if(!Common.isLogin()){
         //     MobileAction.showLoginDialog();
@@ -153,11 +153,13 @@ class VideoList extends Component {
             }, 500);
             
         }
-
-        // }
         
     }
 
+    /**
+     * 关注主播
+     * e: event，uid: 主播id，tile: 主播信息obj
+     */
     handleToggleFollow(e, uid, tile) {
         e.stopPropagation();
         let ret = tile.following ? 2 : 1;
@@ -166,100 +168,57 @@ class VideoList extends Component {
 
     //设置视频背景图片
     getVideoImageUrl(userID, imageID) {
-        let {instances} = this.props;
+        let { instances } = this.props;
         return /\d{13}/.test(imageID) ? (instances.PIC_PATH + "/images/anchorimg/" + userID + "_" + imageID.match(/\d{13}/)[0] + ".jpg") : instances.PIC_PATH + '/images/vzhubo.jpg'
     }
 
     render() {
-                {/*<GridTile
-                    
-                    title={tile.username}
-                    subtitle={<span><b>{tile.live_time}</b></span>}
-                    onTouchTap={ (e) => {
-                        this.handleVideoTap(e, {id: tile.uid})
-                    }}
-                    actionIcon={
-                        <IconButton
-                            onTouchTap={
-                                (e)=> {
-                                    this.handleToggleFollow(e, tile.uid, tile)
-                                }
-                            }
-                        >
-                            {tile.following ? <Star color="#FFC107"/> : <StarBorder color="white"/>}
-                        </IconButton>}
-                >
-                    <img src={ this.getVideoImageUrl(tile.uid, tile.headimg) }/>
-                </GridTile>*/}
-        let {videoLists, listType, videos} = this.props;
+
+        let { videoLists, listType, videos } = this.props;
         let videoList = videoLists[listType];
-        let _videoList = [];
-        videoList.map((uid)=> {
-            let tile = videos[uid];
-            let liveStatusStyle = tile.live_status == 0 ? Object.assign({}, style.video.iconStatus, style.video.iconStatusOff) : Object.assign({}, style.video.iconStatus, style.video.iconStatusOn);
-            _videoList.push(
+        let pageSize = videoList.length < 10 ? videoList.length: this.pageSize;
 
-                <div style={ style.video.root } key={tile.uid} onTouchTap={ (e) => {
-                        this.handleVideoTap(e, {id: tile.uid})
-                    }}>
-                    <div style={ style.video.rootInner }>
-                        <div style={ style.video.main }>
-                            <VideoCover
-                                style={ style.video.cover }
-                                backgroundUrl={ this.getVideoImageUrl(tile.uid, tile.headimg) }
-                                children={
-                                    <div style={ style.video.coverContainer}>
-                                        <div style={ liveStatusStyle }></div>
-                                        <div style={ style.video.iconInfo }></div>
-                                        <div style={ style.video.coverInfo }></div>
-                                    </div>
-                                }
-                            />
-                            <div style={ style.video.name }>{tile.username}</div>
-                        </div>
-                        <div style={ style.video.side }>
-                            <FollowNum textStyle={ style.video.followNum } value={ 12 } />
-                            <div style={ style.video.expLevel }>LV. { tile.lv_exp }</div>
-                        </div>
-                    </div>
-                </div>
-            )
-        });
-
-        // for(let uid in videoList){
-        //     let tile=videoList[uid];
-        //     _videoList.push(
-        //         <GridTile
-        //             key={tile.uid}
-        //             title={tile.username}
-        //             subtitle={<span><b>{tile.live_time}</b></span>}
-        //             onTouchTap={ (e) => {
-        //                 this.handleVideoTap(e, {id: tile.uid})
-        //             }}
-        //             actionIcon={
-        //                 <IconButton
-        //                     onTouchTap={
-        //                         (e)=> {
-        //                             this.handleToggleFollow(e, tile.uid, tile)
-        //                         }
-        //                     }
-        //                 >
-        //                     {tile.following ? <Star color="#FFC107"/> : <StarBorder color="white"/>}
-        //                 </IconButton>}
-        //         >
-        //             <img src={ this.getVideoImageUrl(tile.uid, tile.headimg)}/>
-        //         </GridTile>
-        //     )
-        // }
+        if(videoList.length > 0){
+            for(;this.pageNum < pageSize; this.pageNum++){
+                this.tmpVideoList.push(videoList[this.pageNum]);
+            }
+        }
 
         return (
             <div style={style.root}>
-                {/*<GridList
-                    cellHeight={150}
-                    style={style.gridList}
-                >*/}
-                    {_videoList}
-                {/*</GridList>*/}
+                { this.tmpVideoList.map((uid)=> {
+                    let tile = videos[uid];
+                    //直播状态
+                    let liveStatusStyle = tile.live_status == 0 ? Object.assign({}, style.video.iconStatus, style.video.iconStatusOff) : Object.assign({}, style.video.iconStatus, style.video.iconStatusOn);
+                    //直播列表
+                    return (
+
+                        <div style={ style.video.root } key={tile.uid} onTouchTap={ (e) => {
+                                this.handleVideoTap(e, {id: tile.uid})
+                            }}>
+                            <div style={ style.video.rootInner }>
+                                <div style={ style.video.main }>
+                                    <VideoCover
+                                        style={ style.video.cover }
+                                        backgroundUrl={ this.getVideoImageUrl(tile.uid, tile.headimg) }
+                                        children={
+                                            <div style={ style.video.coverContainer}>
+                                                <div style={ liveStatusStyle }></div>
+                                                <div style={ style.video.iconInfo }></div>
+                                                <div style={ style.video.coverInfo }></div>
+                                            </div>
+                                        }
+                                    />
+                                    <div style={ style.video.name }>{tile.username}</div>
+                                </div>
+                                <div style={ style.video.side }>
+                                    <FollowNum textStyle={ style.video.followNum } value={ tile.attens } />
+                                    <div style={ style.video.expLevel }>LV. { tile.lv_exp }</div>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })}
             </div>
         )
     }

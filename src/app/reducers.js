@@ -45,6 +45,7 @@ import {
     //Snackbar
     UPDATE_SNACKBAR
 } from "./actions";
+
 import Message from "./utils/Message";
 import Gift from "./utils/Gift";
 
@@ -141,6 +142,9 @@ const drawerState = (state = {open: false}, action) => {
     }
 }
 
+/**
+ * 送礼数据初始化
+ */
 const initialGift = {
     dialogIsOpen: false,
     giftList: []
@@ -184,13 +188,11 @@ const home = (state = initialHome, action) => {
             return state;
     }
 };
+
+/**
+ * 主播列表
+ */
 const initVideoLists = {
-    // lobby_rec: {},
-    // lobby_all: {},
-    // all: {},
-    // ord: {},
-    // rec: {},
-    // following: {},
     lobby_rec: [],
     lobby_all: [],
     all: [],
@@ -207,6 +209,9 @@ const videoLists = (state = initVideoLists, action)=> {
     }
 }
 
+/**
+ * 用户信息
+ */
 const initUser = {
     userInfo: {},
 };
@@ -261,6 +266,9 @@ const rank = (state = initialRank, action) => {
     }
 }
 
+/**
+ * 搜索
+ */
 const searchVideos = (state = {videos: []}, action) => {
     switch (action.type) {
         case SEARCH_VIDEO:
@@ -270,7 +278,9 @@ const searchVideos = (state = {videos: []}, action) => {
     }
 }
 
-//activity
+/**
+ * 活动
+ */
 const initActivity = {
     lists: [],
     detailLists: []
@@ -291,6 +301,9 @@ const activity = (state = initActivity, action) => {
     }
 }
 
+/**
+ * 常量
+ */
 const initInstances = {
     PIC_PATH: 'http://p1.1room1.co/public',
     AVATAR_PATH: 'http://10.1.100.194:4869/',
@@ -301,6 +314,9 @@ const instances = (state = initInstances, action) => {
     return state;
 }
 
+/**
+ * 提示框
+ */
 const initSnackbar = {
     open: false,
     action: '撤销',
@@ -315,6 +331,7 @@ const snackbar = (state = initSnackbar, action) => {
             return state;
     }
 }
+
 const videos = (state = {}, action) => {
     switch (action.type) {
         case UPDATE_VIDEOS:

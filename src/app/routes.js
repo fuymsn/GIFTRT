@@ -16,10 +16,10 @@ import Info from './containers/Info';
 
 export default (
     <Route path="/" component={ Main }>
-        <IndexRoute component={ Login } />
-        <Redirect from="/" to="/login" />
+        <IndexRoute component={ Home } />
+        {/*<Redirect from="/" to="/login" />*/}
         <Route path="home" component={ Home } />
-        <Route path="login" component={ Login } />
+        {/*<Route path="login" component={ Login } />*/}
         <Route path="search" component={ Search } />
         <Route path="rank" component={ Rank } />
         <Route path="activity" component={ Activity } />

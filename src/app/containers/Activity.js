@@ -26,11 +26,12 @@ const style = {
 		display: 'flex',
 		flexDirection: 'column',
 		overflow: 'auto',
-		flex: 1
+		flex: 1,
+		paddingBottom: 60
 	},
 
 	cardItem: {
-		margin: '15px 10px'
+		margin: '5px 5px 0px 5px'
 	},
 
 	cardTitle:{

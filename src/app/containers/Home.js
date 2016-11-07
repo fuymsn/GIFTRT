@@ -35,6 +35,7 @@ const mapStateToProps = (state) => {
     return {
         slideIndex: state.home.slideIndex,
         snackbar: state.snackbar,
+        videoLists: state.videoLists
     }
 }
 
@@ -49,8 +50,23 @@ class Home extends Component {
     constructor() {
         super();
         this.LIST_TYPES = [
-            'rec',
-            'all'
+            {
+                title: 'hall',
+                scrollPage: 0
+            },
+            {
+                title: 'rec',
+                scrollPage: 0
+            },
+            {
+                title: 'all',
+                scrollPage: 0
+            },
+            {
+                title: 'following',
+                scrollPage: 0
+            }
+            
         ]
     };
 
@@ -61,9 +77,9 @@ class Home extends Component {
     /**
      * 加载主页列表
      */
-    loadLobbyFromServer() {
-        this.props.actions.fetchLobby();
-    };
+    // loadLobbyFromServer() {
+    //     this.props.actions.fetchLobby();
+    // };
 
     /**
      * 加载 推荐主播，关注主播 列表
@@ -83,14 +99,44 @@ class Home extends Component {
 
     componentDidMount() {
         //加载大厅数据
-        this.loadLobbyFromServer();
-        //加载
-        this.LIST_TYPES.forEach(function (type) {
-            this.loadVideoListFromServer(type)
-        }.bind(this));
+        //this.loadLobbyFromServer();
+
+        //加载首页其他两个列表数据
+        this.loadVideoListFromServer('rec');
+        this.loadVideoListFromServer('all');
         //加载关注
         this.loadFollowingFromServer();
+        this.handleScroll();
     }
+
+    //scroll 滚动加载处理。
+    handleScroll(e) {
+        
+        let node = document.getElementById("hall");
+        let target = node.parentElement.parentElement;
+
+        target.onscroll = function(){
+
+            let { slideIndex, videoLists } = this.props;
+            let scrollTop = target.scrollTop;
+            //alert(scrollTop);
+            //后期优化数据表现
+            if( slideIndex == 0 || slideIndex == 3 ) return;
+
+            if(scrollTop + target.clientHeight + 50 > target.scrollHeight && videoLists[this.LIST_TYPES[slideIndex].title].scrollable){
+                //scrollable 设置为false
+                this.props.actions.updateScrollable(this.LIST_TYPES[slideIndex].title, false);
+                this.LIST_TYPES[slideIndex].scrollPage++;
+                this.props.actions.updateScrollPage(this.LIST_TYPES[slideIndex].title, this.LIST_TYPES[slideIndex].scrollPage);
+                setTimeout(()=>{
+                    this.props.actions.updateScrollable(this.LIST_TYPES[slideIndex].title, true);
+                }, 2000);
+            }
+            
+        }.bind(this);
+        //console.log(target);
+    }
+
     handleSnackbarRequestClose(){
         this.props.actions.updateSnackbar({open:false});
     }
@@ -102,6 +148,7 @@ class Home extends Component {
         let tabsStyle = {
             backgroundColor: this.context.muiTheme.palette.white
         }
+
         let tabStyle = {
             color: this.context.muiTheme.palette.textColor,
             fontWeight: 'bold'
@@ -120,31 +167,31 @@ class Home extends Component {
                     contentContainerStyle={ style.tabsContainer }
                     style={ style.tabs }
                 >
-                    <Tab label="直播大厅" value={0} style={ tabStyle }>
-                        <div>
+                    <Tab label="直播大厅" value={0} style={ tabStyle } >
+                        <div id="hall">
                             <Title title='美女主播'/>
-                            <VideoList key={'lobby_rec'} listType={ 'lobby_rec' }/>
+                            <VideoList listType={ 'lobbyRec' }/>
 
                             <Title title='全部主播'/>
-                            <VideoList key={'lobby_all'} listType={ 'lobby_all' }/>
+                            <VideoList listType={ 'lobbyAll' }/>
                         </div>
                     </Tab>
                     <Tab label="美女主播" value={1} style={ tabStyle }>
                         <div>
                             <Title title='美女主播'/>
-                            <VideoList key={'rec'} listType={ 'rec' }/>
+                            <VideoList listType={ 'rec' }/>
                         </div>
                     </Tab>
                     <Tab label="全部主播" value={2} style={ tabStyle }>
                         <div>
                             <Title title='全部主播'/>
-                            <VideoList key={'all'} listType={ 'all' }/>
+                            <VideoList listType={ 'all' }/>
                         </div>
                     </Tab>
                     <Tab label="我的关注" value={3} style={ tabStyle }>
                         <div>
                             <Title title='我的关注'/>
-                            <VideoList key={'following'} listType={ 'following' }/>
+                            <VideoList listType={ 'following' }/>
                         </div>
                     </Tab>
                 </Tabs>

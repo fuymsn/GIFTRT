@@ -7,6 +7,7 @@
  */
 
 import {combineReducers} from "redux";
+import deepAssign from "deep-assign";
 import {
     RECEIVE_MESSAGE,
     POST_MESSAGE,
@@ -40,6 +41,8 @@ import {
 
     //videolist
     UPDATE_VIDEO_LISTS,
+    UPDATE_VIDEO_SCROLL_PAGE,
+    UPDATE_VIDEO_SCROLLABLE,
     UPDATE_VIDEOS,
 
     //Snackbar
@@ -174,7 +177,7 @@ const gift = (state = initialGift, action) => {
  * action: 当前传入动作的action数据
  **/
 const initialHome = {
-    slideIndex: 0,
+    slideIndex: 0
 }
 
 const home = (state = initialHome, action) => {
@@ -189,25 +192,79 @@ const home = (state = initialHome, action) => {
     }
 };
 
-/**
- * 主播列表
- */
-const initVideoLists = {
-    lobby_rec: [],
-    lobby_all: [],
-    all: [],
-    ord: [],
-    rec: [],
-    following: [],
+//videoList
+const initialVideoLists = {
+
+    lobbyRec: {
+        isFetching: false,
+        disInvalidate: false,
+        lastUpdated: 0,
+        scrollable: false,
+        scrollPage: 0,
+        items: []
+    },
+    lobbyAll: {
+        isFetching: false,
+        disInvalidate: false,
+        lastUpdated: 0,
+        scrollable: false,
+        scrollPage: 0,
+        items: []
+    },
+    all: {
+        isFetching: false,
+        disInvalidate: false,
+        lastUpdated: 0,
+        scrollable: true,
+        scrollPage: 0,
+        items: []
+    },
+    rec: {
+        isFetching: false,
+        disInvalidate: false,
+        lastUpdated: 0,
+        scrollable: true,
+        scrollPage: 0,
+        items: []
+    },
+    following: {
+        isFetching: false,
+        disInvalidate: false,
+        lastUpdated: 0,
+        scrollable: false,
+        scrollPage: 0,
+        items: []
+    }
+
 }
-const videoLists = (state = initVideoLists, action)=> {
+
+const videoLists = (state = initialVideoLists, action) => {
     switch (action.type) {
+
         case UPDATE_VIDEO_LISTS:
-            return Object.assign({}, state, action.videoLists);
+            return deepAssign({}, state, {
+                [action.subreddit]: {
+                    items: action.videoLists,
+                }
+            });
+        
+        case UPDATE_VIDEO_SCROLL_PAGE:
+            return deepAssign({}, state, {
+                [action.subreddit]: {
+                    scrollPage: action.scrollPage
+                }
+            });
+
+        case UPDATE_VIDEO_SCROLLABLE:
+            return deepAssign({}, state, {
+                [action.subreddit]: {
+                    scrollable: action.isScrollable
+                }
+            });
         default:
             return state;
     }
-}
+};
 
 /**
  * 用户信息
@@ -305,7 +362,7 @@ const activity = (state = initActivity, action) => {
  * 常量
  */
 const initInstances = {
-    PIC_PATH: 'http://p1.1room1.co/public',
+    PIC_PATH: 'http://s.wuled.com/public',
     AVATAR_PATH: 'http://10.1.100.194:4869/',
     RANK_PATH: 'http://10.1.100.102',
 }
@@ -323,6 +380,7 @@ const initSnackbar = {
     message: '',
     autoHideDuration: 2000,
 };
+
 const snackbar = (state = initSnackbar, action) => {
     switch (action.type) {
         case UPDATE_SNACKBAR:

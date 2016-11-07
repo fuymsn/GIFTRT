@@ -106,6 +106,7 @@ const style = {
 const mapStateToProps = (state) => {
     return {
         instances: state.instances,
+        slideIndex: state.home.slideIndex,
         videoLists: state.videoLists,
         videos: state.videos,
     }
@@ -172,22 +173,48 @@ class VideoList extends Component {
         return /\d{13}/.test(imageID) ? (instances.PIC_PATH + "/images/anchorimg/" + userID + "_" + imageID.match(/\d{13}/)[0] + ".jpg") : instances.PIC_PATH + '/images/vzhubo.jpg'
     }
 
+    //会引起无限循环，以后修改
+    // componentWillUpdate(){
+    //     let { slideIndex } = this.props;
+    //     switch(slideIndex){
+    //         case 1:
+    //             this.props.actions.updateScrollable('rec', true);
+    //             return true;
+    //         case 2:
+    //             this.props.actions.updateScrollable('all', true);
+    //             return true;
+    //     }
+    // }
+
     render() {
 
         let { videoLists, listType, videos } = this.props;
         let videoList = videoLists[listType];
-        let pageSize = videoList.length < 10 ? videoList.length: this.pageSize;
+        //videoList 的滚动量
+        let scrollPageSize = this.pageSize + videoList.scrollPage * this.pageSize;
 
-        if(videoList.length > 0){
+        //videoList 的current数量
+        let currentPageSize = scrollPageSize >= videoList.items.length? videoList.items.length: scrollPageSize; 
+
+        //videoList 的数量
+        let pageSize = videoList.items.length < 10 ? videoList.items.length: currentPageSize;
+
+        if(videoList.items.length > 0){
             for(;this.pageNum < pageSize; this.pageNum++){
-                this.tmpVideoList.push(videoList[this.pageNum]);
+                this.tmpVideoList.push(videoList.items[this.pageNum]);
             }
         }
 
+        // if(listType == 'rec' || listType == 'all'){
+        //     this.props.actions.updateScrollable(listType, true);
+        // }
+        
         return (
             <div style={style.root}>
                 { this.tmpVideoList.map((uid)=> {
                     let tile = videos[uid];
+                    //排除空对象
+                    if(!tile) { return false; };
                     //直播状态
                     let liveStatusStyle = tile.live_status == 0 ? Object.assign({}, style.video.iconStatus, style.video.iconStatusOff) : Object.assign({}, style.video.iconStatus, style.video.iconStatusOn);
                     //直播列表

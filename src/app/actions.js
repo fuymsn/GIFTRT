@@ -37,6 +37,8 @@ export const UPDATE_ACTIVITY_DETAILS = 'UPDATE_ACTIVITY_DETAILS';
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 export const UPDATE_USER_TOKEN = 'UPDATE_USER_TOKEN';
 export const UPDATE_VIDEO_LISTS = 'UPDATE_VIDEO_LISTS';
+export const UPDATE_VIDEO_SCROLL_PAGE = 'UPDATE_VIDEO_SCROLL_PAGE';
+export const UPDATE_VIDEO_SCROLLABLE = 'UPDATE_VIDEO_SCROLLABLE';
 export const UPDATE_VIDEOS = 'UPDATE_VIDEOS';
 export const UPDATE_SNACKBAR = 'UPDATE_SNACKBAR';
 
@@ -52,6 +54,7 @@ export const disconnect = () => {
         type: DISCONNECT
     }
 }
+
 //收
 export const receiveMessage = (message) => {
     return {
@@ -239,7 +242,7 @@ export const fetchUserFollowing = ()=> {
                         return room.uid;
                     });
                     dispatch(updateVideos(_videos));
-                    dispatch(updateVideoLists(_videoLists));
+                    dispatch(updateVideoLists('following', _videoLists));
                     //更新其他列表
                     const state = getState();
                     // const Video = require('./utils/Video');
@@ -258,51 +261,39 @@ export const fetchUserFollowing = ()=> {
         });
     }
 }
-export const updateVideoLists = (videoLists)=> {
+
+//更新videolist列表
+export const updateVideoLists = (subreddit, videoLists)=> {
     return {
         type: UPDATE_VIDEO_LISTS,
+        subreddit,
         videoLists
     }
 }
+
+//更新翻页数据
+export const updateScrollPage = (subreddit, scrollPage) => {
+    return {
+        type: UPDATE_VIDEO_SCROLL_PAGE,
+        subreddit,
+        scrollPage
+    }
+}
+
+//更新是否可翻页标志位
+export const updateScrollable = (subreddit, isScrollable) => {
+    return {
+        type: UPDATE_VIDEO_SCROLLABLE,
+        subreddit,
+        isScrollable
+    }
+}
+
+//更新主播列表
 export const updateVideos = (videos)=> {
     return {
         type: UPDATE_VIDEOS,
         videos
-    }
-}
-export const fetchLobby = ()=> {
-    return (dispatch)=> {
-        return $.ajax({
-            url: '/m/index',
-            dataType: 'json',
-            type: 'GET',
-            data: {
-                '_': (new Date()).getTime(),
-            },
-            success: function (data) {
-                let _videoLists = {lobby_rec: [], lobby_all: []};
-                let _videos={};
-                // data.rec.data.forEach((room)=> {
-                //     _videoLists.lobby_rec[room.uid] = room
-                // });
-                // data.all.data.forEach((room)=> {
-                //     _videoLists.lobby_all[room.uid] = room
-                // });
-                _videoLists.lobby_rec=data.rec.data.map((room)=>{
-                    _videos[room.uid] = room;
-                    return room.uid;
-                });
-                _videoLists.lobby_all=data.all.data.map((room)=>{
-                    _videos[room.uid] = room;
-                    return room.uid;
-                });
-                dispatch(updateVideos(_videos));
-                dispatch(updateVideoLists(_videoLists));
-            },
-            error: function (ret) {
-                console.log(ret.responseText);
-            }
-        });
     }
 }
 
@@ -317,16 +308,39 @@ export const fetchVideoList = (type)=> {
                 '_': (new Date()).getTime(),
             },
             success: function (data) {
-                let _videos = {};
-                // data.rooms.forEach((room)=> {
-                //     list[room.uid] = room
-                // });
-                let idList=data.rooms.map((room)=>{
-                    _videos[room.uid] = room;
+
+                let videoList = {};
+                let lobbyIdList = [];
+
+                let idList = data.rooms.map((room, index)=>{
+
+                    //存储全部主播
+                    if(type == 'all'){
+                        videoList[room.uid] = room;
+                    }
+                    
+                    //生成大厅索引
+                    if(index < 4){
+                        lobbyIdList.push(room.uid);
+                    }
+                    
                     return room.uid;
                 });
-                dispatch(updateVideos(_videos));
-                dispatch(updateVideoLists({[type]: idList}));
+
+
+                //update 全部主播
+                dispatch(updateVideos(videoList));
+                dispatch(updateVideoLists(type, idList));
+                
+                //update 大厅
+                switch(type){
+                    case 'rec':
+                        dispatch(updateVideoLists('lobbyRec', lobbyIdList ));
+                        break;
+                    case 'all':
+                        dispatch(updateVideoLists('lobbyAll', lobbyIdList ));
+                        break;
+                }
 
             },
             error: function (ret) {

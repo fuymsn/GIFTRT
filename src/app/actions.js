@@ -1,4 +1,4 @@
-import $ from "./utils/JQuery";
+import $ from "jquery";
 import Video from "./utils/Video";
 import Common from "./utils/Common";
 
@@ -8,6 +8,14 @@ import Common from "./utils/Common";
 
 //chat item 随机id
 let nextChatId = 0;
+
+//alert(token);
+if(!Common.isLogin()){
+    //获取login
+    Common.getTokenFromServer();
+}
+
+Common.setAjaxHeader();
 
 //websocket 消息收发
 export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
@@ -196,7 +204,6 @@ export const fetchUserInfo = ()=> {
                     dispatch(updateUserInfo({userInfo: data}));
                 } else {
                     console.log('没有获取到token, /m/user/info没有获取到数据');
-                    //dispatch(Common.login());
                 }
             },
             error: function (ret) {
@@ -235,9 +242,9 @@ export const fetchUserFollowing = ()=> {
             },
             success: function (data) {
                 if (!(data.status == 0)) {
-                    let _videoLists = {following: []};
-                    let _videos={};
-                    _videoLists.following=data.map((room)=> {
+                    let _videoLists = [];
+                    let _videos = {};
+                    _videoLists = data.map((room)=> {
                         _videos[room.uid] = Object.assign(room, {following: true})
                         return room.uid;
                     });
@@ -251,8 +258,6 @@ export const fetchUserFollowing = ()=> {
                     //     dispatch(updateVideoLists());
                 } else {
                     console.log('没有获取到token，/m/user/following没有获取到数据');
-                    //获取token
-                    //dispatch(Common.login());
                 }
             },
             error: function (ret) {

@@ -1,4 +1,5 @@
 import MobileAction from './MobileAction';
+import $ from "jquery";
 
 class Common {
     //获取活动 banner图片url
@@ -36,16 +37,32 @@ class Common {
 
 	/**
 	 * 从android获取token，并入库localStorage
+	 * return: true:获取token成功，用户在登录状态中。false: 获取token失败，用户不在登录状态
 	 */
-	static login() {
-		let data = MobileAction.getToken();
-		//let data = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0NzUxNDQ0MTQsImV4cCI6MTQ3NzczNjQxNCwidWlkIjoiMTAwMDAiLCJ1c2VybmFtZSI6ImFkbWluQGFkbWluLmNvbSJ9.gC6gL_yhrNVE48tniwuYLmlqfcmmnD1V6Y2A2soyHvw';
+	static getTokenFromServer() {
+		let token = MobileAction.getToken();
+		//let data = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0Nzg1MzUxMjMsImV4cCI6MTQ4MTEyNzEyMywidWlkIjoiMTAwMDAiLCJ1c2VybmFtZSI6ImFkbWluQGFkbWluLmNvbSJ9.xvxwrKhnAp472oBUfFZwsN1tyFWhw-fThNYiNenSg50';
 		//alert(data);
 		//alert('token 获取成功');
 		//let data = '';
 		//if(!this.isLogin()){
-		window.localStorage.setItem('token', data);
+
+		//写入token
+		window.localStorage.setItem('token', token);
+		this.setAjaxHeader();
+
 		//}
+		//token返回值判定
+		return token.length > 0 ? true: false;
+	}
+
+	static setAjaxHeader(){
+		let token = window.localStorage.getItem('token');
+		let ajaxToken = token.length > 0 ? 'Bearer ' + token : '';
+		//写入ajax header setting
+		$.ajaxSetup({
+			headers: { 'Authorization': ajaxToken }
+		});
 	}
 
 }

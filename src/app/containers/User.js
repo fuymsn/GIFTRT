@@ -70,16 +70,28 @@ function mapDispatchToProps(dispatch) {
 //主题
 class User extends Component {
     componentDidMount() {
-
+        //判断本地是否登录
         if(!Common.isLogin()){
-            MobileAction.showLoginDialog();
+            //如果本地未登录，从服务端获取token
+            let isServerLogin = Common.getTokenFromServer();
+            if(isServerLogin){
+                this.loadInfoFromServer();
+            }else{
+                MobileAction.showLoginDialog();
+            }
+            
+        }else{
+            //已登录
+            this.loadInfoFromServer();
         }
 
+    }
+
+    loadInfoFromServer() {
         this.loadUserInfoFromServer();
-        if (Object.keys(this.props.following).length==0) {
+        if (this.props.following.items.length==0) {
             this.loadUserFollowingFromServer();
         }
-
     }
 
     handleEdit() {

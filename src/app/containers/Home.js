@@ -8,6 +8,7 @@ import * as actions from "../actions";
 import Title from "../components/Title";
 import Snackbar from "material-ui/Snackbar";
 import BasicAppBar from '../components/BasicAppBar';
+import Common from '../utils/Common';
 
 //聊天窗口头部
 
@@ -104,9 +105,29 @@ class Home extends Component {
         //加载首页其他两个列表数据
         this.loadVideoListFromServer('rec');
         this.loadVideoListFromServer('all');
+        
         //加载关注
         this.loadFollowingFromServer();
+
+        //初始化scroll组件
         this.handleScroll();
+    }
+
+    handleFollowingTab() {
+        //判断本地是否登录
+        if(!Common.isLogin()){
+            //如果本地未登录，从服务端获取token
+            let isServerLogin = Common.getTokenFromServer();
+            if(isServerLogin){
+                this.loadFollowingFromServer();
+            }
+            
+        }else{
+            //已登录
+            if (this.props.videoLists.following.items.length==0) {
+                this.loadFollowingFromServer();
+            }
+        }
     }
 
     //scroll 滚动加载处理。
@@ -122,15 +143,19 @@ class Home extends Component {
             //alert(scrollTop);
             //后期优化数据表现
             if( slideIndex == 0 || slideIndex == 3 ) return;
+            
+            //临界点（向下滚动功能）
+            let criticalPoint = (target.scrollHeight - target.offsetHeight - target.scrollTop) / target.offsetHeight;
 
-            if(scrollTop + target.clientHeight + 50 > target.scrollHeight && videoLists[this.LIST_TYPES[slideIndex].title].scrollable){
+            //临界点设置为0.02
+            if(criticalPoint < 0.02 && videoLists[this.LIST_TYPES[slideIndex].title].scrollable){
                 //scrollable 设置为false
                 this.props.actions.updateScrollable(this.LIST_TYPES[slideIndex].title, false);
                 this.LIST_TYPES[slideIndex].scrollPage++;
                 this.props.actions.updateScrollPage(this.LIST_TYPES[slideIndex].title, this.LIST_TYPES[slideIndex].scrollPage);
                 setTimeout(()=>{
                     this.props.actions.updateScrollable(this.LIST_TYPES[slideIndex].title, true);
-                }, 2000);
+                }, 50);
             }
             
         }.bind(this);
@@ -188,7 +213,7 @@ class Home extends Component {
                             <VideoList listType={ 'all' }/>
                         </div>
                     </Tab>
-                    <Tab label="我的关注" value={3} style={ tabStyle }>
+                    <Tab label="我的关注" value={3} style={ tabStyle } onActive={ this.handleFollowingTab.bind(this) }>
                         <div>
                             <Title title='我的关注'/>
                             <VideoList listType={ 'following' }/>

@@ -359,12 +359,30 @@ const activity = (state = initActivity, action) => {
 }
 
 /**
- * 常量
+ * 常量本地
+ */
+// const initInstances = {
+//     PIC_PATH: 'http://s.wuled.com/public',
+//     AVATAR_PATH: 'http://10.1.100.194:4869/',
+//     RANK_PATH: 'http://10.1.100.102',
+// }
+
+/**
+ * 常量联调环境
+ */
+// const initInstances = {
+//     PIC_PATH: 'http://10.1.100.102/public',
+//     AVATAR_PATH: 'http://10.1.100.194:4869/',
+//     RANK_PATH: 'http://10.1.100.102',
+// }
+
+/**
+ * 常量联调环境
  */
 const initInstances = {
-    PIC_PATH: 'http://s.wuled.com/public',
-    AVATAR_PATH: 'http://10.1.100.194:4869/',
-    RANK_PATH: 'http://10.1.100.102',
+    PIC_PATH: 'http://10.1.100.67/public',
+    AVATAR_PATH: 'http://10.1.100.67:4869/',
+    RANK_PATH: 'http://10.1.100.67',
 }
 
 const instances = (state = initInstances, action) => {

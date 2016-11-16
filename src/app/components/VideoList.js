@@ -146,7 +146,7 @@ class VideoList extends Component {
                 roomId: id
             });
             MobileAction.switchPage(json);
-            this.touched = true;
+            this.touched = false;
         }else{
             //过500毫秒 再变为false
             setTimeout(()=>{

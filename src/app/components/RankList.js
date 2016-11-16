@@ -91,7 +91,8 @@ const style = {
 
 function mapStateToProps(state){
     return {
-        avatarPath: state.instances.AVATAR_PATH
+        avatarPath: state.instances.AVATAR_PATH,
+        dropDownValue: state.rank.dropDownValue,
     }
 }
 
@@ -113,7 +114,7 @@ class RankList extends Component {
                 roomId: id
             });
             MobileAction.switchPage(json);
-            this.touched = true;
+            this.touched = false;
         }else{
             //过500毫秒 再变为false
             setTimeout(()=>{
@@ -126,7 +127,7 @@ class RankList extends Component {
 
     render() {
 
-        let { anchorList, avatarPath } = this.props;
+        let { anchorList, avatarPath, dropDownValue } = this.props;
 
         return (
             <div style={ style.container }>
@@ -147,9 +148,8 @@ class RankList extends Component {
                         <div style={ style.listItem.info }>
                             <div style={ style.listItem.infoTop}>
                                 <div style={ style.listItem.name }>{ anchor.username }</div>
-                                { anchor.roled == 3 ? <div style={ style.listItem.anchorExpLevel }>Lv.{ anchor.lv_exp }</div> : "" }
                                 { anchor.vip == "0" ? "": <IconLevel level={ anchor.vip } type='vip'/> }
-                                <IconLevel level={ anchor.lv_rich } type='rich'/>
+                                { dropDownValue == 0 ? <IconLevel level={ anchor.lv_exp } type='anchor'/> : <IconLevel level={ anchor.lv_rich } type='rich'/>}
                             </div>
                             <div style={ style.listItem.infoButtom }>
                                 收礼数：<Diamond value={ anchor.score } textStyle={ style.listItem.diamondText } />

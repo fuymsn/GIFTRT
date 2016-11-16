@@ -102,9 +102,9 @@ class Rank extends Component {
                     title={
                         <DropDownMenu
                             value={ dropDownValue }
-                            onChange={ (event, index, value) => {
+                            onChange={(event, index, value) => {
                                 this.handleDropDown(event, index, value)
-                            } }
+                            }}
                             underlineStyle={ style.dropDownMenu.underlineStyle }
                             labelStyle={ style.dropDownMenu.labelStyle }
                             style={ style.dropDownMenu.root }

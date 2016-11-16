@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/arrow-back';
-import FlatButton from 'material-ui/FlatButton';
 
 function handleLeftBtn() {
     window.history.back();

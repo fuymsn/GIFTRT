@@ -73,6 +73,23 @@ class Home extends Component {
 
     handleChange(value) {
         this.props.actions.setHomeTabIndex(value);
+
+        if(value == 3){
+            //判断本地是否登录
+            if(!Common.isLogin()){
+                //如果本地未登录，从服务端获取token
+                let isServerLogin = Common.getTokenFromServer();
+                if(isServerLogin){
+                    this.loadFollowingFromServer();
+                }
+                
+            }else{
+                //已登录
+                if (this.props.videoLists.following.items.length==0) {
+                    this.loadFollowingFromServer();
+                }
+            }
+        }
     };
 
     /**
@@ -111,23 +128,6 @@ class Home extends Component {
 
         //初始化scroll组件
         this.handleScroll();
-    }
-
-    handleFollowingTab() {
-        //判断本地是否登录
-        if(!Common.isLogin()){
-            //如果本地未登录，从服务端获取token
-            let isServerLogin = Common.getTokenFromServer();
-            if(isServerLogin){
-                this.loadFollowingFromServer();
-            }
-            
-        }else{
-            //已登录
-            if (this.props.videoLists.following.items.length==0) {
-                this.loadFollowingFromServer();
-            }
-        }
     }
 
     //scroll 滚动加载处理。
@@ -213,7 +213,7 @@ class Home extends Component {
                             <VideoList listType={ 'all' }/>
                         </div>
                     </Tab>
-                    <Tab label="我的关注" value={3} style={ tabStyle } onActive={ this.handleFollowingTab.bind(this) }>
+                    <Tab label="我的关注" value={3} style={ tabStyle }>
                         <div>
                             <Title title='我的关注'/>
                             <VideoList listType={ 'following' }/>

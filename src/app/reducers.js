@@ -377,13 +377,22 @@ const activity = (state = initActivity, action) => {
 // }
 
 /**
- * 常量联调环境
+ * 常量测试环境
  */
 const initInstances = {
     PIC_PATH: 'http://10.1.100.67/public',
-    AVATAR_PATH: 'http://10.1.100.67:4869/',
-    RANK_PATH: 'http://10.1.100.67',
+    AVATAR_PATH: 'http://10.1.100.194:4869/',
+    RANK_PATH: 'http://10.1.100.69',
 }
+
+/**
+ * 常量bar环境
+ */
+// const initInstances = {
+//     PIC_PATH: 'http://50.117.12.17/public',
+//     AVATAR_PATH: 'http://50.117.12.17:4869/',
+//     RANK_PATH: 'http://50.117.12.17',
+// }
 
 const instances = (state = initInstances, action) => {
     return state;

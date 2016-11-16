@@ -4,6 +4,7 @@ import { AppBar, DropDownMenu, MenuItem, IconButton, FlatButton, Toggle, RaisedB
 import IconChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import BasicAppBar from "../components/BasicAppBar";
 import MobileAction from "../utils/MobileAction";
+//import $ from "jquery";
 
 //样式
 const style = {
@@ -57,6 +58,11 @@ class Setting extends Component {
         MobileAction.switchPage(json);
     }
 
+    //版本更新
+    handleUpdateVersion(e) {
+        MobileAction.updateVersion();
+    }
+
     render() {
 
         let {dropDownValue, slideIndex, anchorLists} = this.props;
@@ -84,6 +90,20 @@ class Setting extends Component {
                         disabled={true} 
                     />
                 </List>
+                {/*
+                <List style={ style.list }>
+                    <ListItem 
+                        primaryText="版本更新" 
+                        rightIconButton={ <FlatButton 
+                            primary={true}
+                            label="检查更新"
+                            style={ style.clearButton }
+                            onTouchTap={ (e)=> this.handleUpdateVersion(e)}
+                        />}
+                        style={ style.listItem }
+                        disabled={true} 
+                    />
+                </List>*/}
                 <List style={ style.list }>
                     <ListItem primaryText="条款" rightIcon={<IconChevronRight />} style={ style.listItem } onTouchTap={ (e)=> this.handleLinkToInfo(e, {pageId: 'terms', title: '条款'}) } />
                     <ListItem primaryText="关于" rightIcon={<IconChevronRight />} style={ style.listItem } onTouchTap={ (e)=> this.handleLinkToInfo(e, {pageId: 'about', title: '关于'}) }/>

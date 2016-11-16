@@ -37,7 +37,29 @@ class MobileAction {
      * 返回string token，或者空字符串
      */
     static getToken(){
-         return window.mobileAction.getToken();
+        return window.mobileAction.getToken();
+    }
+
+    /**
+     * 获取移动端版本号
+     */
+    static getVersion(){
+        return window.mobileAction.getVersion();
+    }
+
+    /**
+     * 触发版本更新
+     */
+    static updateVersion(){
+        window.mobileAction.updateVersion();
+    }
+
+    /**
+     * 简易弹窗
+     * { title: '提示', content: '提示内容' }
+     */
+    static showToastDialog(json){
+        window.mobileAction.showToastDialog(json);
     }
 }
 

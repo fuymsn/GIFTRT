@@ -27,7 +27,7 @@ const muiTheme = getMuiTheme({
   appBar: {
     height: 48,
   },
-  fontFamily: 'Roboto, YouYuan, helvetica neue, hiragino sans gb, stheiti, microsoft yahei'
+  fontFamily: 'Arial, YouYuan, helvetica neue, hiragino sans gb, stheiti, microsoft yahei'
 });
 
 class Main extends Component {

@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui';
 //import VAppBar from '../components/VAppBar';
 import Icon from '../components/Icon';
 import BasicAppBar from '../components/BasicAppBar';
@@ -22,27 +21,43 @@ const style = {
 		flexDirection: 'column'
 	},
 
-	activityLists: {
+	activityContainer: {
 		display: 'flex',
 		flexDirection: 'column',
-		overflow: 'auto',
 		flex: 1,
 		paddingBottom: 60
 	},
 
+	activityLists: {
+		overflow: 'auto'
+	},
+
 	cardItem: {
-		margin: '5px 5px 0px 5px'
+		margin: '5px 5px 0px 5px',
+		borderRadius: 3,
+		backgroundColor: '#fff',
+		border: '1px solid #eee'
 	},
 
 	cardTitle:{
+		padding: '5px 0px',
 		fontSize: '20px'
 	},
 
 	cardMedia: {
-		overflow: 'hidden',
+		//overflow: 'hidden'
 	},
-	cardTitleContainer: {
-		padding: '5px 15px'
+	cardInfo: {
+		padding: '5px 10px'
+	},
+	cardImage: {
+		width: '100%',
+		display: 'block',
+		borderRadius: '4px 4px 0px 0px'
+	},
+	cardSubtitle: {
+		padding: '5px 0px',
+		color: '#ccc'
 	}
 }
 
@@ -104,30 +119,24 @@ class Activity extends Component{
 		return (
 			<div style={ style.container }>
                 <BasicAppBar title="活动" />
-				<div style={ style.activityLists }>
-					{activityList.map((item, index) => (
-						<Card 
-							style={ style.cardItem }
-							key={ item.id }
-							onTouchTap={ (e) => this.handleToDetail(e, item.id) }
-						>
-						    <CardMedia
-								style={ style.cardMedia }
-						    >
-						      <img src={ Common.getActivityBannerImageUrl(item.url) } />
-						    </CardMedia>
-						    <CardTitle 
-
-								title={ item.title } 
-								titleStyle={ style.cardTitle }
-
-								subtitle={ item.init_time }
-								style={ style.cardTitleContainer }
-								
-							/>
-						</Card>
-					))}
-
+				<div style={ style.activityContainer }>
+					<div style={ style.activityLists }>
+						{activityList.map((item, index) => (
+							<div 
+								style={ style.cardItem }
+								key={ item.id }
+								onTouchTap={ (e) => this.handleToDetail(e, item.id) }
+							>
+								<div style={ style.cardMedia }>
+								<img style={ style.cardImage } src={ Common.getActivityBannerImageUrl(item.url) } />
+								</div>
+								<div style={ style.cardInfo }>
+									<div style={ style.cardTitle }>{ item.title }</div>
+									<div style={ style.cardSubtitle }>{ item.init_time }</div>
+								</div>
+							</div>
+						))}
+					</div>
 				</div>
 			</div>
 		);

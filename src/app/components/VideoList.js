@@ -7,12 +7,14 @@ import Common from "../utils/Common";
 import MobileAction from "../utils/MobileAction";
 import VideoCover from "./VideoCover";
 import FollowNum from "./FollowNum";
+import objectAssign from "object-assign";
+Object.assign = objectAssign;
 
 const style = {
     root: {
         display: 'flex',
         flexWrap: 'wrap',
-        flex: 1,        
+        flex: 1,
     },
     gridList: {
         width: 500,
@@ -170,7 +172,7 @@ class VideoList extends Component {
     //设置视频背景图片
     getVideoImageUrl(userID, imageID) {
         let { instances } = this.props;
-        return /\d{13}/.test(imageID) ? (instances.PIC_PATH + "/images/anchorimg/" + userID + "_" + imageID.match(/\d{13}/)[0] + ".jpg") : instances.PIC_PATH + '/images/vzhubo.jpg'
+        return /\d{13}/.test(imageID) ? (instances.CDN_PATH + "/public/images/anchorimg/" + userID + "_" + imageID.match(/\d{13}/)[0] + ".jpg") : instances.CDN_PATH + '/public/images/vzhubo.jpg';
     }
 
     //会引起无限循环，以后修改

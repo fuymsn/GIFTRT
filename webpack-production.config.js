@@ -14,6 +14,12 @@ const config = {
     filename: 'app.js', // Name of output file
   },
   plugins: [
+    // Define production build to allow React to strip out unnecessary checks
+    new webpack.DefinePlugin({
+      'process.env':{
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
     // Minify the bundle
     new webpack.optimize.UglifyJsPlugin({
       compress: {
@@ -36,12 +42,13 @@ const config = {
       },
       {
         test: /\.js$/, // All .js files
-        loaders: ['babel-loader'], // react-hot is like browser sync and babel loads jsx and es6-7
+        loader: 'babel-loader', // react-hot is like browser sync and babel loads jsx and es6-7
+        //query: { cacheDirectory: './tmp/' },
         exclude: [nodeModulesPath],
       },
       { 
         test: /\.(jpe?g|png|gif|svg)$/i, 
-        loader: 'url?limit=10000!img?progressive=true' 
+        loader: 'url?limit=12000!img?progressive=true' 
       }
     ],
   },

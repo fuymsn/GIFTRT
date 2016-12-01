@@ -5,6 +5,8 @@
  */
 
 import React, { Component } from 'react';
+import objectAssign from "object-assign";
+Object.assign = objectAssign;
 
 const initStyle = {
     diamondWrapper: {

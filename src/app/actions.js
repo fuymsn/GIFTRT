@@ -3,9 +3,15 @@ import Video from "./utils/Video";
 import Common from "./utils/Common";
 
 /**
+ * 解决android 4.4 内核不支持 object-assign 问题
+ */
+import objectAssign from "object-assign";
+Object.assign = objectAssign;
+
+
+/**
  * ACTION 描述数据改变（描述了有事件发生）
  */
-
 //chat item 随机id
 let nextChatId = 0;
 
@@ -412,6 +418,16 @@ export const fetchAnchorRank = ()=> {
             dataType: "jsonp",
             jsonp: "callback",
             jsonpCallback: "cb",
+            beforeSend: function(xhr, settings) {
+                //尝试解决高防拦截问题
+                xhr.setRequestHeader('Pragma','no-cache');
+                xhr.setRequestHeader("Connection", "keep-alive");
+                xhr.setRequestHeader("Pragma", "no-cache");
+                xhr.setRequestHeader("Accept", "text/html, application/xhtml+xml, image/jxr, */*");
+                xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                xhr.setRequestHeader("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36");
+                xhr.setRequestHeader("DNT", "1");
+            },
             success: function (json) {
                 if (typeof json === 'object')
                     dispatch(updateRankAnchorLists(json));

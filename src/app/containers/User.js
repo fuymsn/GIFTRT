@@ -30,11 +30,12 @@ const style = {
         flex: 1,
         display: "flex",
         flexDirection: 'column',
-        overflow: 'auto'
+        overflow: 'auto',
+        margin: '0px 0px 60px 0px'
     },
 
     followingList: {
-        padding: '0px 0px 60px 0px'
+        
     },
 
     checkbox: {
@@ -137,13 +138,13 @@ class User extends Component {
                         <div className="user-info_avatar_wrapper">
                             <div style={{backgroundImage: "url(" + userInfo.headimg + ")"}}
                                  className="user-info_avatar"></div>
-                            <div className="user-info_avatar_level">LV {userInfo.lv_exp}</div>
+                            { userInfo.roled == "3" ? <div className="user-info_avatar_level">LV { userInfo.lv_exp }</div> : "" }
                         </div>
 
                         <div className="user-info_name_wrapper">
                             <div className="user-info_name">{userInfo.nickname}</div>
                             <IconLevel level={ userInfo.vip } type='vip'/>
-                            <IconLevel level={userInfo.lv_rich} type='rich'/>
+                            <IconLevel level={ userInfo.lv_rich } type='rich'/>
                         </div>
                         <div className="user-info_points">
                             <div className="user-info_points_text">余额</div>

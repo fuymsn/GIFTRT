@@ -21,12 +21,12 @@ export default (
         <Route path="home" component={ Home } />
         {/*<Route path="login" component={ Login } />*/}
         <Route path="search" component={ Search } />
-        <Route path="rank" component={ Rank } />
+        {/*<Route path="rank" component={ Rank } />*/}
         <Route path="activity" component={ Activity } />
         <Route path="activity/:id" component={ ActivityDetail } />
         <Route path="user" component={ User } />
         <Route path="user/edit" component={ UserInfoEdit } />
-        <Route path="video/:id" component={ Video } />
+        {/*<Route path="video/:id" component={ Video } />*/}
         <Route path="setting" component={ Setting } />
         <Route path="info/:id" component={ Info } />
     </Route>

@@ -2,8 +2,7 @@ import React, {Component, PropTypes} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import {Tabs, Tab} from "material-ui/Tabs";
-import {AppBar, DropDownMenu, MenuItem, IconButton} from "material-ui";
-import SwipeableViews from "react-swipeable-views";
+import {AppBar, DropDownMenu, MenuItem} from "material-ui";
 import RankList from "../components/RankList";
 import Icon from "../components/Icon";
 import * as actions from "../actions";
@@ -21,6 +20,7 @@ const style = {
         display: 'flex',
         flexDirection: 'column',
     },
+
     dropDownMenu: {
         root: { 
             display: "block", 
@@ -43,6 +43,33 @@ const style = {
             userSelect: 'none'
         }
     },
+
+    tabs: {
+        root: {
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1
+        },
+
+        tabItemContainerStyle: {
+            backgroundColor: '#fff',
+            display: 'block'
+        },
+        
+        contentContainerStyle: {
+            overflowX: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+        },
+
+        //tab的样式
+        tabStyle: {
+            color: '#555',
+            fontWeight: 'bold'
+        },
+    }
+
 };
 
 const mapStateToProps = (state) => {
@@ -64,7 +91,23 @@ class Rank extends Component {
     constructor() {
         super();
         this.RANK_TYPES = {0: 'rank_exp_', 1: 'rank_rich_'};
-        this.RANK_CATS = ['day', 'week', 'month', 'his'];
+        this.RANK_CATS = [{
+            cat: 'day',
+            title: '日榜',
+            index: 0,
+        }, {
+            cat: 'week',
+            title: '周榜',
+            index: 1,
+        }, {
+            cat: 'month',
+            title: '月榜',
+            index: 2,
+        }, {
+            cat: 'his',
+            title: '总榜',
+            index: 3
+        }];
     }
 
     handleTabs(value) {
@@ -86,15 +129,6 @@ class Rank extends Component {
     render() {
 
         let {dropDownValue, slideIndex, anchorLists} = this.props;
-
-        let tabsStyle = {
-            backgroundColor: this.context.muiTheme.palette.white
-        }
-
-        let tabStyle = {
-            color: this.context.muiTheme.palette.textColor,
-            fontWeight: 'bold'
-        }
 
         return (
             <div style={ style.container }>
@@ -119,32 +153,20 @@ class Rank extends Component {
                     }
                 />
                 <Tabs
-                    onChange={ (slideIndex) => {
-                        this.handleTabs(slideIndex)
-                    } }
+                    onChange={ (slideIndex) => { this.handleTabs(slideIndex) }}
                     value={ slideIndex }
-                    tabItemContainerStyle={ tabsStyle }
+                    style={ style.tabs.root }
+                    inkBarStyle={{ transition:'none' }}
+                    contentContainerStyle={ style.tabs.contentContainerStyle }
+                    tabItemContainerStyle={ style.tabs.tabItemContainerStyle }
                 >
-                    <Tab label="日榜" value={0} style={ tabStyle }/>
-                    <Tab label="周榜" value={1} style={ tabStyle }/>
-                    <Tab label="月榜" value={2} style={ tabStyle }/>
-                    <Tab label="总榜" value={3} style={ tabStyle }/>
+                    { this.RANK_CATS.map((item)=> {
+                        return <Tab label={item.title} value={item.index} style={ style.tabs.tabStyle } key={item.index}>
+                            <RankList 
+                                anchorList={ anchorLists[this.RANK_TYPES[dropDownValue] + item.cat] } />
+                        </Tab>
+                    })}
                 </Tabs>
-                <SwipeableViews
-                    index={ slideIndex }
-                    onChangeIndex={ (slideIndex) => {
-                        this.handleChange(slideIndex)
-                    } }
-                    style={ style.rankList }
-                    disabled={ true }
-                    animateTransitions={false}
-                >
-                { this.RANK_CATS.map((cat)=> {
-                    return <RankList 
-                        key={ this.RANK_TYPES[dropDownValue] + cat }
-                        anchorList={ anchorLists[this.RANK_TYPES[dropDownValue] + cat] } />
-                })}
-                </SwipeableViews>
             </div>
         );
     }

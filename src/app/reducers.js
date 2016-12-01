@@ -51,6 +51,8 @@ import {
 
 import Message from "./utils/Message";
 import Gift from "./utils/Gift";
+import objectAssign from "object-assign";
+Object.assign = objectAssign;
 
 const initialMessage = {
     conversation: [],
@@ -362,7 +364,7 @@ const activity = (state = initActivity, action) => {
  * 常量本地
  */
 // const initInstances = {
-//     PIC_PATH: 'http://s.wuled.com/public',
+//     CDN_PATH: 'http://s.wuled.com/public',
 //     AVATAR_PATH: 'http://10.1.100.194:4869/',
 //     RANK_PATH: 'http://10.1.100.102',
 // }
@@ -371,7 +373,7 @@ const activity = (state = initActivity, action) => {
  * 常量联调环境
  */
 // const initInstances = {
-//     PIC_PATH: 'http://10.1.100.102/public',
+//     CDN_PATH: 'http://10.1.100.102/public',
 //     AVATAR_PATH: 'http://10.1.100.194:4869/',
 //     RANK_PATH: 'http://10.1.100.102',
 // }
@@ -380,8 +382,17 @@ const activity = (state = initActivity, action) => {
  * 常量测试环境
  */
 const initInstances = {
-    PIC_PATH: 'http://10.1.100.67/public',
-    AVATAR_PATH: 'http://10.1.100.194:4869/',
+    //主播封面服务器
+    //线上：http://s.wuled.com
+    CDN_PATH: 'http://10.1.100.67',
+    
+
+    //头像服务器（在排行榜使用）
+    //线上：http://img.mmbroadcast.net
+    AVATAR_PATH: 'http://10.1.100.194:4869',
+    
+    //排行榜
+    //线上：http://p.wuled.com
     RANK_PATH: 'http://10.1.100.69',
 }
 
@@ -389,7 +400,7 @@ const initInstances = {
  * 常量bar环境
  */
 // const initInstances = {
-//     PIC_PATH: 'http://50.117.12.17/public',
+//     CDN_PATH: 'http://50.117.12.17/public',
 //     AVATAR_PATH: 'http://50.117.12.17:4869/',
 //     RANK_PATH: 'http://50.117.12.17',
 // }

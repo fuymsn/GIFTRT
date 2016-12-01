@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
-import ActionGrade from 'material-ui/svg-icons/action/grade';
-import Divider from 'material-ui/Divider';
-import Avatar from 'material-ui/Avatar';
-import {yellow500, grey300, brown300, transparent} from 'material-ui/styles/colors';
+import Avatar from './Avatar';
 import IconLevel from './IconLevel';
 import Diamond from './Diamond';
 import RankLevel from './RankLevel';
@@ -11,7 +8,7 @@ import MobileAction from "../utils/MobileAction";
 
 const style = {
     container: {
-        padding: '0px 0px 60px 0px'
+        margin: '0px 0px 60px 0px'
     },
     listItem: {
         root: {
@@ -91,7 +88,6 @@ const style = {
 
 function mapStateToProps(state){
     return {
-        avatarPath: state.instances.AVATAR_PATH,
         dropDownValue: state.rank.dropDownValue,
     }
 }
@@ -127,7 +123,7 @@ class RankList extends Component {
 
     render() {
 
-        let { anchorList, avatarPath, dropDownValue } = this.props;
+        let { anchorList, dropDownValue } = this.props;
 
         return (
             <div style={ style.container }>
@@ -144,7 +140,9 @@ class RankList extends Component {
                 }>
                     <RankLevel style={style.listItem.left } level={index} />
                     <div style={style.listItem.center}>
-                        <Avatar src={ avatarPath + anchor.headimg } style={ style.listItem.avatar }/>
+                        
+                        <Avatar src={ anchor.headimg } style={ style.listItem.avatar }/>
+                        
                         <div style={ style.listItem.info }>
                             <div style={ style.listItem.infoTop}>
                                 <div style={ style.listItem.name }>{ anchor.username }</div>

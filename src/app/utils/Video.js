@@ -1,6 +1,9 @@
 /**
  * Created by nicholas on 2016/10/5.
  */
+import objectAssign from "object-assign";
+Object.assign = objectAssign;
+
 class Video {
     /**
      * 初始化关注

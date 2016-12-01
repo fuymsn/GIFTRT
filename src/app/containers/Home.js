@@ -21,15 +21,36 @@ const style = {
     },
 
     tabs: {
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-    },
+        root: {
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+        },
 
-    tabsContainer: {
-        overflowX: 'hidden',
-        padding: "0px 5px 60px 5px"
-    }
+
+        tabItemContainerStyle: {
+            backgroundColor: '#fff',
+            display: 'block',
+            height: 50
+        },
+        
+        contentContainerStyle: {
+            overflowX: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+            padding: "0px 5px 5px 5px",
+        },
+
+        tabStyle: {
+            color: '#555',
+            fontWeight: 'bold'
+        },
+
+        tabContentContainerStyle: {
+            margin: '0px 0px 60px 0px'
+        }
+    },
 };
 
 const mapStateToProps = (state) => {
@@ -169,15 +190,6 @@ class Home extends Component {
     render() {
 
         let {slideIndex, snackbar} = this.props;
-        
-        let tabsStyle = {
-            backgroundColor: this.context.muiTheme.palette.white
-        }
-
-        let tabStyle = {
-            color: this.context.muiTheme.palette.textColor,
-            fontWeight: 'bold'
-        }
 
         return (
             <div style={ style.container }>
@@ -187,13 +199,14 @@ class Home extends Component {
                         this.handleChange(slideIndex);
                     } }
                     value={ slideIndex }
-                    tabItemContainerStyle={ tabsStyle }
-                    //inkBarStyle={{transition:'none'}}
-                    contentContainerStyle={ style.tabsContainer }
-                    style={ style.tabs }
+                    
+                    style={ style.tabs.root }
+                    inkBarStyle={{ transition:'none' }}
+                    contentContainerStyle={ style.tabs.contentContainerStyle }
+                    tabItemContainerStyle={ style.tabs.tabItemContainerStyle }
                 >
-                    <Tab label="直播大厅" value={0} style={ tabStyle } >
-                        <div id="hall">
+                    <Tab label="直播大厅" value={0} style={ style.tabs.tabStyle } >
+                        <div id="hall" style={ style.tabs.tabContentContainerStyle }>
                             <Title title='美女主播'/>
                             <VideoList listType={ 'lobbyRec' }/>
 
@@ -201,20 +214,23 @@ class Home extends Component {
                             <VideoList listType={ 'lobbyAll' }/>
                         </div>
                     </Tab>
-                    <Tab label="美女主播" value={1} style={ tabStyle }>
-                        <div>
+
+                    <Tab label="美女主播" value={1} style={ style.tabs.tabStyle }>
+                        <div style={ style.tabs.tabContentContainerStyle }>
                             <Title title='美女主播'/>
                             <VideoList listType={ 'rec' }/>
                         </div>
                     </Tab>
-                    <Tab label="全部主播" value={2} style={ tabStyle }>
-                        <div>
+
+                    <Tab label="全部主播" value={2} style={ style.tabs.tabStyle }>
+                        <div style={ style.tabs.tabContentContainerStyle }>
                             <Title title='全部主播'/>
                             <VideoList listType={ 'all' }/>
                         </div>
                     </Tab>
-                    <Tab label="我的关注" value={3} style={ tabStyle }>
-                        <div>
+
+                    <Tab label="我的关注" value={3} style={ style.tabs.tabStyle }>
+                        <div style={ style.tabs.tabContentContainerStyle }>
                             <Title title='我的关注'/>
                             <VideoList listType={ 'following' }/>
                         </div>

@@ -440,3 +440,23 @@ export const fetchAnchorRank = ()=> {
         });
     }
 };
+
+//获取活动列表数据
+export const fetchActivityList = () => {
+    return (dispatch) => {
+        return fetch('/m/activitylist')
+            .then(response => response.json())
+            .then(json => dispatch(updateActivityLists(json.data)))
+            .catch(ex => console.log('fetch failed', ex));
+    }
+}
+
+//获取活动详情页数据
+export const fetchActivityDetail = (activityId) => {
+    return (dispatch) => {
+        return fetch('/m/activitydetail/' + activityId)
+            .then(response => response.json())
+            .then(json => dispatch(updateActivityDetails(json)))
+            .catch(ex => console.log('fetch failed', ex));
+    }
+}

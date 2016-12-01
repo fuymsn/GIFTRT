@@ -42,21 +42,22 @@ class ActivityDetail extends Component{
 	loadActivityListFromServer() {
 
 		let activityId = this.props.params.id;
-		let that = this;
+		this.props.actions.fetchActivityDetail(activityId);
+		//let that = this;
 
-		$.ajax({
-			url: '/m/activitydetail/' + activityId,
-			dataType: 'json',
-			data: 'get',
-			success: function(ret){
-				console.log(ret);
-				that.props.actions.updateActivityDetails(ret);
-			},
+		// $.ajax({
+		// 	url: '/m/activitydetail/' + activityId,
+		// 	dataType: 'json',
+		// 	data: 'get',
+		// 	success: function(ret){
+		// 		console.log(ret);
+		// 		that.props.actions.updateActivityDetails(ret);
+		// 	},
 
-			error: function(ret){
-				console.log(ret.responseText);
-			}
-		});
+		// 	error: function(ret){
+		// 		console.log(ret.responseText);
+		// 	}
+		// });
 
 	}
 

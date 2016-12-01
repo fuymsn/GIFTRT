@@ -9,7 +9,7 @@ import BasicAppBar from '../components/BasicAppBar';
 import Common from '../utils/Common';
 import MobileAction from '../utils/MobileAction';
 
-import $ from 'jquery';
+//import $ from 'jquery';
 //import activityList from '../data/activityList';
 
 import * as actions from '../actions';
@@ -77,21 +77,21 @@ class Activity extends Component{
 	
 	loadActivityListFromServer() {
 
-		let that = this;
+		//let that = this;
+		this.props.actions.fetchActivityList();
 
-		$.ajax({
-			url: '/m/activitylist',
-			dataType: 'json',
-			type: 'GET',
-			success: function(ret){
-				that.props.actions.updateActivityLists(ret.data);
-			},
-			error: function(ret){
-				console.log(ret.responseText);
-			}
-		});
+		// $.ajax({
+		// 	url: '/m/activitylist',
+		// 	dataType: 'json',
+		// 	type: 'GET',
+		// 	success: function(ret){
+		// 		that.props.actions.updateActivityLists(ret.data);
+		// 	},
+		// 	error: function(ret){
+		// 		console.log(ret.responseText);
+		// 	}
+		// });
 
-		
 	}
 	
 	componentDidMount() {
@@ -125,6 +125,7 @@ class Activity extends Component{
 							<div 
 								style={ style.cardItem }
 								key={ item.id }
+								data-id={item.id}
 								onTouchTap={ (e) => this.handleToDetail(e, item.id) }
 							>
 								<div style={ style.cardMedia }>

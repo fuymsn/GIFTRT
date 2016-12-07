@@ -1,6 +1,7 @@
-import $ from "jquery";
 import Video from "./utils/Video";
 import Common from "./utils/Common";
+import fetch from "isomorphic-fetch";
+import getJsonp from "./utils/jsonp";
 
 /**
  * 解决android 4.4 内核不支持 object-assign 问题
@@ -14,14 +15,6 @@ Object.assign = objectAssign;
  */
 //chat item 随机id
 let nextChatId = 0;
-
-//alert(token);
-if(!Common.isLogin()){
-    //获取login
-    Common.getTokenFromServer();
-}
-
-Common.setAjaxHeader();
 
 //websocket 消息收发
 export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
@@ -197,26 +190,47 @@ export const updateSnackbar = (snackbar) => {
 
 //获取用户信息
 export const fetchUserInfo = ()=> {
-    return (dispatch)=> {
-        return $.ajax({
-            url: '/m/user/info',
-            dataType: 'json',
-            type: 'GET',
-            data: {
-                '_': (new Date()).getTime(),
-            },
-            success: function (data) {
-                if (!(data.status == 0)) {
-                    dispatch(updateUserInfo({userInfo: data}));
+    return (dispatch, getState)=> {
+        
+        // return $.ajax({
+        //     url: '/m/user/info',
+        //     dataType: 'json',
+        //     type: 'GET',
+        //     data: {
+        //         '_': (new Date()).getTime(),
+        //     },
+        //     success: function (data) {
+        //         if (!(data.status == 0)) {
+        //             dispatch(updateUserInfo({userInfo: data}));
+        //         } else {
+        //             console.log('没有获取到token, /m/user/info没有获取到数据');
+        //         }
+        //     },
+        //     error: function (ret) {
+        //         //获取token
+        //         console.log(ret.responseText);
+        //     },
+        // });
+        const token = Common.getAjaxHeader();
+        const state = getState();
+
+        return fetch('/m/user/info', {
+        //return fetch(state.instances.PHP_PATH + '/m/user/info', {
+                method: 'GET',
+                headers: {
+                    'Authorization': token
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                if (json.status) {
+                    dispatch(updateUserInfo({userInfo: json}));
                 } else {
                     console.log('没有获取到token, /m/user/info没有获取到数据');
                 }
-            },
-            error: function (ret) {
-                //获取token
-                console.log(ret.responseText);
-            },
-        });
+            })
+            .catch(ex => console.log('/m/user/info server fetch failed', ex));
+
     }
 };
 
@@ -239,37 +253,64 @@ export const updateUserToken = (token) => {
 export const fetchUserFollowing = ()=> {
     return (dispatch, getState)=> {
 
-        return $.ajax({
-            url: '/m/user/following',
-            dataType: 'json',
-            type: 'GET',
-            data: {
-                '_': (new Date()).getTime(),
-            },
-            success: function (data) {
-                if (!(data.status == 0)) {
+        // return $.ajax({
+        //     url: '/m/user/following',
+        //     dataType: 'json',
+        //     type: 'GET',
+        //     data: {
+        //         '_': (new Date()).getTime(),
+        //     },
+        //     success: function (data) {
+        //         if (!(data.status == 0)) {
+        //             let _videoLists = [];
+        //             let _videos = {};
+        //             _videoLists = data.map((room)=> {
+        //                 _videos[room.uid] = Object.assign(room, {following: true})
+        //                 return room.uid;
+        //             });
+        //             dispatch(updateVideos(_videos));
+        //             dispatch(updateVideoLists('following', _videoLists));
+        //             //更新其他列表
+        //             const state = getState();
+        //             // const Video = require('./utils/Video');
+        //             // _videoLists = Video.initFollowStatusForVideoLists(state.videoLists);
+        //             // if (_videoLists)
+        //             //     dispatch(updateVideoLists());
+        //         } else {
+        //             console.log('没有获取到token，/m/user/following没有获取到数据');
+        //         }
+        //     },
+        //     error: function (ret) {
+        //         console.log(ret.responseText);
+        //     },
+        // });
+
+        const token = Common.getAjaxHeader();
+        const state = getState();
+
+        return fetch('/m/user/following', {
+        //return fetch(state.instances.PHP_PATH + '/m/user/following', {
+                method: 'GET',
+                headers: {
+                    'Authorization': token
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                if (json) {
                     let _videoLists = [];
                     let _videos = {};
-                    _videoLists = data.map((room)=> {
+                    _videoLists = json.map((room)=> {
                         _videos[room.uid] = Object.assign(room, {following: true})
                         return room.uid;
                     });
                     dispatch(updateVideos(_videos));
                     dispatch(updateVideoLists('following', _videoLists));
-                    //更新其他列表
-                    const state = getState();
-                    // const Video = require('./utils/Video');
-                    // _videoLists = Video.initFollowStatusForVideoLists(state.videoLists);
-                    // if (_videoLists)
-                    //     dispatch(updateVideoLists());
                 } else {
                     console.log('没有获取到token，/m/user/following没有获取到数据');
                 }
-            },
-            error: function (ret) {
-                console.log(ret.responseText);
-            },
-        });
+            })
+            .catch(ex => console.log('/m/user/following server fetch failed', ex));
     }
 }
 
@@ -310,20 +351,63 @@ export const updateVideos = (videos)=> {
 
 //获取主播列表
 export const fetchVideoList = (type)=> {
-    return (dispatch)=> {
-        return $.ajax({
-            url: '/m/video/list/' + type,
-            dataType: 'json',
-            type: 'GET',
-            data: {
-                '_': (new Date()).getTime(),
-            },
-            success: function (data) {
+    return (dispatch, getState)=> {
+        // return $.ajax({
+        //     url: '/m/video/list/' + type,
+        //     dataType: 'json',
+        //     type: 'GET',
+        //     data: {
+        //         '_': (new Date()).getTime(),
+        //     },
+        //     success: function (data) {
 
+        //         let videoList = {};
+        //         let lobbyIdList = [];
+
+        //         let idList = data.rooms.map((room, index)=>{
+
+        //             //存储全部主播
+        //             if(type == 'all'){
+        //                 videoList[room.uid] = room;
+        //             }
+                    
+        //             //生成大厅索引
+        //             if(index < 4){
+        //                 lobbyIdList.push(room.uid);
+        //             }
+                    
+        //             return room.uid;
+        //         });
+
+
+        //         //update 全部主播
+        //         dispatch(updateVideos(videoList));
+        //         dispatch(updateVideoLists(type, idList));
+                
+        //         //update 大厅
+        //         switch(type){
+        //             case 'rec':
+        //                 dispatch(updateVideoLists('lobbyRec', lobbyIdList ));
+        //                 break;
+        //             case 'all':
+        //                 dispatch(updateVideoLists('lobbyAll', lobbyIdList ));
+        //                 break;
+        //         }
+
+        //     },
+        //     error: function (ret) {
+        //         console.log(ret.responseText);
+        //     }
+        // });
+        const state = getState();
+        //return fetch(state.instances.PHP_PATH + '/m/video/list/' + type)
+        return fetch('/m/video/list/' + type)
+            .then(response => response.json())
+            .then(json => {
                 let videoList = {};
                 let lobbyIdList = [];
 
-                let idList = data.rooms.map((room, index)=>{
+                let idList = json.rooms.map((room, index)=>{
 
                     //存储全部主播
                     if(type == 'all'){
@@ -352,87 +436,101 @@ export const fetchVideoList = (type)=> {
                         dispatch(updateVideoLists('lobbyAll', lobbyIdList ));
                         break;
                 }
-
-            },
-            error: function (ret) {
-                console.log(ret.responseText);
-            }
-        });
+            })
+            .catch(ex => console.log('/m/video/list/ server fetch failed', ex));
     }
 }
 
 //关注action
-export const toggleFollow = (uid, ret, tile)=> {
-    return (dispatch, getState)=> {
-        return $.ajax({
-            url: '/m/follow',
-            dataType: 'json',
-            type: 'post',
-            data: {
-                pid: uid,
-                ret: ret,
-                '_': (new Date()).getTime(),
-            },
-            success: function (data) {
-                dispatch(updateSnackbar({message:data.msg,open:true}));
-                if (data.status == 1) {
-                    const state = getState();
-                    let _videoLists = Object.assign({}, {following:state.videoLists.following});
-                    let _videos = {};
-                    // for (let type in _videoLists) {
-                    //     if (type == 'following') continue;
-                    //     if (_videoLists[type][uid] !== undefined)
-                    //         _videoLists[type][uid].following = !_videoLists[type][uid].following;
-                    // }
-                    if (ret == 1) {//我的关注-添加
-                        _videoLists.following.unshift(uid);
-                        _videos[uid] = Object.assign({},tile,{following:true});
-                    } else if (ret == 2) {
-                        //我的关注-删除
-                        let index=_videoLists.following.indexOf(uid);
-                        if (index!==-1)
-                            _videoLists.following.splice(index,1);
-                        _videos[uid] = Object.assign({},tile,{following:false});
-                    }
-                    dispatch(updateVideos(_videos));
-                    dispatch(updateVideoLists(_videoLists));
+// export const toggleFollow = (uid, ret, tile)=> {
+//     return (dispatch, getState)=> {
+//         return $.ajax({
+//             url: '/m/follow',
+//             dataType: 'json',
+//             type: 'post',
+//             data: {
+//                 pid: uid,
+//                 ret: ret,
+//                 '_': (new Date()).getTime(),
+//             },
+//             success: function (data) {
+//                 dispatch(updateSnackbar({message:data.msg,open:true}));
+//                 if (data.status == 1) {
+//                     const state = getState();
+//                     let _videoLists = Object.assign({}, {following:state.videoLists.following});
+//                     let _videos = {};
+//                     // for (let type in _videoLists) {
+//                     //     if (type == 'following') continue;
+//                     //     if (_videoLists[type][uid] !== undefined)
+//                     //         _videoLists[type][uid].following = !_videoLists[type][uid].following;
+//                     // }
+//                     if (ret == 1) {//我的关注-添加
+//                         _videoLists.following.unshift(uid);
+//                         _videos[uid] = Object.assign({},tile,{following:true});
+//                     } else if (ret == 2) {
+//                         //我的关注-删除
+//                         let index=_videoLists.following.indexOf(uid);
+//                         if (index!==-1)
+//                             _videoLists.following.splice(index,1);
+//                         _videos[uid] = Object.assign({},tile,{following:false});
+//                     }
+//                     dispatch(updateVideos(_videos));
+//                     dispatch(updateVideoLists(_videoLists));
 
-                } else {
-                    console.log(data);
-                }
-            },
-            error: function (ret) {
-                dispatch(updateSnackbar({message:ret.responseText,open:true}));
-                console.log(ret.responseText);
-            }
-        });
-    }
-};
+//                 } else {
+//                     console.log(data);
+//                 }
+//             },
+//             error: function (ret) {
+//                 dispatch(updateSnackbar({message:ret.responseText,open:true}));
+//                 console.log(ret.responseText);
+//             }
+//         });
+//     }
+// };
 
 //获取排行榜数据
 export const fetchAnchorRank = ()=> {
     return (dispatch, getState)=> {
-        const state=getState();
-        return $.ajax({
-            url: state.instances.RANK_PATH+'/video_gs/rank/data_ajax',
-            dataType: "jsonp",
-            jsonp: "callback",
-            jsonpCallback: "cb",
-            beforeSend: function(xhr, settings) {
-                //尝试解决高防拦截问题
-                xhr.setRequestHeader('Pragma','no-cache');
-                xhr.setRequestHeader("Connection", "keep-alive");
-                xhr.setRequestHeader("Pragma", "no-cache");
-                xhr.setRequestHeader("Accept", "text/html, application/xhtml+xml, image/jxr, */*");
-                xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-                xhr.setRequestHeader("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36");
-                xhr.setRequestHeader("DNT", "1");
-            },
-            success: function (json) {
+
+        //const state=getState();
+        // return $.ajax({
+        //     url: state.instances.RANK_PATH+'/video_gs/rank/data_ajax',
+        //     dataType: "jsonp",
+        //     jsonp: "callback",
+        //     jsonpCallback: "cb",
+        //     beforeSend: function(xhr, settings) {
+        //         //尝试解决高防拦截问题
+        //         xhr.setRequestHeader('Pragma','no-cache');
+        //         xhr.setRequestHeader("Connection", "keep-alive");
+        //         xhr.setRequestHeader("Pragma", "no-cache");
+        //         xhr.setRequestHeader("Accept", "text/html, application/xhtml+xml, image/jxr, */*");
+        //         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+        //         xhr.setRequestHeader("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36");
+        //         xhr.setRequestHeader("DNT", "1");
+        //     },
+        //     success: function (json) {
+        //         if (typeof json === 'object')
+        //             dispatch(updateRankAnchorLists(json));
+        //     },
+        //     error: function (json) {
+        //         if (console) {
+        //             console.log("rank data fetch error")
+        //         }
+        //     }
+        // });
+
+        const state = getState();
+
+        return getJsonp({
+            url: state.instances.RANK_PATH + '/video_gs/rank/data_ajax',
+            callbackName: 'cb',
+            type: 'jsonp',
+            onsuccess: function(json){
                 if (typeof json === 'object')
                     dispatch(updateRankAnchorLists(json));
             },
-            error: function (json) {
+            error: function(json){
                 if (console) {
                     console.log("rank data fetch error")
                 }
@@ -443,7 +541,9 @@ export const fetchAnchorRank = ()=> {
 
 //获取活动列表数据
 export const fetchActivityList = () => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const state = getState();
+        //return fetch(state.instances.PHP_PATH + '/m/activitylist')
         return fetch('/m/activitylist')
             .then(response => response.json())
             .then(json => dispatch(updateActivityLists(json.data)))
@@ -453,8 +553,10 @@ export const fetchActivityList = () => {
 
 //获取活动详情页数据
 export const fetchActivityDetail = (activityId) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const state = getState();
         return fetch('/m/activitydetail/' + activityId)
+        //return fetch(state.instances.PHP_PATH + '/m/activitydetail/' + activityId)
             .then(response => response.json())
             .then(json => dispatch(updateActivityDetails(json)))
             .catch(ex => console.log('fetch failed', ex));

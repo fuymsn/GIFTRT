@@ -9,9 +9,6 @@ import BasicAppBar from '../components/BasicAppBar';
 import Common from '../utils/Common';
 import MobileAction from '../utils/MobileAction';
 
-//import $ from 'jquery';
-//import activityList from '../data/activityList';
-
 import * as actions from '../actions';
 
 const style = {

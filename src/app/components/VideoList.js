@@ -136,27 +136,33 @@ class VideoList extends Component {
         e.preventDefault();
 
         // location.href = '#/video/' + id;
-
-        // if(!Common.isLogin()){
-        //     MobileAction.showLoginDialog();
-        // }else{
-
-        if(!this.touched){
-            let id = data.id;
-            let json = JSON.stringify({
-                dir: 'room',
-                roomId: id
-            });
-            MobileAction.switchPage(json);
-            this.touched = false;
-        }else{
-            //过500毫秒 再变为false
-            setTimeout(()=>{
-                this.touched = false;
-            }, 500);
-            
-        }
         
+        if(data.liveStatus){
+            //如果在线
+            if(!this.touched){
+                let id = data.id;
+                let json = JSON.stringify({
+                    dir: 'room',
+                    roomId: id
+                });
+                MobileAction.switchPage(json);
+                this.touched = false;
+            }else{
+                //过500毫秒 再变为false，防止双击屏幕的情况
+                setTimeout(()=>{
+                    this.touched = false;
+                }, 500);
+                
+            }
+        }else{
+            //如果不在线
+            let json = JSON.stringify({
+                title: '提示',
+                content: '主播还没有开播哟\n请选择已经在播的主播观看吧！'
+            });
+            MobileAction.showToastDialog(json);
+        }
+
     }
 
     /**
@@ -223,7 +229,7 @@ class VideoList extends Component {
                     return (
 
                         <div style={ style.video.root } key={tile.uid} onTouchTap={ (e) => {
-                                this.handleVideoTap(e, {id: tile.uid})
+                                this.handleVideoTap(e, { id: tile.uid, liveStatus: tile.live_status })
                             }}>
                             <div style={ style.video.rootInner }>
                                 <div style={ style.video.main }>

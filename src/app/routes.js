@@ -20,8 +20,8 @@ export default (
         {/*<Redirect from="/" to="/login" />*/}
         <Route path="home" component={ Home } />
         {/*<Route path="login" component={ Login } />*/}
-        <Route path="search" component={ Search } />
-        {/*<Route path="rank" component={ Rank } />*/}
+        {/*<Route path="search" component={ Search } />*/}
+        <Route path="rank" component={ Rank } />
         <Route path="activity" component={ Activity } />
         <Route path="activity/:id" component={ ActivityDetail } />
         <Route path="user" component={ User } />

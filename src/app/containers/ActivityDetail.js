@@ -3,12 +3,8 @@ import React, { Component } from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import $ from 'jquery';
-
 import BackAppBar from '../components/BackAppBar';
 import Common from '../utils/Common';
-
-//import activityList from '../data/activityList';
 
 import * as actions from '../actions';
 

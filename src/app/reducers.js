@@ -364,8 +364,9 @@ const activity = (state = initActivity, action) => {
  * 常量本地
  */
 // const initInstances = {
-//     CDN_PATH: 'http://s.wuled.com/public',
-//     AVATAR_PATH: 'http://10.1.100.194:4869/',
+//     PHP_PATH: 'http://www.vf.com',
+//     CDN_PATH: 'http://s.wuled.com',
+//     AVATAR_PATH: 'http://10.1.100.194:4869',
 //     RANK_PATH: 'http://10.1.100.102',
 // }
 
@@ -373,37 +374,62 @@ const activity = (state = initActivity, action) => {
  * 常量联调环境
  */
 // const initInstances = {
-//     CDN_PATH: 'http://10.1.100.102/public',
-//     AVATAR_PATH: 'http://10.1.100.194:4869/',
+//     PHP_PATH: 'http://10.1.100.102',
+//     CDN_PATH: 'http://10.1.100.102',
+//     AVATAR_PATH: 'http://10.1.100.194:4869',
 //     RANK_PATH: 'http://10.1.100.102',
 // }
 
 /**
  * 常量测试环境
  */
-const initInstances = {
-    //主播封面服务器
-    //线上：http://s.wuled.com
-    CDN_PATH: 'http://10.1.100.67',
+// const initInstances = {
+//     //php服务器
+//     //线上：http://m.wuled.com
+//     PHP_PATH: 'http://10.1.100.67',
+
+//     //主播封面服务器
+//     //线上：http://s.wuled.com
+//     CDN_PATH: 'http://10.1.100.67',
     
 
-    //头像服务器（在排行榜使用）
-    //线上：http://img.mmbroadcast.net
-    AVATAR_PATH: 'http://10.1.100.194:4869',
+//     //头像服务器（在排行榜使用）
+//     //线上：http://img.mmbroadcast.net
+//     AVATAR_PATH: 'http://10.1.100.194:4869',
     
-    //排行榜
-    //线上：http://p.wuled.com
-    RANK_PATH: 'http://10.1.100.69',
-}
+//     //排行榜
+//     //线上：http://p.wuled.com
+//     RANK_PATH: 'http://10.1.100.69',
+// }
 
 /**
  * 常量bar环境
  */
 // const initInstances = {
-//     CDN_PATH: 'http://50.117.12.17/public',
-//     AVATAR_PATH: 'http://50.117.12.17:4869/',
+//     PHP_PATH: 'http://50.117.12.17',
+//     CDN_PATH: 'http://50.117.12.17',
+//     AVATAR_PATH: 'http://50.117.12.17:4869',
 //     RANK_PATH: 'http://50.117.12.17',
 // }
+
+const initInstances = {
+    //php服务器
+    //线上：http://m.wuled.com
+    PHP_PATH: 'http://m.wuled.com',
+
+    //主播封面服务器
+    //线上：http://s.wuled.com
+    CDN_PATH: 'http://s.wuled.com',
+    
+
+    //头像服务器（在排行榜使用）
+    //线上：http://img.mmbroadcast.net
+    AVATAR_PATH: 'http://img.mmbroadcast.net',
+    
+    //排行榜
+    //线上：http://p.wuled.com
+    RANK_PATH: 'http://p.wuled.com',
+}
 
 const instances = (state = initInstances, action) => {
     return state;

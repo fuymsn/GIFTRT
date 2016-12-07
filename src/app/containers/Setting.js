@@ -4,7 +4,6 @@ import { AppBar, DropDownMenu, MenuItem, IconButton, FlatButton, Toggle, RaisedB
 import IconChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import BasicAppBar from "../components/BasicAppBar";
 import MobileAction from "../utils/MobileAction";
-//import $ from "jquery";
 
 //样式
 const style = {

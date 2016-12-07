@@ -72,18 +72,12 @@ function mapDispatchToProps(dispatch) {
 class User extends Component {
     componentDidMount() {
         //判断本地是否登录
-        if(!Common.isLogin()){
-            //如果本地未登录，从服务端获取token
-            let isServerLogin = Common.getTokenFromServer();
-            if(isServerLogin){
-                this.loadInfoFromServer();
-            }else{
-                MobileAction.showLoginDialog();
-            }
-            
-        }else{
+        if(Common.isLogin()){
             //已登录
             this.loadInfoFromServer();
+        }else{
+            //未登录
+            MobileAction.showLoginDialog();
         }
 
     }

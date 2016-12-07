@@ -96,29 +96,13 @@ class Home extends Component {
         this.props.actions.setHomeTabIndex(value);
 
         if(value == 3){
-            //判断本地是否登录
-            if(!Common.isLogin()){
-                //如果本地未登录，从服务端获取token
-                let isServerLogin = Common.getTokenFromServer();
-                if(isServerLogin){
-                    this.loadFollowingFromServer();
-                }
-                
-            }else{
-                //已登录
-                if (this.props.videoLists.following.items.length==0) {
-                    this.loadFollowingFromServer();
-                }
+
+            if (this.props.videoLists.following.items.length == 0) {
+                this.loadFollowingFromServer();
             }
+
         }
     };
-
-    /**
-     * 加载主页列表
-     */
-    // loadLobbyFromServer() {
-    //     this.props.actions.fetchLobby();
-    // };
 
     /**
      * 加载 推荐主播，关注主播 列表
@@ -137,10 +121,8 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        //加载大厅数据
-        //this.loadLobbyFromServer();
 
-        //加载首页其他两个列表数据
+        //加载首页两个列表数据
         this.loadVideoListFromServer('rec');
         this.loadVideoListFromServer('all');
         

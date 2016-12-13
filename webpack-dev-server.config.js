@@ -32,6 +32,7 @@ const config = {
     new webpack.HotModuleReplacementPlugin(),
     // Allows error warnings but does not stop compiling.
     new webpack.NoErrorsPlugin(),
+
     // Moves files
     new TransferWebpackPlugin([
       {from: 'www'},
@@ -39,6 +40,7 @@ const config = {
     // Extract css files
     new ExtractTextPlugin('main.css')
   ],
+
   module: {
     loaders: [
       {
@@ -52,6 +54,7 @@ const config = {
       //   test: /\.less$/,
       //   loader: ExtractTextPlugin.extract('css!less')
       // }
+      
       {
         test: /\.less$/,
         loader: "style!css!less"
@@ -65,5 +68,4 @@ const config = {
   },
 };
 
-console.log('buildPath:' + buildPath);
 module.exports = config;

@@ -61,6 +61,7 @@ class MobileAction {
     static showToastDialog(json){
         window.mobileAction.showToastDialog(json);
     }
+
 }
 
 export default MobileAction;

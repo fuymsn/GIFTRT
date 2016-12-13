@@ -22,11 +22,23 @@ class Icon extends Component{
         //背景图片
         let backgroundImage = "url(images/" + icon +".png)";
         //icon背景排列
-        let iconStyle = { backgroundImage: backgroundImage };
+        let iconCommonStyle = { backgroundImage: backgroundImage };
         //appbar头部样式
-        let logoStyle = type == "logo" ? { height: '30px', width: '30px', position: 'relative', top: '9px' } : {};
+        let iconStyle = {};
+
+        switch(type){
+            case 'logo':
+                iconStyle = { height: '30px', width: '30px', position: 'relative', top: '9px' }
+                break;
+            case 'room':
+                iconStyle = { height: '25px', width: '25px', margin: '8px 8px 0 0' }
+                break;
+            default:
+                break;
+        }
+        
         //reset style
-        let styleOption = Object.assign({}, initStyle, iconStyle, logoStyle, style);
+        let styleOption = Object.assign({}, initStyle, iconCommonStyle, iconStyle, style);
         
         return (
             <div style={ styleOption } ></div>

@@ -412,6 +412,9 @@ const activity = (state = initActivity, action) => {
 //     RANK_PATH: 'http://50.117.12.17',
 // }
 
+/**
+ * 线上环境
+ */
 const initInstances = {
     //php服务器
     //线上：http://m.wuled.com
@@ -421,7 +424,6 @@ const initInstances = {
     //线上：http://s.wuled.com
     CDN_PATH: 'http://s.wuled.com',
     
-
     //头像服务器（在排行榜使用）
     //线上：http://img.mmbroadcast.net
     AVATAR_PATH: 'http://img.mmbroadcast.net',

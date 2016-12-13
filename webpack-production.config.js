@@ -3,15 +3,20 @@ const path = require('path');
 const buildPath = path.resolve(__dirname, 'build');
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
-  entry: [path.join(__dirname, '/src/app/app.js')],
+  entry:{
+    app: [path.join(__dirname, '/src/app/app.js')],
+    vendor: ['react', 'redux', 'react-redux', 'material-ui']
+  } ,
   // Render source-map file for final build
   devtool: 'source-map',
   // output config
   output: {
     path: buildPath, // Path of output file
     filename: 'app.js', // Name of output file
+    publicPath: 'http://s.wuled.com/mobile/build/' //线上环境html cdn
   },
   plugins: [
     // Define production build to allow React to strip out unnecessary checks
@@ -29,10 +34,17 @@ const config = {
     }),
     // Allows error warnings but does not stop compiling.
     new webpack.NoErrorsPlugin(),
-    // Transfer Files
+
+    new HtmlWebpackPlugin({
+      title: '第一坊',
+      template: 'src/template/index.html'
+    }),
+    // Transfer Files, 将src/www 下的images 拷贝到 build
     new TransferWebpackPlugin([
-      {from: 'www'},
-    ], path.resolve(__dirname, 'src')),
+      {from: 'images', to: 'images'},
+    ], path.resolve(__dirname, 'src/www')),
+
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
   ],
   module: {
     loaders: [
@@ -49,7 +61,16 @@ const config = {
       { 
         test: /\.(jpe?g|png|gif|svg)$/i, 
         loader: 'url?limit=12000!img?progressive=true' 
-      }
+      },
+      // {
+      //   test: /\.html$/,
+      //   loader: 'string-replace',
+      //   query: {
+      //     multiple: [
+      //       { search: '$app.js', replace: 'abc' }
+      //     ]
+      //   }
+      // }
     ],
   },
 };

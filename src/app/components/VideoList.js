@@ -7,6 +7,7 @@ import Common from "../utils/Common";
 import MobileAction from "../utils/MobileAction";
 import VideoCover from "./VideoCover";
 import FollowNum from "./FollowNum";
+import Icon from "./Icon";
 import objectAssign from "object-assign";
 Object.assign = objectAssign;
 
@@ -68,13 +69,17 @@ const style = {
         },
 
         iconStatusOn: {
-            backgroundImage: 'url(images/live-status-on.png)',
+            backgroundImage: 'url(./images/live-status-on.png)',
         },
 
         iconStatusOff: {
-            backgroundImage: 'url(images/live-status-off.png)',
+            backgroundImage: 'url(./images/live-status-off.png)',
         },
 
+        iconInfo: {
+            display: 'flex',
+            flexDirection: 'row-reverse'
+        },
         name: {
             width: '100%',
             position: 'absolute',
@@ -138,6 +143,7 @@ class VideoList extends Component {
         // location.href = '#/video/' + id;
         
         if(data.liveStatus){
+
             //如果在线
             if(!this.touched){
                 let id = data.id;
@@ -146,14 +152,14 @@ class VideoList extends Component {
                     roomId: id
                 });
                 MobileAction.switchPage(json);
-                this.touched = false;
-            }else{
+                this.touched = true;
+                
                 //过500毫秒 再变为false，防止双击屏幕的情况
-                setTimeout(()=>{
+                setTimeout(() => {
                     this.touched = false;
                 }, 500);
-                
             }
+
         }else{
             //如果不在线
             let json = JSON.stringify({
@@ -194,6 +200,7 @@ class VideoList extends Component {
     //     }
     // }
 
+    //tid == 2 为密码房间, tid == 4 预约房间
     render() {
 
         let { videoLists, listType, videos } = this.props;
@@ -239,7 +246,14 @@ class VideoList extends Component {
                                         children={
                                             <div style={ style.video.coverContainer}>
                                                 <div style={ liveStatusStyle }></div>
-                                                <div style={ style.video.iconInfo }></div>
+                                                <div style={ style.video.iconInfo }>
+                                                    {/* 密码房间 */}
+                                                    { tile.tid == 2 && <Icon type='room' icon='room-secret' /> }
+                                                    {/* 限制房间 */}
+                                                    { tile.enterRoomlimit == 1 && <Icon type='room' icon='room-limited' />}
+                                                    {/* 一对一房间 */}
+                                                    { tile.tid == 4 && <Icon type='room' icon='room-1v1' />}
+                                                </div>
                                                 <div style={ style.video.coverInfo }></div>
                                             </div>
                                         }

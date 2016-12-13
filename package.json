@@ -38,6 +38,7 @@
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
+    "string-replace-webpack-plugin": "0.0.4",
     "style-loader": "^0.13.1",
     "transfer-webpack-plugin": "^0.1.4",
     "url-loader": "^0.5.7",

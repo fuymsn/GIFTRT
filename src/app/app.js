@@ -12,6 +12,7 @@ import reducers from './reducers';
 import * as actions from './actions';
 
 import WS from './utils/WS.js';
+import IOSAction from './utils/IOSAction';
 
 
 

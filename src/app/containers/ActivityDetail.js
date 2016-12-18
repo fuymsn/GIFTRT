@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import BackAppBar from '../components/BackAppBar';
 import Common from '../utils/Common';
 
 import * as actions from '../actions';
@@ -75,7 +73,6 @@ class ActivityDetail extends Component{
 
 		return (
 			<div style={ style.container }>
-				{/*<BackAppBar title='女神降临' />*/}
 				<div>
 					{ detail }
 				</div>

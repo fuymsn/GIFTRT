@@ -8,7 +8,7 @@ import { RaisedButton, Checkbox, TextField } from 'material-ui';
 import {Toolbar, ToolbarSeparator, ToolbarGroup} from 'material-ui/Toolbar';
 
 //聊天窗口头部
-import VAppBar from '../components/VAppBar';
+import AppBar from '../components/AppBar';
 import VideoList from '../components/VideoList';
 
 //data
@@ -63,7 +63,7 @@ class Search extends Component {
 
     return (
     <div style={ styles.container } >
-      <VAppBar title="搜索" />
+      <AppBar title="搜索" />
       <Toolbar style={styles.toolBar}>
         <ToolbarGroup style={styles.toolBarGroup}>
           <TextField hintText="主播名或主播ID" fullWidth={true} ref="chatInput"/>

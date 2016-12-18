@@ -26,7 +26,7 @@ class Common {
 	 */
 	static getTokenFromServer() {
 		let token = MobileAction.getToken();
-		//let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0Nzg1MzUxMjMsImV4cCI6MTQ4MTEyNzEyMywidWlkIjoiMTAwMDAiLCJ1c2VybmFtZSI6ImFkbWluQGFkbWluLmNvbSJ9.xvxwrKhnAp472oBUfFZwsN1tyFWhw-fThNYiNenSg50';
+		//let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0ODIwNzM5MzgsImV4cCI6MTQ4NDY2NTkzOCwidWlkIjoiMTAxMTExMTcwIiwidXNlcm5hbWUiOiJ5b3VuZ0BxcS5jb20ifQ.CFriXX4NqbLpVGqVooOaglBwqG7bNUZtM7oNyBTkpuY';
 		//alert(data);
 		//alert('token 获取成功');
 		//let data = '';

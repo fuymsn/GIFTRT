@@ -28,10 +28,13 @@ class Icon extends Component{
 
         switch(type){
             case 'logo':
-                iconStyle = { height: '30px', width: '30px', position: 'relative', top: '9px' }
+                iconStyle = { height: '30px', width: '30px', position: 'relative'}
                 break;
             case 'room':
                 iconStyle = { height: '25px', width: '25px', margin: '8px 8px 0 0' }
+                break;
+            case 'list':
+                iconStyle = { height: '22px', width: '12px', margin: '14px 20px 0 0' }
                 break;
             default:
                 break;

@@ -139,14 +139,44 @@ class VideoList extends Component {
     handleVideoTap(e, data) {
 
         e.preventDefault();
-
         // location.href = '#/video/' + id;
         
-        if(data.liveStatus){
+        //是否在直播
+        if(data.live_status){
 
+            if(data.tid == 2){
+                //密码房间
+                let json = JSON.stringify({
+                    title: '提示',
+                    content: '手机端的密码房间暂不对外开放，敬请期待！'
+                });
+                MobileAction.showToastDialog(json);
+                return;
+            }
+
+            if(data.tid == 4){
+                //如果不在线
+                let json = JSON.stringify({
+                    title: '提示',
+                    content: '手机端一对一房间暂时不对外开放，敬请期待！'
+                });
+                MobileAction.showToastDialog(json);
+                return;
+            }
+
+            if(data.enterRoomlimit == 1 ){
+                //如果不在线
+                let json = JSON.stringify({
+                    title: '提示',
+                    content: '手机端限制房间暂时不对外开放，敬请期待！'
+                });
+                MobileAction.showToastDialog(json);
+                return;
+            }
+            
             //如果在线
             if(!this.touched){
-                let id = data.id;
+                let id = data.uid;
                 let json = JSON.stringify({
                     dir: 'room',
                     roomId: id
@@ -235,8 +265,8 @@ class VideoList extends Component {
                     //直播列表
                     return (
 
-                        <div style={ style.video.root } key={tile.uid} onTouchTap={ (e) => {
-                                this.handleVideoTap(e, { id: tile.uid, liveStatus: tile.live_status })
+                        <div style={ style.video.root } key={tile. uid} onTouchTap={ (e) => {
+                                this.handleVideoTap(e, tile)
                             }}>
                             <div style={ style.video.rootInner }>
                                 <div style={ style.video.main }>

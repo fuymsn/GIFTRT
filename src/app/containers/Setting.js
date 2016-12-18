@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from "react";
-import {List, ListItem} from 'material-ui/List';
-import { AppBar, DropDownMenu, MenuItem, IconButton, FlatButton, Toggle, RaisedButton } from "material-ui";
-import IconChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
-import BasicAppBar from "../components/BasicAppBar";
 import MobileAction from "../utils/MobileAction";
+import Button from "../components/Button";
+import List from "../components/List";
+import ListItem from "../components/ListItem";
+import Icon from "../components/Icon";
 
 //样式
 const style = {
@@ -12,19 +12,18 @@ const style = {
         flexDirection: 'column',
         height: '100%'
     },
-    list:{
-        marginTop: '10px'
-    },
     listItem: {
         backgroundColor: '#fff'
     },
     clearButton: {
         margin: '6px 6px 0px 0px'
     },
-    buttonBox: {
-        margin: '10px 0',
-        padding: 10
+
+    logoutButton: {
+        paddingLeft: '15px',
+        paddingRight: '15px' 
     }
+
 };
 
 //主题
@@ -70,17 +69,17 @@ class Setting extends Component {
             <div style={ style.container }>
                 {/*<List style={ style.list }>
                     <ListItem 
-                        primaryText="消息提醒" 
+                        label="消息提醒" 
                         rightToggle={<Toggle /> }
                         style={ style.listItem }
                         disabled={true} 
                     />
                 </List>*/}
-                <List style={ style.list }>
+                <List>
                     <ListItem 
-                        primaryText="清除缓存" 
-                        rightIconButton={ <FlatButton 
-                            primary={true}
+                        label="清除缓存" 
+                        elementRight={ <Button 
+                            type="flat"
                             label="立即清除"
                             style={ style.clearButton }
                             onTouchTap={ (e)=>{ this.handleClearCache(e) } }
@@ -92,7 +91,7 @@ class Setting extends Component {
                 {/*
                 <List style={ style.list }>
                     <ListItem 
-                        primaryText="版本更新" 
+                        label="版本更新" 
                         rightIconButton={ <FlatButton 
                             primary={true}
                             label="检查更新"
@@ -103,13 +102,13 @@ class Setting extends Component {
                         disabled={true} 
                     />
                 </List>*/}
-                <List style={ style.list }>
-                    <ListItem primaryText="条款" rightIcon={<IconChevronRight />} style={ style.listItem } onTouchTap={ (e)=> this.handleLinkToInfo(e, {pageId: 'terms', title: '条款'}) } />
-                    <ListItem primaryText="关于" rightIcon={<IconChevronRight />} style={ style.listItem } onTouchTap={ (e)=> this.handleLinkToInfo(e, {pageId: 'about', title: '关于'}) }/>
+                <List>
+                    <ListItem label="条款" iconRight={<Icon type="list" icon="list-arrow-right"/>} style={ style.listItem } onTouchTap={ (e)=> this.handleLinkToInfo(e, {pageId: 'terms', title: '条款'}) } />
+                    <ListItem label="关于" iconRight={<Icon type="list" icon="list-arrow-right"/>} style={ style.listItem } onTouchTap={ (e)=> this.handleLinkToInfo(e, {pageId: 'about', title: '关于'}) }/>
                 </List>
-                <div style={ style.buttonBox }>
-                    <RaisedButton label="退出登录" primary={true} fullWidth={true} onTouchTap={ (e)=>{this.handleLogout(e) } } />
-                </div>
+                <List style={ style.logoutButton }>
+                    <Button label="退出登录" primary={true} fullWidth={true} onTouchTap={ (e)=>{this.handleLogout(e) } } />
+                </List>
             </div>
         );
     }

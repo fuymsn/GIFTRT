@@ -8,7 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const config = {
   entry:{
     app: [path.join(__dirname, '/src/app/app.js')],
-    vendor: ['react', 'redux', 'react-redux', 'material-ui']
+    vendor: ['react', 'react-dom', 'redux', 'redux-thunk', 'react-redux', 'react-router', 'object-assign', "deep-assign", 'isomorphic-fetch', 'react-tap-event-plugin']
   } ,
   // Render source-map file for final build
   devtool: 'source-map',

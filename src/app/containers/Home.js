@@ -1,14 +1,16 @@
 import React, {Component, PropTypes} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {Tabs, Tab} from "material-ui/Tabs";
+//import {Tabs, Tab} from "material-ui/Tabs";
 
 import VideoList from "../components/VideoList";
 import * as actions from "../actions";
 import Title from "../components/Title";
-import Snackbar from "material-ui/Snackbar";
-import BasicAppBar from '../components/BasicAppBar';
+//import Snackbar from "material-ui/Snackbar";
+import AppBar from '../components/AppBar';
 import Common from '../utils/Common';
+import Icon from '../components/Icon';
+import Tabs from '../components/Tabs';
 
 //聊天窗口头部
 
@@ -48,7 +50,8 @@ const style = {
         },
 
         tabContentContainerStyle: {
-            margin: '0px 0px 60px 0px'
+            margin: '0px 0px 60px 0px',
+            padding: "0px 5px 5px 5px",
         }
     },
 };
@@ -172,11 +175,55 @@ class Home extends Component {
     render() {
 
         let {slideIndex, snackbar} = this.props;
+        let tabStyleActive = {
+            height: 'initial',
+            overflow: 'initial'
+        }
+
+        let tabStyle = {
+            height: '0px',
+            overflow: 'hidden'
+        }
 
         return (
             <div style={ style.container }>
-                <BasicAppBar title="大厅" />
-                <Tabs
+                <AppBar title="大厅" elementLeft={
+                    <Icon icon="logo-white" type="logo"/>
+                } />
+
+                <Tabs 
+                    value={ slideIndex }
+                    onChange={(slideIndex) => {
+                        this.handleChange(slideIndex);
+                    }} >
+                    <div label="直播大厅" value={0} style={ tabStyleActive }>
+                        <div id="hall" style={ style.tabs.tabContentContainerStyle }>
+                            <Title title='美女主播'/>
+                            <VideoList listType={ 'lobbyRec' }/>
+
+                            <Title title='全部主播'/>
+                            <VideoList listType={ 'lobbyAll' }/>
+                        </div></div>
+                    <div label="美女主播" value={1} style={ tabStyle }>
+                        <div style={ style.tabs.tabContentContainerStyle }>
+                            <Title title='美女主播'/>
+                            <VideoList listType={ 'rec' }/>
+                        </div>
+                    </div>
+                    <div label="全部主播" value={2} style={ tabStyle }>
+                        <div style={ style.tabs.tabContentContainerStyle }>
+                            <Title title='全部主播'/>
+                            <VideoList listType={ 'all' }/>
+                        </div>
+                    </div>
+                    <div label="我的关注" value={3} style={ tabStyle }>
+                        <div style={ style.tabs.tabContentContainerStyle }>
+                            <Title title='我的关注'/>
+                            <VideoList listType={ 'following' }/>
+                        </div>
+                    </div>
+                </Tabs>
+                {/*<Tabs
                     onChange={ (slideIndex) => {
                         this.handleChange(slideIndex);
                     } }
@@ -217,24 +264,20 @@ class Home extends Component {
                             <VideoList listType={ 'following' }/>
                         </div>
                     </Tab>
-                </Tabs>
+                </Tabs>*/}
 
-                <Snackbar
+                {/*<Snackbar
                     open={snackbar.open}
                     message={snackbar.message}
                     autoHideDuration={snackbar.autoHideDuration}
                     //action={snackbar.action}
                     //onActionTouchTap={this.handleActionTouchTap}
                     onRequestClose={this.handleSnackbarRequestClose.bind(this)}
-                />
+                />*/}
             </div>
         );
     }
 }
 
-
-Home.contextTypes = {
-    muiTheme: PropTypes.object.isRequired,
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

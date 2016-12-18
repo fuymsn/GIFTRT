@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { RaisedButton, Checkbox, TextField } from 'material-ui';
 
 //聊天窗口头部
-import VAppBar from '../components/VAppBar';
+import AppBar from '../components/AppBar';
 //actions
 import * as ChatActions from '../actions';
 //样式
@@ -54,7 +54,7 @@ class Login extends Component {
     return (
 
       <div>
-        <VAppBar title="登录" />
+        <AppBar title="登录" />
         <div style={ styles.container}>
           <TextField
               //hintText="Hint Text"

@@ -103,20 +103,31 @@ class RankList extends Component {
         
         e.preventDefault();
 
-        if(!this.touched){
-            let id = data.id;
-            let json = JSON.stringify({
-                dir: 'room',
-                roomId: id
-            });
-            MobileAction.switchPage(json);
-            this.touched = false;
-        }else{
-            //过500毫秒 再变为false
-            setTimeout(()=>{
+        if(data.live_status){
+
+            if(!this.touched){
+                let id = data.uid;
+                let json = JSON.stringify({
+                    dir: 'room',
+                    roomId: id
+                });
+                MobileAction.switchPage(json);
                 this.touched = false;
-            }, 500);
-            
+
+                //过500毫秒 再变为false
+                setTimeout(()=>{
+                    this.touched = false;
+                }, 500);
+                
+            }
+
+        }else{
+            //如果不在线
+            let json = JSON.stringify({
+                title: '提示',
+                content: '主播还没有开播哟\n请选择已经在播的主播观看吧！'
+            });
+            MobileAction.showToastDialog(json);
         }
 
     }
@@ -134,7 +145,7 @@ class RankList extends Component {
                     className='rank-list-item'
                     onTouchTap={ (e)=>{
                         if(anchor.roled == 3){
-                            this.handleVideoTap(e, {id: anchor.uid });
+                            this.handleVideoTap(e, anchor);
                         }
                     }
                 }>

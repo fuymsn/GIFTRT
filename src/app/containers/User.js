@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {white} from "material-ui/styles/colors";
-import { IconButton, Snackbar } from "material-ui";
+//import { IconButton, Snackbar } from "material-ui";
 
 import IconLevel from "../components/IconLevel";
 import Diamond from "../components/Diamond";
@@ -44,7 +43,8 @@ const style = {
 
     setting: {
         position: "absolute",
-        left: "0px"
+        left: "10px",
+        padding: '5px'
     },
 
     edit: {
@@ -116,12 +116,10 @@ class User extends Component {
         return (
             <div style={ style.container }>
                 <div className="user-info">
-                    <IconButton
-                        style={ style.setting }
-                        onTouchTap={ (e) => this.handleSetting(e) }
-                    >
-                        <Icon icon="setting"/>
-                    </IconButton>
+
+                    <div style={ style.setting } onTouchTap={ (e) => this.handleSetting(e) }>
+                        <Icon icon="setting" />
+                    </div>
                     {/*<IconButton
                         style={ style.edit }
                         onTouchTap={ () => this.handleEdit() }
@@ -153,13 +151,13 @@ class User extends Component {
                         <VideoList key={'following'} listType={ 'following' }/>
                     </div>
                 </div>
-                <Snackbar
+                {/*<Snackbar
                     open={snackbar.open}
                     message={snackbar.message}
                     autoHideDuration={snackbar.autoHideDuration}
                     //onActionTouchTap={this.handleActionTouchTap}
                     onRequestClose={this.handleSnackbarRequestClose.bind(this)}
-                />
+                />*/}
             </div>
         );
     }

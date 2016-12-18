@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-//import VAppBar from '../components/VAppBar';
 import Icon from '../components/Icon';
-import BasicAppBar from '../components/BasicAppBar';
+import AppBar from '../components/AppBar';
 import Common from '../utils/Common';
 import MobileAction from '../utils/MobileAction';
 
@@ -115,7 +113,9 @@ class Activity extends Component{
 
 		return (
 			<div style={ style.container }>
-                <BasicAppBar title="活动" />
+                <AppBar title="活动" elementLeft={
+                    <Icon icon="logo-white" type="logo"/>
+                } />
 				<div style={ style.activityContainer }>
 					<div style={ style.activityLists }>
 						{activityList.map((item, index) => (

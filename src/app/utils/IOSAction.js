@@ -1,9 +1,9 @@
-import MobileAction from './MobileAction';
+import Common from './Common';
 
 window.IOSAction = {}
 window.IOSAction = {
     userInit: function(){
-        alert("hi");
+        //MobileAction.getToken
+        Common.getTokenFromServer();
     }
-    
 }

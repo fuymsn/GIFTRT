@@ -1,8 +1,9 @@
 import React, {Component, PropTypes} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {Tabs, Tab} from "material-ui/Tabs";
-import {AppBar, DropDownMenu, MenuItem} from "material-ui";
+//import {Tabs, Tab} from "material-ui/Tabs";
+import Tabs from '../components/Tabs';
+import AppBar from "../components/AppBar";
 import RankList from "../components/RankList";
 import Icon from "../components/Icon";
 import * as actions from "../actions";
@@ -130,9 +131,29 @@ class Rank extends Component {
 
         let {dropDownValue, slideIndex, anchorLists} = this.props;
 
+        let tabStyleActive = {
+            height: 'initial',
+            overflow: 'initial'
+        }
+
+        let tabStyle = {
+            height: '0px',
+            overflow: 'hidden'
+        }
+
         return (
             <div style={ style.container }>
-                <AppBar
+                <AppBar 
+                    title="主播排行榜" 
+                    titleType="dropdown"
+                    elementLeft={
+                        <Icon icon="logo-white" type="logo"/>
+                    }
+                    onChange={(event, index, value) => {
+                        this.handleDropDown(event, index, value)
+                    }}
+                />
+                {/* <AppBar
                     title={
                         <DropDownMenu
                             value={ dropDownValue }
@@ -151,8 +172,8 @@ class Rank extends Component {
                     iconElementLeft={
                         <Icon icon="logo-white" type="logo"/>
                     }
-                />
-                <Tabs
+                /> */}
+                {/*<Tabs
                     onChange={ (slideIndex) => { this.handleTabs(slideIndex) }}
                     value={ slideIndex }
                     style={ style.tabs.root }
@@ -166,15 +187,23 @@ class Rank extends Component {
                                 anchorList={ anchorLists[this.RANK_TYPES[dropDownValue] + item.cat] } />
                         </Tab>
                     })}
+                </Tabs>*/}
+                <Tabs 
+                    value={ slideIndex }
+                    onChange={(slideIndex) => {
+                        this.handleTabs(slideIndex);
+                    }} >
+                    { this.RANK_CATS.map((item, index)=> {
+                        return <div label={item.title} value={item.index} style={ index==0 ? tabStyleActive: tabStyle } key={item.index}>
+                            <RankList 
+                                anchorList={ anchorLists[this.RANK_TYPES[dropDownValue] + item.cat] } />
+                        </div>
+                    })}
                 </Tabs>
             </div>
         );
     }
 
 }
-
-Rank.contextTypes = {
-    muiTheme: PropTypes.object.isRequired,
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rank);

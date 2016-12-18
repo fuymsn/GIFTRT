@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { RaisedButton, Checkbox, TextField, SelectField, MenuItem } from 'material-ui';
 import DatePicker from 'material-ui/DatePicker';
 //聊天窗口头部
-import SaveAppBar from '../components/SaveAppBar';
+//import SaveAppBar from '../components/SaveAppBar';
 //actions
 import * as ChatActions from '../actions';
 //样式
@@ -49,7 +49,7 @@ class UserInfoEdit extends Component {
   render() {
     return (
     <div>
-      <SaveAppBar title="编辑个人信息" />
+      {/* <SaveAppBar title="编辑个人信息" /> */}
       <div style={ styles.container}>
         <TextField
             //hintText="Hint Text"

@@ -18,7 +18,9 @@ const initStyle = {
         fontSize: '13px',
         color: '#fff',
         display: 'inline-block',
-        verticalAlign: 'middle'
+        verticalAlign: 'middle',
+        userSelect: 'none',
+        WebkitUserSelect: 'none'
     },
 
     diamondIcon: {

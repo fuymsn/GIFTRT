@@ -22,6 +22,7 @@ const style = {
         lineHeight: '50px',
         fontSize: '14px',
         userSelect: 'none',
+        WebkitUserSelect: 'none',
         cursor: 'pointer',
         color: '#555',
         textAlign: 'center',
@@ -54,32 +55,32 @@ const style = {
 
 class Tabs extends Component {
 
-    constructor() {
-        super();
-        this.barItemValue = 0;
-    }
     //barItem 激活状态
-    activeBarItem() {
-        let barItem = this.refs['barItem' + this.barItemValue];
+    activeBarItem(value) {
+        let barItem = this.refs['barItem' + value];
         Object.assign(barItem.style, style.barItem, style.barItemActive);
     }
 
     //barItem 取消激活状态
-    removeActiveBarItem(value) {
-        let barItem = this.refs['barItem' + this.barItemValue];
-        Object.assign(barItem.style, style.barItem);
+    removeActiveBarItem() {
+        let barItems = this.refs;
+        for(let i = 0; i < barItems.length; i++){
+            Object.assign(barItems[i].style, style.barItem);
+        };
     }
 
     //active tabItem
-    activeTabItem() {
-        let tabItem = this.refs.tab.childNodes[this.barItemValue];
+    activeTabItem(value) {
+        let tabItem = this.refs.tab.childNodes[value];
         Object.assign(tabItem.style, style.tabItem, style.tabItemActive);
     }
 
     //removeActive tabItem
     removeActiveTabItem() {
-        let tabItem = this.refs.tab.childNodes[this.barItemValue];
-        Object.assign(tabItem.style, style.tabItem);
+        let tabItems = this.refs.tab.childNodes;
+        for(let i = 0; i < tabItems.length; i++){
+            Object.assign(tabItems[i].style, style.tabItem);
+        }
     }
 
     //barItem 事件处理
@@ -87,10 +88,8 @@ class Tabs extends Component {
         this.removeActiveBarItem();
         this.removeActiveTabItem();
 
-        this.barItemValue = value;
-
-        this.activeBarItem();
-        this.activeTabItem();
+        this.activeBarItem(value);
+        this.activeTabItem(value);
 
         callback(value);
     }
@@ -99,8 +98,6 @@ class Tabs extends Component {
 
         let tabs = this.props.children;
         let { value, onChange } = this.props;
-
-        this.barItemValue = value;
         
         let tabsLength = tabs.length;
         let barItemWidth = 100/tabsLength;

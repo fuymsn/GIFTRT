@@ -41,7 +41,8 @@ const style = {
             lineHeight: '48px',
             fontSize: '24px',
             padding: 0,
-            userSelect: 'none'
+            userSelect: 'none',
+            WebkitUserSelect: 'none',
         }
     },
 
@@ -194,7 +195,7 @@ class Rank extends Component {
                         this.handleTabs(slideIndex);
                     }} >
                     { this.RANK_CATS.map((item, index)=> {
-                        return <div label={item.title} value={item.index} style={ index==0 ? tabStyleActive: tabStyle } key={item.index}>
+                        return <div label={item.title} value={item.index} style={ index == slideIndex ? tabStyleActive: tabStyle } key={item.index}>
                             <RankList 
                                 anchorList={ anchorLists[this.RANK_TYPES[dropDownValue] + item.cat] } />
                         </div>

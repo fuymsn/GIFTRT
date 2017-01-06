@@ -196,7 +196,7 @@ class Home extends Component {
                     onChange={(slideIndex) => {
                         this.handleChange(slideIndex);
                     }} >
-                    <div label="直播大厅" value={0} style={ tabStyleActive }>
+                    <div label="直播大厅" value={0} style={ slideIndex == 0 ? tabStyleActive: tabStyle }>
                         <div id="hall" style={ style.tabs.tabContentContainerStyle }>
                             <Title title='美女主播'/>
                             <VideoList listType={ 'lobbyRec' }/>
@@ -204,19 +204,19 @@ class Home extends Component {
                             <Title title='全部主播'/>
                             <VideoList listType={ 'lobbyAll' }/>
                         </div></div>
-                    <div label="美女主播" value={1} style={ tabStyle }>
+                    <div label="美女主播" value={1} style={ slideIndex == 1? tabStyleActive: tabStyle }>
                         <div style={ style.tabs.tabContentContainerStyle }>
                             <Title title='美女主播'/>
                             <VideoList listType={ 'rec' }/>
                         </div>
                     </div>
-                    <div label="全部主播" value={2} style={ tabStyle }>
+                    <div label="全部主播" value={2} style={ slideIndex == 2 ? tabStyleActive: tabStyle }>
                         <div style={ style.tabs.tabContentContainerStyle }>
                             <Title title='全部主播'/>
                             <VideoList listType={ 'all' }/>
                         </div>
                     </div>
-                    <div label="我的关注" value={3} style={ tabStyle }>
+                    <div label="我的关注" value={3} style={ slideIndex == 3 ? tabStyleActive: tabStyle }>
                         <div style={ style.tabs.tabContentContainerStyle }>
                             <Title title='我的关注'/>
                             <VideoList listType={ 'following' }/>

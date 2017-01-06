@@ -17,6 +17,7 @@ const style = {
 
     title: {
         userSelect: 'none',
+        WebkitUserSelect: 'none',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
         margin: 0,
@@ -29,7 +30,6 @@ const style = {
         flex: '1 1 0%',
         textAlign: 'center',
         color: '#fff',
-        userSelect: 'none',
         left: '-24px',
         position: 'relative'
     },
@@ -85,6 +85,7 @@ const style = {
             padding: '15px 20px',
             fontSize: '22px',
             userSelect: 'none',
+            WebkitUserSelect: 'none',
             color: '#666',
             cursor: 'pointer'
         }

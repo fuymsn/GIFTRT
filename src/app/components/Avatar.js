@@ -11,6 +11,7 @@ Object.assign = objectAssign;
 
 const initStyle = {
     userSelect: 'none',
+    WebkitUserSelect: 'none',
     color: '#fff',
     backgroundColor: 'rgb(188, 188, 188)',
     display: 'inline-flex',

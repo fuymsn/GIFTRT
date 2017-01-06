@@ -20,6 +20,8 @@ const initStyle = {
         fontSize: '13px',
         lineHeight: '13px',
         color: '#fff',
+        userSelect: 'none',
+        WebkitUserSelect: 'none'
     },
 
     diamondIcon: {

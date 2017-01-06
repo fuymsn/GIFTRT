@@ -16,7 +16,7 @@ const config = {
   output: {
     path: buildPath, // Path of output file
     filename: 'app.js', // Name of output file
-    publicPath: 'http://s.wuled.com/mobile/build/' //线上环境html cdn
+    publicPath: 'http://s.tnmhl.com/mobile/build/' //线上环境html cdn
   },
   plugins: [
     // Define production build to allow React to strip out unnecessary checks

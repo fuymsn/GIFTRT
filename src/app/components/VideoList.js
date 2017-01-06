@@ -87,7 +87,9 @@ const style = {
             backgroundColor: '#000',
             color: '#fff',
             opacity: '0.4',
-            padding: '4px 8px'
+            padding: '4px 8px',
+            userSelect: 'none',
+            WebkitUserSelect: 'none'
         },
 
         side: {
@@ -100,11 +102,15 @@ const style = {
         },
 
         followNum: {
-            color: '#666'
+            color: '#666',
+            userSelect: 'none',
+            WebkitUserSelect: 'none'
         },
 
         expLevel: {
-            color: '#666'
+            color: '#666',
+            userSelect: 'none',
+            WebkitUserSelect: 'none',
         }
 
     }

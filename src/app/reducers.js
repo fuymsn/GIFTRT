@@ -365,7 +365,7 @@ const activity = (state = initActivity, action) => {
  */
 // const initInstances = {
 //     PHP_PATH: 'http://www.vf.com',
-//     CDN_PATH: 'http://s.wuled.com',
+//     CDN_PATH: 'http://s.tnmhl.com',
 //     AVATAR_PATH: 'http://10.1.100.194:4869',
 //     RANK_PATH: 'http://10.1.100.102',
 // }
@@ -389,7 +389,7 @@ const activity = (state = initActivity, action) => {
 //     PHP_PATH: 'http://10.1.100.67',
 
 //     //主播封面服务器
-//     //线上：http://s.wuled.com
+//     //线上：http://s.tnmhl.com
 //     CDN_PATH: 'http://10.1.100.67',
     
 
@@ -421,8 +421,8 @@ const initInstances = {
     PHP_PATH: 'http://m.wuled.com',
 
     //主播封面服务器
-    //线上：http://s.wuled.com
-    CDN_PATH: 'http://s.wuled.com',
+    //线上：http://s.tnmhl.com
+    CDN_PATH: 'http://s.tnmhl.com',
     
     //头像服务器（在排行榜使用）
     //线上：http://img.mmbroadcast.net

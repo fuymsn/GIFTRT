@@ -20,6 +20,7 @@ const initStyle = {
 
     buttonText: {
         userSelect: 'none',
+        WebkitUserSelect: 'none',
         position: 'relative',
         fontSize: '14px',
         letterSpacing: '0px',

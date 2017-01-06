@@ -11,7 +11,9 @@ const initStyle = {
     lineHeight: '14px',
     fontSize: '14px',
     margin: '10px 0px 10px 2px',
-    paddingLeft: '5px'
+    paddingLeft: '5px',
+    userSelect: 'none',
+    WebkitUserSelect: 'none',
 }
 
 class Title extends Component{
